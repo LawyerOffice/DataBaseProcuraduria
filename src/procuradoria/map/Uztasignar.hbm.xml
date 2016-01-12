@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 7, 2016 1:07:51 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="procuradoria.map.Uztasignar" table="UZTASIGNAR" schema="ABPROCU">
+        <composite-id name="id" class="procuradoria.map.UztasignarId">
+            <key-property name="uztfuncionarioId" type="big_decimal">
+                <column name="UZTFUNCIONARIO_ID" precision="22" scale="0" />
+            </key-property>
+            <key-property name="uztcasoId" type="big_decimal">
+                <column name="UZTCASO_ID" precision="22" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="uztcaso" class="procuradoria.map.Uztcaso" update="false" insert="false" fetch="select">
+            <column name="UZTCASO_ID" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="uztfuncionario" class="procuradoria.map.Uztfuncionario" update="false" insert="false" fetch="select">
+            <column name="UZTFUNCIONARIO_ID" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="uztasignarId" type="big_decimal">
+            <column name="UZTASIGNAR_ID" precision="22" scale="0" />
+        </property>
+        <property name="uztasignarFechaIn" type="string">
+            <column name="UZTASIGNAR_FECHA_IN" length="12" />
+        </property>
+        <property name="uztasignarFechaOut" type="string">
+            <column name="UZTASIGNAR_FECHA_OUT" length="12" />
+        </property>
+        <property name="uztasignarFlag" type="big_decimal">
+            <column name="UZTASIGNAR_FLAG" precision="22" scale="0" />
+        </property>
+        <property name="uztasignarMotivo" type="string">
+            <column name="UZTASIGNAR_MOTIVO" length="200" />
+        </property>
+    </class>
+</hibernate-mapping>

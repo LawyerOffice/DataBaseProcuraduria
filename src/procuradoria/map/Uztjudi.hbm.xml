@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 7, 2016 1:07:51 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="procuradoria.map.Uztjudi" table="UZTJUDI" schema="ABPROCU">
+        <composite-id name="id" class="procuradoria.map.UztjudiId">
+            <key-property name="uztmateriaId" type="big_decimal">
+                <column name="UZTMATERIA_ID" precision="22" scale="0" />
+            </key-property>
+            <key-property name="uztjudiId" type="big_decimal">
+                <column name="UZTJUDI_ID" precision="22" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="uztmateria" class="procuradoria.map.Uztmateria" update="false" insert="false" fetch="select">
+            <column name="UZTMATERIA_ID" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="uztjudiDescripcion" type="string">
+            <column name="UZTJUDI_DESCRIPCION" length="350" />
+        </property>
+        <set name="uztcasos" table="UZTCASO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UZTMATERIA_ID" precision="22" scale="0" not-null="true" />
+                <column name="UZTJUDI_ID" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="procuradoria.map.Uztcaso" />
+        </set>
+    </class>
+</hibernate-mapping>

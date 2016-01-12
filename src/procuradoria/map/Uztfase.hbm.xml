@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 7, 2016 1:07:51 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="procuradoria.map.Uztfase" table="UZTFASE" schema="ABPROCU">
+        <composite-id name="id" class="procuradoria.map.UztfaseId">
+            <key-property name="uztcasoId" type="big_decimal">
+                <column name="UZTCASO_ID" precision="22" scale="0" />
+            </key-property>
+            <key-property name="uztfaseId" type="big_decimal">
+                <column name="UZTFASE_ID" precision="22" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="uztcaso" class="procuradoria.map.Uztcaso" update="false" insert="false" fetch="select">
+            <column name="UZTCASO_ID" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="uztfaseFlag" type="big_decimal">
+            <column name="UZTFASE_FLAG" precision="22" scale="0" />
+        </property>
+        <property name="uztfaseNumfase" type="big_decimal">
+            <column name="UZTFASE_NUMFASE" precision="22" scale="0" />
+        </property>
+        <property name="uztfaseNombre" type="string">
+            <column name="UZTFASE_NOMBRE" length="150" />
+        </property>
+        <property name="uztfaseFechaIn" type="string">
+            <column name="UZTFASE_FECHA_IN" length="12" />
+        </property>
+        <property name="uztfaseFechaOut" type="string">
+            <column name="UZTFASE_FECHA_OUT" length="12" />
+        </property>
+        <set name="uztdocses" table="UZTDOCS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UZTCASO_ID" precision="22" scale="0" not-null="true" />
+                <column name="UZTFASE_ID" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="procuradoria.map.Uztdocs" />
+        </set>
+        <set name="uztcitas" table="UZTCITA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UZTCASO_ID" precision="22" scale="0" not-null="true" />
+                <column name="UZTFASE_ID" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="procuradoria.map.Uztcita" />
+        </set>
+        <set name="uztcomts" table="UZTCOMT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UZTCASO_ID" precision="22" scale="0" not-null="true" />
+                <column name="UZTFASE_ID" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="procuradoria.map.Uztcomt" />
+        </set>
+        <set name="uztinvolFfs" table="UZTINVOL_FF" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UZTCASO_ID" precision="22" scale="0" not-null="true" />
+                <column name="UZTFASE_ID" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="procuradoria.map.UztinvolFf" />
+        </set>
+    </class>
+</hibernate-mapping>
