@@ -4,9 +4,11 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
     <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
-    <property name="hibernate.connection.url">jdbc:oracle:thin:@//192.168.56.101:1523/orcl</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@//192.168.56.102:1523/orcl</property>
     <property name="hibernate.connection.username">abprocu</property>
     <property name="hibernate.connection.password">123.456</property>
+    <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+    <property name="hibernate.current_session_context_class">thread</property>
     <mapping resource="procuradoria/map/Uztjudi.hbm.xml"/>
     <mapping resource="procuradoria/map/UztinvolCa.hbm.xml"/>
     <mapping resource="procuradoria/map/Uztcaso.hbm.xml"/>
