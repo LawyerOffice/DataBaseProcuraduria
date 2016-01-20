@@ -27,6 +27,7 @@ public class Uztcaso  implements java.io.Serializable {
      private Set uztinvolCas = new HashSet(0);
 
     public Uztcaso() {
+        this.uztjudi = new Uztjudi();
     }
 
 	

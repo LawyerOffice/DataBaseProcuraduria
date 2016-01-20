@@ -6,9 +6,10 @@
 
 package procuradoria.test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import procuradoria.crud.ProcuradoriaMethods;
-import procuradoria.map.Uzttiporol;
+import procuradoria.map.*;
 
 /**
  *
@@ -23,6 +24,21 @@ public class test {
         // TODO code application logic here
         ArrayList<Uzttiporol>  list1 = ProcuradoriaMethods.ListTipoRol();
         System.out.println(">> "+list1.size());
+        
+        ArrayList<Uztfuncionario> list2 = ProcuradoriaMethods.ListFuncionarios(BigDecimal.ONE);
+        System.out.println(">> "+list2.size());
+        
+        ArrayList<Uztrol> list3 = ProcuradoriaMethods.FindRolByIdFuncionario(new BigDecimal(100), BigDecimal.ONE);
+        System.out.println(">> "+list3.size());
+        
+        ArrayList<Uztmateria> lis4 = ProcuradoriaMethods.ListMaterias();
+        System.out.println(">> "+lis4.size());
+        
+        ArrayList<Uztjudi> list5 = ProcuradoriaMethods.listJudicaturas(new BigDecimal(101));
+        System.out.println(">> "+list5.size());
+        
+        ArrayList<Uztcaso> list6 = ProcuradoriaMethods.ListCasosByFlag(BigDecimal.ZERO);
+        System.out.println(">> "+list6);        
     }
     
 }

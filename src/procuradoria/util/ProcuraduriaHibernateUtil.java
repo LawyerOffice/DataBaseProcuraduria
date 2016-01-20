@@ -24,11 +24,11 @@ public class ProcuraduriaHibernateUtil {
     private static final SessionFactory sessionFactory;
     private static final ServiceRegistry sessionServiceRegistry;
     
-    
+    //procuraduria_hibernate.cfg
     static {
         try {
             Configuration configuration = new Configuration();
-            configuration.configure("/procuradoria_hibernate.cfg.xml");
+            configuration.configure("/procuraduria_hibernate.cfg.xml");
             sessionServiceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
             sessionFactory = configuration.buildSessionFactory(sessionServiceRegistry);
         } catch (Throwable ex) {
