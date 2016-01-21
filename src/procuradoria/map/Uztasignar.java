@@ -20,6 +20,8 @@ public class Uztasignar  implements java.io.Serializable {
      private String uztasignarMotivo;
 
     public Uztasignar() {
+        this.uztfuncionario = new Uztfuncionario();
+        this.uztcaso = new Uztcaso();
     }
 
 	
