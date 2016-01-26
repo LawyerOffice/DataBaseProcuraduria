@@ -82,7 +82,28 @@ public class ProcuradoriaCrud {
                 listFuncionario = (ArrayList<Uztfuncionario>) list;
             }
         } catch (Exception ex) {
-            log.level.info("EROR LISTAFUNCIONARIO : " + ex.toString());
+            log.level.info("ERROR LISTAFUNCIONARIO : " + ex.toString());
+        }
+        return listFuncionario;
+    }
+    
+    public static ArrayList<Uztfuncionario> listActiveAbogados() {
+        ArrayList<Uztfuncionario> listFuncionario = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+//        query_1.setColumnName("uztfuncionarioFlag");
+//        query_1.setWhereClause("=");
+//        query_1.setValue(uztfuncionarioFlag);
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        List<Uztfuncionario> list = ds.customQuery(parameList, Uztfuncionario.class);
+        try {
+            if (!list.isEmpty()) {
+                listFuncionario = (ArrayList<Uztfuncionario>) list;
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR PROCESO ACTIVEABOGADOS : " + ex.toString());
         }
         return listFuncionario;
     }
@@ -98,7 +119,7 @@ public class ProcuradoriaCrud {
                 listMaterias = (ArrayList<Uztmateria>) list;
             }
         } catch (Exception ex) {
-            log.level.info("EROR LISTAMATERIAS : " + ex.toString());
+            log.level.info("ERROR LISTAMATERIAS : " + ex.toString());
         }
         return listMaterias;
     }
@@ -119,7 +140,7 @@ public class ProcuradoriaCrud {
                 listJudicaturas = (ArrayList<Uztjudi>) list;
             }
         } catch (Exception ex) {
-            log.level.info("EROR LISTAJUDICATURAS : " + ex.toString());
+            log.level.info("ERROR LISTAJUDICATURAS : " + ex.toString());
         }
         return listJudicaturas;
     }
@@ -140,7 +161,7 @@ public class ProcuradoriaCrud {
                 listCasos= (ArrayList<Uztcaso>) list;
             }
         } catch (Exception ex) {
-            log.level.info("EROR LISTAJUDICATURAS : " + ex.toString());
+            log.level.info("ERROR LISTAJUDICATURAS : " + ex.toString());
         }
         return listCasos;
     }

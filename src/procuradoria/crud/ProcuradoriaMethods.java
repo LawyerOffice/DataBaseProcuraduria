@@ -94,7 +94,28 @@ public class ProcuradoriaMethods {
         return listFuncionarios;
     }
 
-    
+    public static ArrayList<Uztfuncionario> ListActiveAbogados() {
+        ArrayList<Uztfuncionario> listActiveAbogados = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+                listActiveAbogados = ProcuradoriaCrud.listActiveAbogados();
+        } catch (Exception ex) {
+            log.level.error("ERROR EN PROCESO ACTIVEABOGADOS : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listActiveAbogados;
+    }
+
 
     public static ArrayList<Uztmateria> ListMaterias() {
         ArrayList<Uztmateria> listMaterias = null;
