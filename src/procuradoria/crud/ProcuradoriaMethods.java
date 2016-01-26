@@ -8,6 +8,7 @@ package procuradoria.crud;
 import com.logger.L;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import static procuradoria.crud.ProcuradoriaCrud.log;
 import procuradoria.map.*;
 import procuradoria.util.*;
 
@@ -44,13 +45,13 @@ public class ProcuradoriaMethods {
         }
         return listTipoRol;
     }
-    
+
     public static ArrayList<Uztrol> FindRolByIdFuncionario(BigDecimal uztfuncionarioId, BigDecimal uztrolFlag) {
         ArrayList<Uztrol> listRol = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-            if(uztfuncionarioId != null && uztrolFlag != null){
+            if (uztfuncionarioId != null && uztrolFlag != null) {
                 listRol = ProcuradoriaCrud.findRolByIdFuncionario(uztfuncionarioId, uztrolFlag);
             }
 
@@ -99,7 +100,7 @@ public class ProcuradoriaMethods {
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-                listActiveAbogados = ProcuradoriaCrud.listActiveAbogados();
+            listActiveAbogados = ProcuradoriaCrud.listActiveAbogados();
         } catch (Exception ex) {
             log.level.error("ERROR EN PROCESO ACTIVEABOGADOS : ");
             delegateException = ex;
@@ -115,7 +116,6 @@ public class ProcuradoriaMethods {
         }
         return listActiveAbogados;
     }
-
 
     public static ArrayList<Uztmateria> ListMaterias() {
         ArrayList<Uztmateria> listMaterias = null;
@@ -138,8 +138,7 @@ public class ProcuradoriaMethods {
         }
         return listMaterias;
     }
-    
-    
+
     public static ArrayList<Uztjudi> listJudicaturas(BigDecimal uztmateriaId) {
         ArrayList<Uztjudi> listJudicaturas = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -161,7 +160,7 @@ public class ProcuradoriaMethods {
         }
         return listJudicaturas;
     }
-    
+
     public static ArrayList<Uztcaso> ListCasosByFlag(BigDecimal uztcasoFlag) {
         ArrayList<Uztcaso> listCasos = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -182,6 +181,30 @@ public class ProcuradoriaMethods {
             }
         }
         return listCasos;
+    }
+
+    public static Boolean InsertDocs(Uztdocs docs) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (docs != null) {
+                exito = ProcuradoriaCrud.insertDocs(docs);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN LISTTIPOROL : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
     }
 
 }

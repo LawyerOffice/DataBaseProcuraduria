@@ -165,5 +165,16 @@ public class ProcuradoriaCrud {
         }
         return listCasos;
     }
+    
+    public static Boolean insertDocs(Uztdocs docs) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (docs != null) {
+            ds.save(docs);
+            exito = true;
+        }
+        return exito;
+    }
 
 }
