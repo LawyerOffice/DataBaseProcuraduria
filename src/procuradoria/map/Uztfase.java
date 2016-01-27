@@ -25,6 +25,8 @@ public class Uztfase  implements java.io.Serializable {
      private Set uztinvolFfs = new HashSet(0);
 
     public Uztfase() {
+        this.id = new UztfaseId();
+        this.uztcaso = new Uztcaso();
     }
 
 	
