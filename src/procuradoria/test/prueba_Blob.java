@@ -10,13 +10,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.hibernate.engine.jdbc.BinaryStream;
+import javax.sql.rowset.serial.SerialBlob;
+import org.hibernate.LobHelper;
 import procuradoria.crud.ProcuradoriaCrud;
+import procuradoria.crud.ProcuradoriaMethods;
 import procuradoria.map.Uztdocs;
 import procuradoria.map.UztdocsId;
 import procuradoria.util.ProcuradoriaHibernateSessionHandler;
@@ -27,108 +29,31 @@ import procuradoria.util.ProcuraduriaHibernateUtil;
  * @author Dennis
  */
 public class prueba_Blob {
-    static {
-        ProcuraduriaHibernateUtil.init();
-    }
-
-    public static Boolean InsertDocs(Uztdocs docs) {
-        Boolean exito = false;
-        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
-        Exception delegateException = null;
-        try {
-            if (docs != null) {
-                exito = ProcuradoriaCrud.insertDocs(docs);
-            }
-        } catch (Exception ex) {
-            System.out.println("ERROR EN LISTTIPOROL : ");
-            delegateException = ex;
-        } finally {
-            hss.close();
-            if (delegateException != null) {
-                try {
-                    throw delegateException;
-                } catch (Exception ex) {
-                    System.out.println("delageException " + ex.toString());
-                }
-            }
-        }
-        return exito;
-    }   
-    
+   
     public static void main(String args[])
     {
-        FileInputStream in = null;
+        
+        
+        String filepath = "C:\\Users\\Dennis\\Desktop\\Tutorial_ARQUITECTURAS_JEE.pdf";
+        
+        FileInputStream in = null;   
+        File file = new File(filepath);     
+        byte[] bFile = new byte[(int) file.length()];
+        FileInputStream fileInputStream;       
+        
+        
         try {
-            
-            
-            prueba_Blob pb = new prueba_Blob();
-            File blob = new File("C:\\Users\\Dennis\\Desktop\\Tutorial_ARQUITECTURAS_JEE.pdf");
-            in = new FileInputStream(blob);
-            BinaryStream ds = new BinaryStream() {
-
-                @Override
-                public InputStream getInputStream() {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public byte[] getBytes() {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public long getLength() {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void release() {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-            };
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+            java.sql.Blob blob=null;
+            blob=new SerialBlob(bFile);      
             Uztdocs docs = new Uztdocs(new UztdocsId(new BigDecimal(300),new BigDecimal(600),new BigDecimal(129)),
-                    null, null, null, null, null);
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(prueba_Blob.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                in.close();
-            } catch (IOException ex) {
-                Logger.getLogger(prueba_Blob.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                    null, null, null, "prueba2", blob);
+            ProcuradoriaMethods.InsertDocs(docs);
+        } catch (Exception e) {
+                 e.printStackTrace();
         }
         
-        
-        
     }
-//    public void prueba(){
-//        PreparedStatement pstmt = conn.prepareStatement("update blob_table set blob = ? where id = ?");
-//        File blob = new File("/path/to/picture.png");
-//        FileInputStream in = new FileInputStream(blob);
-//
-//        // the cast to int is necessary because with JDBC 4 there is 
-//        // also a version of this method with a (int, long) 
-//        // but that is not implemented by Oracle
-//        pstmt.setBinaryStream(1, in, (int)blob.length()); 
-//
-//        pstmt.setInt(2, 42);  // set the PK value
-//        pstmt.executeUpdate();
-//        conn.commit();
-//    }
 }
