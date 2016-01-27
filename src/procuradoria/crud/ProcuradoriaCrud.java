@@ -177,4 +177,33 @@ public class ProcuradoriaCrud {
         return exito;
     }
 
+//Modificado por Dennis Santamaria
+    
+    public static ArrayList<Uztdocs> findDocsByCaso_Fase(BigDecimal uztcasoId, BigDecimal uztfaseId) {
+        ArrayList<Uztdocs> listDoc = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("id.uztcasoId");
+        query_1.setWhereClause("=");
+        query_1.setValue(uztcasoId);
+        //uztrolFlag
+        QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_2.setColumnName("id.uztfaseId");
+        query_2.setWhereClause("=");
+        query_2.setValue(uztfaseId);
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        parameList.add(query_2);
+        List<Uztdocs> list = ds.customQuery(parameList, Uztdocs.class);
+        try {
+            if (!list.isEmpty()) {
+                listDoc = (ArrayList<Uztdocs>) list;
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR  LISTDOCS : " + ex.toString());
+        }
+        return listDoc;
+    }
+    
 }

@@ -206,5 +206,32 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
+    
+    
+//Modificado por Dennis Santamaria
+    
+    public static ArrayList<Uztdocs> FindDocsbyCaso_Fase(BigDecimal uztcasoId, BigDecimal uzfaseId) {
+        ArrayList<Uztdocs> listDocs = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (uztcasoId != null && uzfaseId != null) {
+                listDocs = ProcuradoriaCrud.findDocsByCaso_Fase(uztcasoId, uzfaseId);
+            }
 
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FindDocsbyCaso_Fase : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listDocs;
+    }    
 }

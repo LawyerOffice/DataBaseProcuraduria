@@ -41,9 +41,10 @@ public class test {
 //        ArrayList<Uztcaso> list6 = ProcuradoriaMethods.ListCasosByFlag(BigDecimal.ZERO);
 //        System.out.println(">> "+list6);    
         
-        DocumentsPdf  pdf = new DocumentsPdf();
-        pdf.CovertPdfToByteArray("prueba_archivo", "prueba_archivo");
+//        DocumentsPdf  pdf = new DocumentsPdf();
+//        pdf.CovertPdfToByteArray("prueba_archivo", "prueba_archivo");
         
     }
+    
     
 }

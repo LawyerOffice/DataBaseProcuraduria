@@ -9,10 +9,14 @@ package procuradoria.test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.rowset.serial.SerialBlob;
@@ -32,28 +36,35 @@ public class prueba_Blob {
    
     public static void main(String args[])
     {
+        ArrayList<Uztdocs> docs = new ArrayList<Uztdocs>();
         
-        
-        String filepath = "C:\\Users\\Dennis\\Desktop\\Tutorial_ARQUITECTURAS_JEE.pdf";
-        
-        FileInputStream in = null;   
-        File file = new File(filepath);     
-        byte[] bFile = new byte[(int) file.length()];
-        FileInputStream fileInputStream;       
-        
-        
+        docs = ProcuradoriaMethods.FindDocsbyCaso_Fase(new BigDecimal(300),new BigDecimal(600));
+        Blob blob = docs.get(0).getUztdocsArchivo();
+
+        int blobLength;  
         try {
-            fileInputStream = new FileInputStream(file);
-            fileInputStream.read(bFile);
-            fileInputStream.close();
-            java.sql.Blob blob=null;
-            blob=new SerialBlob(bFile);      
-            Uztdocs docs = new Uztdocs(new UztdocsId(new BigDecimal(300),new BigDecimal(600),new BigDecimal(129)),
-                    null, null, null, "prueba2", blob);
-            ProcuradoriaMethods.InsertDocs(docs);
-        } catch (Exception e) {
-                 e.printStackTrace();
+            
+            blobLength = (int) blob.length();
+            byte[] blobAsBytes = blob.getBytes(1, blobLength);
+            blob.free();
+            System.out.println(blobAsBytes.toString());
+            
+            OutputStream out = new FileOutputStream("out.pdf");
+            out.write(blobAsBytes);
+            out.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(prueba_Blob.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(prueba_Blob.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(prueba_Blob.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        
+
+        //release the blob and free up memory. (since JDBC 4.0)
+        
         
     }
 }
