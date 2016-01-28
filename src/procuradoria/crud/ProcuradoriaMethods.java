@@ -8,7 +8,6 @@ package procuradoria.crud;
 import com.logger.L;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import static procuradoria.crud.ProcuradoriaCrud.log;
 import procuradoria.map.*;
 import procuradoria.util.*;
 
