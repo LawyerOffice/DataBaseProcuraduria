@@ -9,8 +9,15 @@ import com.dao.DAOServices;
 import com.dao.QueryParameter;
 import com.logger.L;
 import java.math.BigDecimal;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
+import org.hibernate.jdbc.ReturningWork;
 import procuradoria.map.*;
 import procuradoria.util.ProcuraduriaHibernateUtil;
 
@@ -205,5 +212,40 @@ public class ProcuradoriaCrud {
         }
         return listDoc;
     }
+    
+    /*
+    BEGIN getReportByDztusId(?,?,?,?,?); END;
+    */
+    
+    
+    public static ArrayList<Uztrol> getFuncionariosTipoRolByFlag(final BigDecimal UztFlag){
+        ArrayList<Uztrol> listR = null;
+        try{
+            listR = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uztrol>>() {
+
+                @Override
+                public ArrayList<Uztrol> execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall("BEGIN GETFUNCIONARIOSTIPOROL(?,?); END;");
+                    f1.setBigDecimal(1, UztFlag);
+                    f1.registerOutParameter(2, OracleTypes.CURSOR);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(2);
+                    ArrayList<Uztrol> list = new ArrayList<>();
+                    while(rs.next()){
+                        Uztrol rol = new Uztrol();
+                        
+                        list.add(rol);
+                    }
+                    rs.close();
+                    return list;
+                }
+            });
+        }catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+        return listR;
+    }
+    
+    
     
 }

@@ -19,6 +19,9 @@ public class Uztrol  implements java.io.Serializable {
      private BigDecimal uztrolFlag;
 
     public Uztrol() {
+        this.id = new UztrolId();
+        this.uztfuncionario = new Uztfuncionario();
+        this.uzttiporol = new Uzttiporol();
     }
 
 	
