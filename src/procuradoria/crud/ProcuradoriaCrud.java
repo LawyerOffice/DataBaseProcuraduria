@@ -257,6 +257,17 @@ public class ProcuradoriaCrud {
     }
     
     
+    public static Boolean insertRol(Uztrol rol) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (rol != null) {
+            ds.save(rol);
+            exito = true;
+        }
+        return exito;
+    }
+    
     public static Boolean updateRol(Uztrol rol) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
