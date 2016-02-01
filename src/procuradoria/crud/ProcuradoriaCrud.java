@@ -25,6 +25,7 @@ import procuradoria.util.ProcuraduriaHibernateUtil;
  *
  * @author Ivan
  */
+
 public class ProcuradoriaCrud {
 
     public final static L log = new L(ProcuradoriaCrud.class);
@@ -233,7 +234,16 @@ public class ProcuradoriaCrud {
                     ArrayList<Uztrol> list = new ArrayList<>();
                     while(rs.next()){
                         Uztrol rol = new Uztrol();
-                        
+                        rol.getUztfuncionario().setUztfuncionarioCedula(rs.getString(1));
+                        rol.getUztfuncionario().setUztfuncionarioApellidos(rs.getString(2));
+                        rol.getUztfuncionario().setUztfuncionarioNombres(rs.getString(3));
+                        rol.getUzttiporol().setUzttiporolDescripcion(rs.getString(4));
+                        rol.setUztrolFechaIn(rs.getString(5));
+                        rol.setUztrolFlag(rs.getBigDecimal(6));
+                        rol.getUztfuncionario().setUztfuncionarioFlag(rs.getBigDecimal(7));
+                        rol.getUztfuncionario().setUztfuncionarioId(rs.getBigDecimal(8));
+                        rol.getUzttiporol().setUzttiporolId(rs.getBigDecimal(9));
+                        rol.setId(new UztrolId(rs.getBigDecimal(8), rs.getBigDecimal(9), rs.getBigDecimal(10)));
                         list.add(rol);
                     }
                     rs.close();
@@ -244,6 +254,18 @@ public class ProcuradoriaCrud {
             log.level.info(">>> " + ex.toString());
         }
         return listR;
+    }
+    
+    
+    public static Boolean updateRol(Uztrol rol) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (rol != null) {
+            ds.update(rol);
+            exito = true;
+        }
+        return exito;
     }
     
     

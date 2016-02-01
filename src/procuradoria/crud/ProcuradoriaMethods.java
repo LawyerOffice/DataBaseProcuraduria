@@ -232,5 +232,55 @@ public class ProcuradoriaMethods {
             }
         }
         return listDocs;
-    }    
+    }
+    
+    
+    public static ArrayList<Uztrol> GetFuncionariosTipoRolByFlag(BigDecimal UztFlag) {
+        ArrayList<Uztrol> listRol = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (UztFlag != null) {
+                listRol = ProcuradoriaCrud.getFuncionariosTipoRolByFlag(UztFlag);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FindDocsbyCaso_Fase : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listRol;
+    }
+    
+    public static Boolean UpdateRol(Uztrol rol) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (rol != null) {
+                exito = ProcuradoriaCrud.updateRol(rol);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN LISTTIPOROL : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
 }

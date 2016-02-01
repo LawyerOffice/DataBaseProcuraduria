@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import procuradoria.crud.ProcuradoriaMethods;
 import procuradoria.map.*;
-import procuradoria.pdf.util.DocumentsPdf;
 
 /**
  *
@@ -43,6 +42,9 @@ public class test {
         
 //        DocumentsPdf  pdf = new DocumentsPdf();
 //        pdf.CovertPdfToByteArray("prueba_archivo", "prueba_archivo");
+        
+        ArrayList<Uztrol> rols = ProcuradoriaMethods.GetFuncionariosTipoRolByFlag(BigDecimal.ONE);
+        System.out.println(">> "+rols.size());
         
     }
     
