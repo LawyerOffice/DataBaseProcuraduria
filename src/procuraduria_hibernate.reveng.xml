@@ -2,18 +2,18 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-schema="ABPROCU"/>
-  <table-filter match-name="UZTACTOR"/>
-  <table-filter match-name="UZTFUNCIONARIO"/>
-  <table-filter match-name="UZTCITA"/>
+  <table-filter match-name="UZTINVOL_CA"/>
   <table-filter match-name="UZTASIGNAR"/>
-  <table-filter match-name="UZTCASO"/>
+  <table-filter match-name="UZTJUDI"/>
   <table-filter match-name="UZTINVOL_FF"/>
-  <table-filter match-name="UZTCOMT"/>
   <table-filter match-name="UZTDOCS"/>
   <table-filter match-name="UZTFASE"/>
-  <table-filter match-name="UZTROL"/>
-  <table-filter match-name="UZTTIPOROL"/>
+  <table-filter match-name="UZTCASO"/>
   <table-filter match-name="UZTMATERIA"/>
-  <table-filter match-name="UZTINVOL_CA"/>
-  <table-filter match-name="UZTJUDI"/>
+  <table-filter match-name="UZTACTOR"/>
+  <table-filter match-name="UZTCOMT"/>
+  <table-filter match-name="UZTCITA"/>
+  <table-filter match-name="UZTROL"/>
+  <table-filter match-name="UZTFUNCIONARIO"/>
+  <table-filter match-name="UZTTIPOROL"/>
 </hibernate-reverse-engineering>

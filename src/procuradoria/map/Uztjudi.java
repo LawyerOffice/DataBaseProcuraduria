@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Jan 7, 2016 1:07:49 PM by Hibernate Tools 3.6.0
+// Generated Feb 2, 2016 9:54:14 AM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -17,6 +17,7 @@ public class Uztjudi  implements java.io.Serializable {
      private Set uztcasos = new HashSet(0);
 
     public Uztjudi() {
+        this.id = new UztjudiId();
         this.uztmateria = new Uztmateria();
     }
 

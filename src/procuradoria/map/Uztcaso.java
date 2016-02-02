@@ -1,8 +1,9 @@
 package procuradoria.map;
-// Generated Jan 7, 2016 1:07:49 PM by Hibernate Tools 3.6.0
+// Generated Feb 2, 2016 9:54:14 AM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,7 +28,8 @@ public class Uztcaso  implements java.io.Serializable {
      private Set uztinvolCas = new HashSet(0);
 
     public Uztcaso() {
-        this.uztjudi = new Uztjudi();
+        this.uztcasoFlag = new BigDecimal(BigInteger.ONE);
+        this.uztcasoId = new BigDecimal(BigInteger.ONE);
     }
 
 	

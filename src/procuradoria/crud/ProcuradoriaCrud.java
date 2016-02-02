@@ -279,6 +279,16 @@ public class ProcuradoriaCrud {
         return exito;
     }
     
+    public static Boolean insertFuncionario(Uztfuncionario fun) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (fun != null) {
+            ds.update(fun);
+            exito = true;
+        }
+        return exito;
+    }
     
     
 }

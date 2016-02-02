@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Jan 7, 2016 1:07:49 PM by Hibernate Tools 3.6.0
+// Generated Feb 2, 2016 9:54:14 AM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -20,20 +20,21 @@ public class Uztfuncionario  implements java.io.Serializable {
      private String uztfuncionarioCedula;
      private String uztfuncionarioEmail;
      private String uztfuncionarioMovil;
+     private String uztfuncionarioIdbanner;
      private Set uztrols = new HashSet(0);
      private Set uztasignars = new HashSet(0);
      private Set uztinvolFfs = new HashSet(0);
 
     public Uztfuncionario() {
-        this.uztfuncionarioId = new BigDecimal(BigInteger.ZERO);
-        this.uztfuncionarioFlag = new BigDecimal(BigInteger.ZERO); // desactivado
+        this.uztfuncionarioFlag = new BigDecimal(BigInteger.ONE);
+        this.uztfuncionarioId = new BigDecimal(BigInteger.ONE);
     }
 
 	
     public Uztfuncionario(BigDecimal uztfuncionarioId) {
         this.uztfuncionarioId = uztfuncionarioId;
     }
-    public Uztfuncionario(BigDecimal uztfuncionarioId, BigDecimal uztfuncionarioFlag, String uztfuncionarioNombres, String uztfuncionarioApellidos, String uztfuncionarioCedula, String uztfuncionarioEmail, String uztfuncionarioMovil, Set uztrols, Set uztasignars, Set uztinvolFfs) {
+    public Uztfuncionario(BigDecimal uztfuncionarioId, BigDecimal uztfuncionarioFlag, String uztfuncionarioNombres, String uztfuncionarioApellidos, String uztfuncionarioCedula, String uztfuncionarioEmail, String uztfuncionarioMovil, String uztfuncionarioIdbanner, Set uztrols, Set uztasignars, Set uztinvolFfs) {
        this.uztfuncionarioId = uztfuncionarioId;
        this.uztfuncionarioFlag = uztfuncionarioFlag;
        this.uztfuncionarioNombres = uztfuncionarioNombres;
@@ -41,6 +42,7 @@ public class Uztfuncionario  implements java.io.Serializable {
        this.uztfuncionarioCedula = uztfuncionarioCedula;
        this.uztfuncionarioEmail = uztfuncionarioEmail;
        this.uztfuncionarioMovil = uztfuncionarioMovil;
+       this.uztfuncionarioIdbanner = uztfuncionarioIdbanner;
        this.uztrols = uztrols;
        this.uztasignars = uztasignars;
        this.uztinvolFfs = uztinvolFfs;
@@ -94,6 +96,13 @@ public class Uztfuncionario  implements java.io.Serializable {
     
     public void setUztfuncionarioMovil(String uztfuncionarioMovil) {
         this.uztfuncionarioMovil = uztfuncionarioMovil;
+    }
+    public String getUztfuncionarioIdbanner() {
+        return this.uztfuncionarioIdbanner;
+    }
+    
+    public void setUztfuncionarioIdbanner(String uztfuncionarioIdbanner) {
+        this.uztfuncionarioIdbanner = uztfuncionarioIdbanner;
     }
     public Set getUztrols() {
         return this.uztrols;

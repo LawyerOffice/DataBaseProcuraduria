@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Jan 7, 2016 1:07:51 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated Feb 2, 2016 9:54:14 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="procuradoria.map.Uztasignar" table="UZTASIGNAR" schema="ABPROCU">
         <composite-id name="id" class="procuradoria.map.UztasignarId">

@@ -307,4 +307,28 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
+    
+    public static Boolean InserFuncionario(Uztfuncionario fun) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (fun != null) {
+                exito = ProcuradoriaCrud.insertFuncionario(fun);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN LISTTIPOROL : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
 }

@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Jan 7, 2016 1:07:49 PM by Hibernate Tools 3.6.0
+// Generated Feb 2, 2016 9:54:14 AM by Hibernate Tools 3.6.0
 
 
 
@@ -15,6 +15,8 @@ public class Uztcomt  implements java.io.Serializable {
      private String uztcomtFecha;
 
     public Uztcomt() {
+        this.id = new UztcomtId();
+        this.uztfase = new Uztfase();
     }
 
 	
