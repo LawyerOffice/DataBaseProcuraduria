@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2016 11:47:40 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="procuradoria.map.Uzattrol" table="UZATTROL" schema="ESPE">
+        <id name="uzattiporolId" type="big_decimal">
+            <column name="UZATTIPOROL_ID" precision="38" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="uzattiporolDescripcion" type="string">
+            <column name="UZATTIPOROL_DESCRIPCION" length="350" />
+        </property>
+        <set name="uzatrols" table="UZATROL" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UZATTIPOROL_ID" precision="38" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="procuradoria.map.Uzatrol" />
+        </set>
+    </class>
+</hibernate-mapping>

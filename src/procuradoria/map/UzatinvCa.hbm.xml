@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2016 11:47:40 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="procuradoria.map.UzatinvCa" table="UZATINV_CA" schema="ESPE">
+        <composite-id name="id" class="procuradoria.map.UzatinvCaId">
+            <key-property name="uzatactorId" type="big_decimal">
+                <column name="UZATACTOR_ID" precision="38" scale="0" />
+            </key-property>
+            <key-property name="uzatcasoId" type="big_decimal">
+                <column name="UZATCASO_ID" precision="38" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="uzatcaso" class="procuradoria.map.Uzatcaso" update="false" insert="false" fetch="select">
+            <column name="UZATCASO_ID" precision="38" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="uzatactor" class="procuradoria.map.Uzatactor" update="false" insert="false" fetch="select">
+            <column name="UZATACTOR_ID" precision="38" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="uzatinvolCa" type="date">
+            <column name="UZATINVOL_CA" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -4,24 +4,22 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
     <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
-    <property name="hibernate.connection.url">jdbc:oracle:thin:@//192.168.56.102:1523/orcl</property>
-    <property name="hibernate.connection.username">abprocu</property>
-    <property name="hibernate.connection.password">123.456</property>
-    <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-    <property name="hibernate.current_session_context_class">thread</property>
-    <mapping resource="procuradoria/map/Uztjudi.hbm.xml"/>
-    <mapping resource="procuradoria/map/UztinvolCa.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uztcaso.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uzttiporol.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uztactor.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uztmateria.hbm.xml"/>
-    <mapping resource="procuradoria/map/UztinvolFf.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uztdocs.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uztfuncionario.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uztcomt.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uztrol.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uztasignar.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uztfase.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uztcita.hbm.xml"/>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@10.1.0.188:1521:desarrollo</property>
+    <property name="hibernate.connection.username">ESPE</property>
+    <property name="hibernate.connection.password">3SP3UFA</property>
+    <mapping resource="procuradoria/map/Uzatmateri.hbm.xml"/>
+    <mapping resource="procuradoria/map/UzatinvCa.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatasign.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatfunci.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzattrol.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatcita.hbm.xml"/>
+    <mapping resource="procuradoria/map/UzatinvFf.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatjudi.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatactor.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatcaso.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatrol.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatdocs.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatfase.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatcomt.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

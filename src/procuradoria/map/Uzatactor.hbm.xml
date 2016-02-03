@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2016 11:47:40 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="procuradoria.map.Uzatactor" table="UZATACTOR" schema="ESPE">
+        <id name="uzatactorId" type="big_decimal">
+            <column name="UZATACTOR_ID" precision="38" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="uzatactorNombres" type="string">
+            <column name="UZATACTOR_NOMBRES" length="45" />
+        </property>
+        <property name="uzatactorApellidos" type="string">
+            <column name="UZATACTOR_APELLIDOS" length="45" />
+        </property>
+        <property name="uzatactorCedula" type="string">
+            <column name="UZATACTOR_CEDULA" length="15" />
+        </property>
+        <property name="uzatactorDireccion" type="string">
+            <column name="UZATACTOR_DIRECCION" length="350" />
+        </property>
+        <property name="uzatactorMovil" type="string">
+            <column name="UZATACTOR_MOVIL" length="15" />
+        </property>
+        <property name="uzatactorEmail" type="string">
+            <column name="UZATACTOR_EMAIL" length="25" />
+        </property>
+        <property name="uzatactorInstitutcion" type="string">
+            <column name="UZATACTOR_INSTITUTCION" length="150" />
+        </property>
+        <property name="uzatactorTipo" type="big_decimal">
+            <column name="UZATACTOR_TIPO" precision="38" scale="0" />
+        </property>
+        <set name="uzatinvCas" table="UZATINV_CA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UZATACTOR_ID" precision="38" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="procuradoria.map.UzatinvCa" />
+        </set>
+    </class>
+</hibernate-mapping>

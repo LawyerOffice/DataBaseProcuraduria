@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
-  <schema-selection match-schema="ABPROCU"/>
-  <table-filter match-name="UZTINVOL_CA"/>
-  <table-filter match-name="UZTASIGNAR"/>
-  <table-filter match-name="UZTJUDI"/>
-  <table-filter match-name="UZTINVOL_FF"/>
-  <table-filter match-name="UZTDOCS"/>
-  <table-filter match-name="UZTFASE"/>
-  <table-filter match-name="UZTCASO"/>
-  <table-filter match-name="UZTMATERIA"/>
-  <table-filter match-name="UZTACTOR"/>
-  <table-filter match-name="UZTCOMT"/>
-  <table-filter match-name="UZTCITA"/>
-  <table-filter match-name="UZTROL"/>
-  <table-filter match-name="UZTFUNCIONARIO"/>
-  <table-filter match-name="UZTTIPOROL"/>
+  <schema-selection match-schema="ESPE"/>
+  <table-filter match-name="UZATFUNCI"/>
+  <table-filter match-name="UZATJUDI"/>
+  <table-filter match-name="UZATFASE"/>
+  <table-filter match-name="UZATASIGN"/>
+  <table-filter match-name="UZATINV_FF"/>
+  <table-filter match-name="UZATCASO"/>
+  <table-filter match-name="UZATACTOR"/>
+  <table-filter match-name="UZATDOCS"/>
+  <table-filter match-name="UZATMATERI"/>
+  <table-filter match-name="UZATINV_CA"/>
+  <table-filter match-name="UZATCOMT"/>
+  <table-filter match-name="UZATCITA"/>
+  <table-filter match-name="UZATTROL"/>
+  <table-filter match-name="UZATROL"/>
 </hibernate-reverse-engineering>

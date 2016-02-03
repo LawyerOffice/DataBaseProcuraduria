@@ -25,20 +25,19 @@ import procuradoria.util.ProcuraduriaHibernateUtil;
  *
  * @author Ivan
  */
-
 public class ProcuradoriaCrud {
 
     public final static L log = new L(ProcuradoriaCrud.class);
 
-    public static ArrayList<Uzttiporol> listTipoRol() {
-        ArrayList<Uzttiporol> listTipoRol = null;
+    public static ArrayList<Uzattrol> listTipoRol() {
+        ArrayList<Uzattrol> listTipoRol = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         List parameList = new ArrayList();
-        List<Uzttiporol> list = ds.customQuery(parameList, Uzttiporol.class);
+        List<Uzattrol> list = ds.customQuery(parameList, Uzattrol.class);
         try {
             if (!list.isEmpty()) {
-                listTipoRol = (ArrayList<Uzttiporol>) list;
+                listTipoRol = (ArrayList<Uzattrol>) list;
             }
         } catch (Exception ex) {
             log.level.info("ERROR  LISTTIPOROL : " + ex.toString());
@@ -47,8 +46,8 @@ public class ProcuradoriaCrud {
     }
 //flag en 1 rol en funcionamiento en el trnascurso del tiempo para un los funcioanrios
 
-    public static ArrayList<Uztrol> findRolByIdFuncionario(BigDecimal uztfuncionarioId, BigDecimal uztrolFlag) {
-        ArrayList<Uztrol> listRol = null;
+    public static ArrayList<Uzatrol> findRolByIdFuncionario(BigDecimal uztfuncionarioId, BigDecimal uztrolFlag) {
+        ArrayList<Uzatrol> listRol = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
@@ -63,10 +62,10 @@ public class ProcuradoriaCrud {
         List parameList = new ArrayList();
         parameList.add(query_1);
         parameList.add(query_2);
-        List<Uztrol> list = ds.customQuery(parameList, Uztrol.class);
+        List<Uzatrol> list = ds.customQuery(parameList, Uzatrol.class);
         try {
             if (!list.isEmpty()) {
-                listRol = (ArrayList<Uztrol>) list;
+                listRol = (ArrayList<Uzatrol>) list;
             }
         } catch (Exception ex) {
             log.level.info("ERROR  LISTROL : " + ex.toString());
@@ -74,8 +73,8 @@ public class ProcuradoriaCrud {
         return listRol;
     }
 
-    public static ArrayList<Uztfuncionario> listFuncionarios(BigDecimal uztfuncionarioFlag) {
-        ArrayList<Uztfuncionario> listFuncionario = null;
+    public static ArrayList<Uzatfunci> listFuncionarios(BigDecimal uztfuncionarioFlag) {
+        ArrayList<Uzatfunci> listFuncionario = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
@@ -84,19 +83,19 @@ public class ProcuradoriaCrud {
         query_1.setValue(uztfuncionarioFlag);
         List parameList = new ArrayList();
         parameList.add(query_1);
-        List<Uztfuncionario> list = ds.customQuery(parameList, Uztfuncionario.class);
+        List<Uzatfunci> list = ds.customQuery(parameList, Uzatfunci.class);
         try {
             if (!list.isEmpty()) {
-                listFuncionario = (ArrayList<Uztfuncionario>) list;
+                listFuncionario = (ArrayList<Uzatfunci>) list;
             }
         } catch (Exception ex) {
             log.level.info("ERROR LISTAFUNCIONARIO : " + ex.toString());
         }
         return listFuncionario;
     }
-    
-    public static ArrayList<Uztfuncionario> listActiveAbogados() {
-        ArrayList<Uztfuncionario> listFuncionario = null;
+
+    public static ArrayList<Uzatfunci> listActiveAbogados() {
+        ArrayList<Uzatfunci> listFuncionario = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
@@ -105,35 +104,35 @@ public class ProcuradoriaCrud {
 //        query_1.setValue(uztfuncionarioFlag);
         List parameList = new ArrayList();
         parameList.add(query_1);
-        List<Uztfuncionario> list = ds.customQuery(parameList, Uztfuncionario.class);
+        List<Uzatfunci> list = ds.customQuery(parameList, Uzatfunci.class);
         try {
             if (!list.isEmpty()) {
-                listFuncionario = (ArrayList<Uztfuncionario>) list;
+                listFuncionario = (ArrayList<Uzatfunci>) list;
             }
         } catch (Exception ex) {
             log.level.info("ERROR PROCESO ACTIVEABOGADOS : " + ex.toString());
         }
         return listFuncionario;
     }
-    
-    public static ArrayList<Uztmateria> listMaterias() {
-        ArrayList<Uztmateria> listMaterias = null;
+
+    public static ArrayList<Uzatmateri> listMaterias() {
+        ArrayList<Uzatmateri> listMaterias = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         List parameList = new ArrayList();
-        List<Uztmateria> list = ds.customQuery(parameList, Uztmateria.class);
+        List<Uzatmateri> list = ds.customQuery(parameList, Uzatmateri.class);
         try {
             if (!list.isEmpty()) {
-                listMaterias = (ArrayList<Uztmateria>) list;
+                listMaterias = (ArrayList<Uzatmateri>) list;
             }
         } catch (Exception ex) {
             log.level.info("ERROR LISTAMATERIAS : " + ex.toString());
         }
         return listMaterias;
     }
-    
-    public static ArrayList<Uztjudi> listJudicaturas(BigDecimal uztmateriaId) {
-        ArrayList<Uztjudi> listJudicaturas = null;
+
+    public static ArrayList<Uzatjudi> listJudicaturas(BigDecimal uztmateriaId) {
+        ArrayList<Uzatjudi> listJudicaturas = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
@@ -142,19 +141,19 @@ public class ProcuradoriaCrud {
         query_1.setValue(uztmateriaId);
         List parameList = new ArrayList();
         parameList.add(query_1);
-        List<Uztjudi> list = ds.customQuery(parameList, Uztjudi.class);
+        List<Uzatjudi> list = ds.customQuery(parameList, Uzatjudi.class);
         try {
             if (!list.isEmpty()) {
-                listJudicaturas = (ArrayList<Uztjudi>) list;
+                listJudicaturas = (ArrayList<Uzatjudi>) list;
             }
         } catch (Exception ex) {
             log.level.info("ERROR LISTAJUDICATURAS : " + ex.toString());
         }
         return listJudicaturas;
     }
-    
-    public static ArrayList<Uztcaso> listCasosByFlag(BigDecimal uztcasoFlag) {
-        ArrayList<Uztcaso> listCasos = null;
+
+    public static ArrayList<Uzatcaso> listCasosByFlag(BigDecimal uztcasoFlag) {
+        ArrayList<Uzatcaso> listCasos = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
@@ -163,18 +162,18 @@ public class ProcuradoriaCrud {
         query_1.setValue(uztcasoFlag);
         List parameList = new ArrayList();
         parameList.add(query_1);
-        List<Uztcaso> list = ds.customQuery(parameList, Uztcaso.class);
+        List<Uzatcaso> list = ds.customQuery(parameList, Uzatcaso.class);
         try {
             if (!list.isEmpty()) {
-                listCasos= (ArrayList<Uztcaso>) list;
+                listCasos = (ArrayList<Uzatcaso>) list;
             }
         } catch (Exception ex) {
             log.level.info("ERROR LISTAJUDICATURAS : " + ex.toString());
         }
         return listCasos;
     }
-    
-    public static Boolean insertDocs(Uztdocs docs) {
+
+    public static Boolean insertDocs(Uzatdocs docs) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -186,9 +185,8 @@ public class ProcuradoriaCrud {
     }
 
 //Modificado por Dennis Santamaria
-    
-    public static ArrayList<Uztdocs> findDocsByCaso_Fase(BigDecimal uztcasoId, BigDecimal uztfaseId) {
-        ArrayList<Uztdocs> listDoc = null;
+    public static ArrayList<Uzatdocs> findDocsByCaso_Fase(BigDecimal uztcasoId, BigDecimal uztfaseId) {
+        ArrayList<Uzatdocs> listDoc = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
@@ -203,61 +201,58 @@ public class ProcuradoriaCrud {
         List parameList = new ArrayList();
         parameList.add(query_1);
         parameList.add(query_2);
-        List<Uztdocs> list = ds.customQuery(parameList, Uztdocs.class);
+        List<Uzatdocs> list = ds.customQuery(parameList, Uzatdocs.class);
         try {
             if (!list.isEmpty()) {
-                listDoc = (ArrayList<Uztdocs>) list;
+                listDoc = (ArrayList<Uzatdocs>) list;
             }
         } catch (Exception ex) {
             log.level.info("ERROR  LISTDOCS : " + ex.toString());
         }
         return listDoc;
     }
-    
+
     /*
-    BEGIN getReportByDztusId(?,?,?,?,?); END;
-    */
-    
-    
-    public static ArrayList<Uztrol> getFuncionariosTipoRolByFlag(final BigDecimal UztFlag){
-        ArrayList<Uztrol> listR = null;
-        try{
-            listR = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uztrol>>() {
+     BEGIN getReportByDztusId(?,?,?,?,?); END;
+     */
+    public static ArrayList<Uzatrol> getFuncionariosTipoRolByFlag(final BigDecimal UztFlag) {
+        ArrayList<Uzatrol> listR = null;
+        try {
+            listR = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatrol>>() {
 
                 @Override
-                public ArrayList<Uztrol> execute(Connection cnctn) throws SQLException {
+                public ArrayList<Uzatrol> execute(Connection cnctn) throws SQLException {
                     CallableStatement f1 = cnctn.prepareCall("BEGIN GETFUNCIONARIOSTIPOROL(?,?); END;");
                     f1.setBigDecimal(1, UztFlag);
                     f1.registerOutParameter(2, OracleTypes.CURSOR);
                     f1.execute();
                     ResultSet rs = ((OracleCallableStatement) f1).getCursor(2);
-                    ArrayList<Uztrol> list = new ArrayList<>();
-                    while(rs.next()){
-                        Uztrol rol = new Uztrol();
-                        rol.getUztfuncionario().setUztfuncionarioCedula(rs.getString(1));
-                        rol.getUztfuncionario().setUztfuncionarioApellidos(rs.getString(2));
-                        rol.getUztfuncionario().setUztfuncionarioNombres(rs.getString(3));
-                        rol.getUzttiporol().setUzttiporolDescripcion(rs.getString(4));
-                        rol.setUztrolFechaIn(rs.getString(5));
-                        rol.setUztrolFlag(rs.getBigDecimal(6));
-                        rol.getUztfuncionario().setUztfuncionarioFlag(rs.getBigDecimal(7));
-                        rol.getUztfuncionario().setUztfuncionarioId(rs.getBigDecimal(8));
-                        rol.getUzttiporol().setUzttiporolId(rs.getBigDecimal(9));
-                        rol.setId(new UztrolId(rs.getBigDecimal(8), rs.getBigDecimal(9), rs.getBigDecimal(10)));
+                    ArrayList<Uzatrol> list = new ArrayList<>();
+                    while (rs.next()) {
+                        Uzatrol rol = new Uzatrol();
+                        rol.getUzatfunci().setUzatfuncionarioCedula(rs.getString(1));
+                        rol.getUzatfunci().setUzatfuncionarioApellidos(rs.getString(2));
+                        rol.getUzatfunci().setUzatfuncionarioNombres(rs.getString(3));
+                        rol.getUzattrol().setUzattiporolDescripcion(rs.getString(4));
+                        //rol.setUzatrolFechaIn(rs.getString(5));
+                        rol.setUzatrolFlag(rs.getBigDecimal(6));
+                        rol.getUzatfunci().setUzatfuncionarioFlag(rs.getBigDecimal(7));
+                        rol.getUzatfunci().setUzatfuncionarioId(rs.getBigDecimal(8));
+                        rol.getUzattrol().setUzattiporolId(rs.getBigDecimal(9));
+                        rol.setId(new UzatrolId(rs.getBigDecimal(8), rs.getBigDecimal(9), rs.getBigDecimal(10)));
                         list.add(rol);
                     }
                     rs.close();
                     return list;
                 }
             });
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             log.level.info(">>> " + ex.toString());
         }
         return listR;
     }
-    
-    
-    public static Boolean insertRol(Uztrol rol) {
+
+    public static Boolean insertRol(Uzatrol rol) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -267,8 +262,8 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
-    public static Boolean updateRol(Uztrol rol) {
+
+    public static Boolean updateRol(Uzatrol rol) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -278,17 +273,53 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
-    public static Boolean insertFuncionario(Uztfuncionario fun) {
+
+    public static Boolean insertFuncionario(Uzatfunci fun) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         if (fun != null) {
-            ds.update(fun);
+            ds.save(fun);
             exito = true;
         }
         return exito;
     }
-    
-    
+
+    public static Uzatfunci findFuncionarioByCedulaOrIdBanner(String claveFuncionario) {
+        Uzatfunci findFun = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        
+        QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_5.setColumnName("uztfuncionarioCedula");
+        query_5.setWhereClause("=");
+        query_5.setValue(claveFuncionario);
+        QueryParameter query_6 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_6.setColumnName("uztfuncionarioIdbanner");
+        query_6.setWhereClause("=");
+        query_6.setValue(claveFuncionario);
+        
+        List<QueryParameter> Custadios_ = new ArrayList();
+        Custadios_.add(query_5);
+        Custadios_.add(query_6);
+        
+        QueryParameter orFun_ = new QueryParameter(QueryParameter.$TYPE_OR);
+        orFun_.setDetachedParameters(Custadios_);
+
+        List paramList = new ArrayList();
+        paramList.add(orFun_);
+        
+        List<Uzatfunci> listfun = ds.customQuery(paramList, Uzatfunci.class);
+        try {
+            if (!listfun.isEmpty()){
+                findFun = listfun.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo buscar equipo by Id");
+        }
+        
+        
+        return findFun;
+    }
+
 }

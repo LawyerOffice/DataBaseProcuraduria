@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2016 11:47:40 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="procuradoria.map.Uzatcomt" table="UZATCOMT" schema="ESPE">
+        <composite-id name="id" class="procuradoria.map.UzatcomtId">
+            <key-property name="uzatcasoId" type="big_decimal">
+                <column name="UZATCASO_ID" precision="38" scale="0" />
+            </key-property>
+            <key-property name="uzatfaseId" type="big_decimal">
+                <column name="UZATFASE_ID" precision="38" scale="0" />
+            </key-property>
+            <key-property name="uzatcomtId" type="big_decimal">
+                <column name="UZATCOMT_ID" precision="38" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="uzatfase" class="procuradoria.map.Uzatfase" update="false" insert="false" fetch="select">
+            <column name="UZATCASO_ID" precision="38" scale="0" not-null="true" />
+            <column name="UZATFASE_ID" precision="38" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="uzatcomtDescripcion" type="string">
+            <column name="UZATCOMT_DESCRIPCION" length="500" />
+        </property>
+        <property name="uzatcomtFecha" type="date">
+            <column name="UZATCOMT_FECHA" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

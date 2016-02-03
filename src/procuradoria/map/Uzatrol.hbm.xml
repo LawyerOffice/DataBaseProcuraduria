@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2016 11:47:40 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="procuradoria.map.Uzatrol" table="UZATROL" schema="ESPE">
+        <composite-id name="id" class="procuradoria.map.UzatrolId">
+            <key-property name="uzattiporolId" type="big_decimal">
+                <column name="UZATTIPOROL_ID" precision="38" scale="0" />
+            </key-property>
+            <key-property name="uzatfuncionarioId" type="big_decimal">
+                <column name="UZATFUNCIONARIO_ID" precision="38" scale="0" />
+            </key-property>
+            <key-property name="uzatrolId" type="big_decimal">
+                <column name="UZATROL_ID" precision="38" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="uzatfunci" class="procuradoria.map.Uzatfunci" update="false" insert="false" fetch="select">
+            <column name="UZATFUNCIONARIO_ID" precision="38" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="uzattrol" class="procuradoria.map.Uzattrol" update="false" insert="false" fetch="select">
+            <column name="UZATTIPOROL_ID" precision="38" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="uzatrolCod" type="string">
+            <column name="UZATROL_COD" length="20" />
+        </property>
+        <property name="uzatrolFechaIn" type="date">
+            <column name="UZATROL_FECHA_IN" length="7" />
+        </property>
+        <property name="uzatrolFechaOut" type="date">
+            <column name="UZATROL_FECHA_OUT" length="7" />
+        </property>
+        <property name="uzatrolFlag" type="big_decimal">
+            <column name="UZATROL_FLAG" precision="38" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

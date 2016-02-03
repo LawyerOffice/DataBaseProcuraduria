@@ -39,12 +39,12 @@ public class test {
 //        
 //        ArrayList<Uztcaso> list6 = ProcuradoriaMethods.ListCasosByFlag(BigDecimal.ZERO);
 //        System.out.println(">> "+list6);    
-        
+//        
 //        DocumentsPdf  pdf = new DocumentsPdf();
 //        pdf.CovertPdfToByteArray("prueba_archivo", "prueba_archivo");
-        
-        ArrayList<Uztrol> rols = ProcuradoriaMethods.GetFuncionariosTipoRolByFlag(BigDecimal.ONE);
-        System.out.println(">> "+rols.size());
+//        
+//        ArrayList<Uztrol> rols = ProcuradoriaMethods.GetFuncionariosTipoRolByFlag(BigDecimal.ONE);
+//        System.out.println(">> "+rols.size());
         
     }
     
