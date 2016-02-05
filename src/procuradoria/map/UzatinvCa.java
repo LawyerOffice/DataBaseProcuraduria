@@ -15,6 +15,9 @@ public class UzatinvCa  implements java.io.Serializable {
      private String uzatinvolCa;
 
     public UzatinvCa() {
+        this.id = new UzatinvCaId();
+        this.uzatactor = new Uzatactor();
+        this.uzatcaso = new Uzatcaso();
     }
 
 	

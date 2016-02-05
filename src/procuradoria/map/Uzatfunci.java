@@ -3,6 +3,7 @@ package procuradoria.map;
 
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,8 @@ public class Uzatfunci  implements java.io.Serializable {
      private Set uzatrols = new HashSet(0);
 
     public Uzatfunci() {
+        this.uzatfuncionarioFlag = new BigDecimal(BigInteger.ONE);
+        this.uzatfuncionarioId = new BigDecimal(BigInteger.ONE);
     }
 
 	

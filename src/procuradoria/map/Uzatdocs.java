@@ -18,6 +18,8 @@ public class Uzatdocs  implements java.io.Serializable {
      private Blob uzatdocsArchivo;
 
     public Uzatdocs() {
+        this.id = new UzatdocsId();
+        this.uzatfase = new Uzatfase();
     }
 
 	

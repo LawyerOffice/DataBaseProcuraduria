@@ -16,6 +16,9 @@ public class UzatinvFf  implements java.io.Serializable {
      private String uzatinvolFfFOut;
 
     public UzatinvFf() {
+        this.id = new UzatinvFfId();
+        this.uzatfase = new Uzatfase();
+        this.uzatfunci = new Uzatfunci();
     }
 
 	

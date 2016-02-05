@@ -17,6 +17,8 @@ public class Uzatjudi  implements java.io.Serializable {
      private Set uzatcasos = new HashSet(0);
 
     public Uzatjudi() {
+        this.id = new UzatjudiId();
+        this.uzatmateri = new Uzatmateri();
     }
 
 	

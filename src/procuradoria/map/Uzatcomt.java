@@ -15,6 +15,8 @@ public class Uzatcomt  implements java.io.Serializable {
      private String uzatcomtFecha;
 
     public Uzatcomt() {
+        this.id = new UzatcomtId();
+        this.uzatfase = new Uzatfase();
     }
 
 	
