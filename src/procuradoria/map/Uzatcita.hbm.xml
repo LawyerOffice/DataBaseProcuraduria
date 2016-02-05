@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 3, 2016 11:47:40 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="procuradoria.map.Uzatcita" table="UZATCITA" schema="ESPE">
         <composite-id name="id" class="procuradoria.map.UzatcitaId">
@@ -22,8 +22,8 @@
         <property name="uzatcitaSala" type="string">
             <column name="UZATCITA_SALA" length="150" />
         </property>
-        <property name="uzatcitaFecha" type="date">
-            <column name="UZATCITA_FECHA" length="7" />
+        <property name="uzatcitaFecha" type="string">
+            <column name="UZATCITA_FECHA" length="20" />
         </property>
         <property name="uzatcitaFlag" type="big_decimal">
             <column name="UZATCITA_FLAG" precision="38" scale="0" />

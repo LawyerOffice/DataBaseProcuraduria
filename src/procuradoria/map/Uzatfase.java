@@ -1,9 +1,8 @@
 package procuradoria.map;
-// Generated Feb 3, 2016 11:47:39 AM by Hibernate Tools 3.6.0
+// Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,8 +17,8 @@ public class Uzatfase  implements java.io.Serializable {
      private BigDecimal uzatfaseFlag;
      private BigDecimal uzatfaseNumfase;
      private String uzatfaseNombre;
-     private Date uzatfaseFechaIn;
-     private Date uzatfaseFechaOut;
+     private String uzatfaseFechaIn;
+     private String uzatfaseFechaOut;
      private Set uzatdocses = new HashSet(0);
      private Set uzatinvFfs = new HashSet(0);
      private Set uzatcomts = new HashSet(0);
@@ -33,7 +32,7 @@ public class Uzatfase  implements java.io.Serializable {
         this.id = id;
         this.uzatcaso = uzatcaso;
     }
-    public Uzatfase(UzatfaseId id, Uzatcaso uzatcaso, BigDecimal uzatfaseFlag, BigDecimal uzatfaseNumfase, String uzatfaseNombre, Date uzatfaseFechaIn, Date uzatfaseFechaOut, Set uzatdocses, Set uzatinvFfs, Set uzatcomts, Set uzatcitas) {
+    public Uzatfase(UzatfaseId id, Uzatcaso uzatcaso, BigDecimal uzatfaseFlag, BigDecimal uzatfaseNumfase, String uzatfaseNombre, String uzatfaseFechaIn, String uzatfaseFechaOut, Set uzatdocses, Set uzatinvFfs, Set uzatcomts, Set uzatcitas) {
        this.id = id;
        this.uzatcaso = uzatcaso;
        this.uzatfaseFlag = uzatfaseFlag;
@@ -82,18 +81,18 @@ public class Uzatfase  implements java.io.Serializable {
     public void setUzatfaseNombre(String uzatfaseNombre) {
         this.uzatfaseNombre = uzatfaseNombre;
     }
-    public Date getUzatfaseFechaIn() {
+    public String getUzatfaseFechaIn() {
         return this.uzatfaseFechaIn;
     }
     
-    public void setUzatfaseFechaIn(Date uzatfaseFechaIn) {
+    public void setUzatfaseFechaIn(String uzatfaseFechaIn) {
         this.uzatfaseFechaIn = uzatfaseFechaIn;
     }
-    public Date getUzatfaseFechaOut() {
+    public String getUzatfaseFechaOut() {
         return this.uzatfaseFechaOut;
     }
     
-    public void setUzatfaseFechaOut(Date uzatfaseFechaOut) {
+    public void setUzatfaseFechaOut(String uzatfaseFechaOut) {
         this.uzatfaseFechaOut = uzatfaseFechaOut;
     }
     public Set getUzatdocses() {

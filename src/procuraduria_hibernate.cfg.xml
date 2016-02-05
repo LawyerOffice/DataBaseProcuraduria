@@ -7,6 +7,8 @@
     <property name="hibernate.connection.url">jdbc:oracle:thin:@10.1.0.188:1521:desarrollo</property>
     <property name="hibernate.connection.username">ESPE</property>
     <property name="hibernate.connection.password">3SP3UFA</property>
+    <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+    <property name="hibernate.current_session_context_class">thread</property>
     <mapping resource="procuradoria/map/Uzatmateri.hbm.xml"/>
     <mapping resource="procuradoria/map/UzatinvCa.hbm.xml"/>
     <mapping resource="procuradoria/map/Uzatasign.hbm.xml"/>

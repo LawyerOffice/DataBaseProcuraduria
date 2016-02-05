@@ -1,9 +1,8 @@
 package procuradoria.map;
-// Generated Feb 3, 2016 11:47:39 AM by Hibernate Tools 3.6.0
+// Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,12 +19,12 @@ public class Uzatcaso  implements java.io.Serializable {
      private String uzatcasoMotivo;
      private String uzatcasoDetalle;
      private String uzatcasoTipo;
-     private Date uzatcasoFechaIn;
-     private Date uzatcasoFechaOut;
+     private String uzatcasoFechaIn;
+     private String uzatcasoFechaOut;
      private String uzatcasoResolucion;
      private Set uzatasigns = new HashSet(0);
-     private Set uzatinvCas = new HashSet(0);
      private Set uzatfases = new HashSet(0);
+     private Set uzatinvCas = new HashSet(0);
 
     public Uzatcaso() {
     }
@@ -35,7 +34,7 @@ public class Uzatcaso  implements java.io.Serializable {
         this.uzatcasoId = uzatcasoId;
         this.uzatjudi = uzatjudi;
     }
-    public Uzatcaso(BigDecimal uzatcasoId, Uzatjudi uzatjudi, BigDecimal uzatcasoFlag, String uzatcasoNumcausa, String uzatcasoMotivo, String uzatcasoDetalle, String uzatcasoTipo, Date uzatcasoFechaIn, Date uzatcasoFechaOut, String uzatcasoResolucion, Set uzatasigns, Set uzatinvCas, Set uzatfases) {
+    public Uzatcaso(BigDecimal uzatcasoId, Uzatjudi uzatjudi, BigDecimal uzatcasoFlag, String uzatcasoNumcausa, String uzatcasoMotivo, String uzatcasoDetalle, String uzatcasoTipo, String uzatcasoFechaIn, String uzatcasoFechaOut, String uzatcasoResolucion, Set uzatasigns, Set uzatfases, Set uzatinvCas) {
        this.uzatcasoId = uzatcasoId;
        this.uzatjudi = uzatjudi;
        this.uzatcasoFlag = uzatcasoFlag;
@@ -47,8 +46,8 @@ public class Uzatcaso  implements java.io.Serializable {
        this.uzatcasoFechaOut = uzatcasoFechaOut;
        this.uzatcasoResolucion = uzatcasoResolucion;
        this.uzatasigns = uzatasigns;
-       this.uzatinvCas = uzatinvCas;
        this.uzatfases = uzatfases;
+       this.uzatinvCas = uzatinvCas;
     }
    
     public BigDecimal getUzatcasoId() {
@@ -100,18 +99,18 @@ public class Uzatcaso  implements java.io.Serializable {
     public void setUzatcasoTipo(String uzatcasoTipo) {
         this.uzatcasoTipo = uzatcasoTipo;
     }
-    public Date getUzatcasoFechaIn() {
+    public String getUzatcasoFechaIn() {
         return this.uzatcasoFechaIn;
     }
     
-    public void setUzatcasoFechaIn(Date uzatcasoFechaIn) {
+    public void setUzatcasoFechaIn(String uzatcasoFechaIn) {
         this.uzatcasoFechaIn = uzatcasoFechaIn;
     }
-    public Date getUzatcasoFechaOut() {
+    public String getUzatcasoFechaOut() {
         return this.uzatcasoFechaOut;
     }
     
-    public void setUzatcasoFechaOut(Date uzatcasoFechaOut) {
+    public void setUzatcasoFechaOut(String uzatcasoFechaOut) {
         this.uzatcasoFechaOut = uzatcasoFechaOut;
     }
     public String getUzatcasoResolucion() {
@@ -128,19 +127,19 @@ public class Uzatcaso  implements java.io.Serializable {
     public void setUzatasigns(Set uzatasigns) {
         this.uzatasigns = uzatasigns;
     }
-    public Set getUzatinvCas() {
-        return this.uzatinvCas;
-    }
-    
-    public void setUzatinvCas(Set uzatinvCas) {
-        this.uzatinvCas = uzatinvCas;
-    }
     public Set getUzatfases() {
         return this.uzatfases;
     }
     
     public void setUzatfases(Set uzatfases) {
         this.uzatfases = uzatfases;
+    }
+    public Set getUzatinvCas() {
+        return this.uzatinvCas;
+    }
+    
+    public void setUzatinvCas(Set uzatinvCas) {
+        this.uzatinvCas = uzatinvCas;
     }
 
 

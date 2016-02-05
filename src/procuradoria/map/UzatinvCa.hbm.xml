@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 3, 2016 11:47:40 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="procuradoria.map.UzatinvCa" table="UZATINV_CA" schema="ESPE">
         <composite-id name="id" class="procuradoria.map.UzatinvCaId">
@@ -18,8 +18,8 @@
         <many-to-one name="uzatactor" class="procuradoria.map.Uzatactor" update="false" insert="false" fetch="select">
             <column name="UZATACTOR_ID" precision="38" scale="0" not-null="true" />
         </many-to-one>
-        <property name="uzatinvolCa" type="date">
-            <column name="UZATINVOL_CA" length="7" />
+        <property name="uzatinvolCa" type="string">
+            <column name="UZATINVOL_CA" length="20" />
         </property>
     </class>
 </hibernate-mapping>

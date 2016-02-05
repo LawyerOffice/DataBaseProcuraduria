@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 3, 2016 11:47:40 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="procuradoria.map.Uzatfase" table="UZATFASE" schema="ESPE">
         <composite-id name="id" class="procuradoria.map.UzatfaseId">
@@ -24,11 +24,11 @@
         <property name="uzatfaseNombre" type="string">
             <column name="UZATFASE_NOMBRE" length="150" />
         </property>
-        <property name="uzatfaseFechaIn" type="date">
-            <column name="UZATFASE_FECHA_IN" length="7" />
+        <property name="uzatfaseFechaIn" type="string">
+            <column name="UZATFASE_FECHA_IN" length="20" />
         </property>
-        <property name="uzatfaseFechaOut" type="date">
-            <column name="UZATFASE_FECHA_OUT" length="7" />
+        <property name="uzatfaseFechaOut" type="string">
+            <column name="UZATFASE_FECHA_OUT" length="20" />
         </property>
         <set name="uzatdocses" table="UZATDOCS" inverse="true" lazy="true" fetch="select">
             <key>

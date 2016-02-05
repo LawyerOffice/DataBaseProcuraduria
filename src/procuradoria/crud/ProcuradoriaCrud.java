@@ -213,7 +213,7 @@ public class ProcuradoriaCrud {
     }
 
     /*
-     BEGIN getReportByDztusId(?,?,?,?,?); END;
+     BEGIN UZAPGFUNTR(?,?,?,?,?); END;
      */
     public static ArrayList<Uzatrol> getFuncionariosTipoRolByFlag(final BigDecimal UztFlag) {
         ArrayList<Uzatrol> listR = null;
@@ -222,7 +222,7 @@ public class ProcuradoriaCrud {
 
                 @Override
                 public ArrayList<Uzatrol> execute(Connection cnctn) throws SQLException {
-                    CallableStatement f1 = cnctn.prepareCall("BEGIN GETFUNCIONARIOSTIPOROL(?,?); END;");
+                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPGFUNTR(?,?); END;");
                     f1.setBigDecimal(1, UztFlag);
                     f1.registerOutParameter(2, OracleTypes.CURSOR);
                     f1.execute();
@@ -291,11 +291,11 @@ public class ProcuradoriaCrud {
                 getSessionFactory().getCurrentSession());
         
         QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_5.setColumnName("uztfuncionarioCedula");
+        query_5.setColumnName("uzatfuncionarioCedula");
         query_5.setWhereClause("=");
         query_5.setValue(claveFuncionario);
         QueryParameter query_6 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_6.setColumnName("uztfuncionarioIdbanner");
+        query_6.setColumnName("uzatfuncionarioIdbanner");
         query_6.setWhereClause("=");
         query_6.setValue(claveFuncionario);
         

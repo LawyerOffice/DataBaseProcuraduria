@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Feb 3, 2016 11:47:39 AM by Hibernate Tools 3.6.0
+// Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;

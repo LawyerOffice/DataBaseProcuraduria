@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 3, 2016 11:47:40 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="procuradoria.map.Uzatcomt" table="UZATCOMT" schema="ESPE">
         <composite-id name="id" class="procuradoria.map.UzatcomtId">
@@ -22,8 +22,8 @@
         <property name="uzatcomtDescripcion" type="string">
             <column name="UZATCOMT_DESCRIPCION" length="500" />
         </property>
-        <property name="uzatcomtFecha" type="date">
-            <column name="UZATCOMT_FECHA" length="7" />
+        <property name="uzatcomtFecha" type="string">
+            <column name="UZATCOMT_FECHA" length="20" />
         </property>
     </class>
 </hibernate-mapping>

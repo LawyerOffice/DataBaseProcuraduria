@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Feb 3, 2016 11:47:39 AM by Hibernate Tools 3.6.0
+// Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -21,8 +21,8 @@ public class Uzatfunci  implements java.io.Serializable {
      private String uzatfuncionarioMovil;
      private BigDecimal uzatfuncionarioFlag;
      private Set uzatasigns = new HashSet(0);
-     private Set uzatrols = new HashSet(0);
      private Set uzatinvFfs = new HashSet(0);
+     private Set uzatrols = new HashSet(0);
 
     public Uzatfunci() {
     }
@@ -31,7 +31,7 @@ public class Uzatfunci  implements java.io.Serializable {
     public Uzatfunci(BigDecimal uzatfuncionarioId) {
         this.uzatfuncionarioId = uzatfuncionarioId;
     }
-    public Uzatfunci(BigDecimal uzatfuncionarioId, String uzatfuncionarioIdbanner, String uzatfuncionarioNombres, String uzatfuncionarioApellidos, String uzatfuncionarioCedula, String uzatfuncionarioEmail, String uzatfuncionarioMovil, BigDecimal uzatfuncionarioFlag, Set uzatasigns, Set uzatrols, Set uzatinvFfs) {
+    public Uzatfunci(BigDecimal uzatfuncionarioId, String uzatfuncionarioIdbanner, String uzatfuncionarioNombres, String uzatfuncionarioApellidos, String uzatfuncionarioCedula, String uzatfuncionarioEmail, String uzatfuncionarioMovil, BigDecimal uzatfuncionarioFlag, Set uzatasigns, Set uzatinvFfs, Set uzatrols) {
        this.uzatfuncionarioId = uzatfuncionarioId;
        this.uzatfuncionarioIdbanner = uzatfuncionarioIdbanner;
        this.uzatfuncionarioNombres = uzatfuncionarioNombres;
@@ -41,8 +41,8 @@ public class Uzatfunci  implements java.io.Serializable {
        this.uzatfuncionarioMovil = uzatfuncionarioMovil;
        this.uzatfuncionarioFlag = uzatfuncionarioFlag;
        this.uzatasigns = uzatasigns;
-       this.uzatrols = uzatrols;
        this.uzatinvFfs = uzatinvFfs;
+       this.uzatrols = uzatrols;
     }
    
     public BigDecimal getUzatfuncionarioId() {
@@ -108,19 +108,19 @@ public class Uzatfunci  implements java.io.Serializable {
     public void setUzatasigns(Set uzatasigns) {
         this.uzatasigns = uzatasigns;
     }
-    public Set getUzatrols() {
-        return this.uzatrols;
-    }
-    
-    public void setUzatrols(Set uzatrols) {
-        this.uzatrols = uzatrols;
-    }
     public Set getUzatinvFfs() {
         return this.uzatinvFfs;
     }
     
     public void setUzatinvFfs(Set uzatinvFfs) {
         this.uzatinvFfs = uzatinvFfs;
+    }
+    public Set getUzatrols() {
+        return this.uzatrols;
+    }
+    
+    public void setUzatrols(Set uzatrols) {
+        this.uzatrols = uzatrols;
     }
 
 

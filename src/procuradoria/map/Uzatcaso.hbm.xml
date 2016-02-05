@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 3, 2016 11:47:40 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="procuradoria.map.Uzatcaso" table="UZATCASO" schema="ESPE">
         <id name="uzatcasoId" type="big_decimal">
@@ -27,11 +27,11 @@
         <property name="uzatcasoTipo" type="string">
             <column name="UZATCASO_TIPO" length="45" />
         </property>
-        <property name="uzatcasoFechaIn" type="date">
-            <column name="UZATCASO_FECHA_IN" length="7" />
+        <property name="uzatcasoFechaIn" type="string">
+            <column name="UZATCASO_FECHA_IN" length="20" />
         </property>
-        <property name="uzatcasoFechaOut" type="date">
-            <column name="UZATCASO_FECHA_OUT" length="7" />
+        <property name="uzatcasoFechaOut" type="string">
+            <column name="UZATCASO_FECHA_OUT" length="20" />
         </property>
         <property name="uzatcasoResolucion" type="string">
             <column name="UZATCASO_RESOLUCION" length="350" />
@@ -42,17 +42,17 @@
             </key>
             <one-to-many class="procuradoria.map.Uzatasign" />
         </set>
-        <set name="uzatinvCas" table="UZATINV_CA" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="UZATCASO_ID" precision="38" scale="0" not-null="true" />
-            </key>
-            <one-to-many class="procuradoria.map.UzatinvCa" />
-        </set>
         <set name="uzatfases" table="UZATFASE" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="UZATCASO_ID" precision="38" scale="0" not-null="true" />
             </key>
             <one-to-many class="procuradoria.map.Uzatfase" />
+        </set>
+        <set name="uzatinvCas" table="UZATINV_CA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UZATCASO_ID" precision="38" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="procuradoria.map.UzatinvCa" />
         </set>
     </class>
 </hibernate-mapping>
