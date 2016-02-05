@@ -259,7 +259,7 @@ public class ProcuradoriaCrud {
 
                 @Override
                 public ArrayList<Uzatcaso> execute(Connection cnctn) throws SQLException {
-                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPGFUNTR(?); END;");
+                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPGACTC(?); END;");
                     f1.registerOutParameter(1, OracleTypes.CURSOR);
                     f1.execute();
                     ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
