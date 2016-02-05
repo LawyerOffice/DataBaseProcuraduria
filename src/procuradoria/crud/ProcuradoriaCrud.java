@@ -252,6 +252,40 @@ public class ProcuradoriaCrud {
         return listR;
     }
 
+    public static ArrayList<Uzatcaso> getActiveCasos() {
+        ArrayList<Uzatcaso> listR = null;
+        try {
+            listR = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatcaso>>() {
+
+                @Override
+                public ArrayList<Uzatcaso> execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPGFUNTR(?); END;");
+                    f1.registerOutParameter(1, OracleTypes.CURSOR);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
+                    ArrayList<Uzatcaso> list = new ArrayList<>();
+                    while (rs.next()) {
+                        Uzatcaso caso = new Uzatcaso();
+                        caso.setUzatcasoId(rs.getBigDecimal(1));
+                        //caso.getUzatfunci().setUzatfuncionarioApellidos(rs.getString(2));
+                        caso.setUzatcasoNumcausa(rs.getString(3));
+                        caso.setUzatcasoMotivo(rs.getString(4));
+                        caso.setUzatcasoDetalle(rs.getString(5));
+                        caso.setUzatcasoTipo(rs.getString(6));
+                        caso.setUzatcasoFechaIn(rs.getString(7));
+                        list.add(caso);
+                    }
+
+                    rs.close();
+                    return list;
+                }
+            });
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+        return listR;
+    }
+
     public static Boolean insertRol(Uzatrol rol) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -289,7 +323,7 @@ public class ProcuradoriaCrud {
         Uzatfunci findFun = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        
+
         QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
         query_5.setColumnName("uzatfuncionarioCedula");
         query_5.setWhereClause("=");
@@ -298,27 +332,26 @@ public class ProcuradoriaCrud {
         query_6.setColumnName("uzatfuncionarioIdbanner");
         query_6.setWhereClause("=");
         query_6.setValue(claveFuncionario);
-        
+
         List<QueryParameter> Custadios_ = new ArrayList();
         Custadios_.add(query_5);
         Custadios_.add(query_6);
-        
+
         QueryParameter orFun_ = new QueryParameter(QueryParameter.$TYPE_OR);
         orFun_.setDetachedParameters(Custadios_);
 
         List paramList = new ArrayList();
         paramList.add(orFun_);
-        
+
         List<Uzatfunci> listfun = ds.customQuery(paramList, Uzatfunci.class);
         try {
-            if (!listfun.isEmpty()){
+            if (!listfun.isEmpty()) {
                 findFun = listfun.get(0);
             }
         } catch (Exception ex) {
             log.level.info("No se pudo buscar equipo by Id");
         }
-        
-        
+
         return findFun;
     }
 

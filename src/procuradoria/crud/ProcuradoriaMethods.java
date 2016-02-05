@@ -234,6 +234,29 @@ public class ProcuradoriaMethods {
         return listDocs;
     }
     
+     public static ArrayList<Uzatcaso> GetActiveCasos() {
+        ArrayList<Uzatcaso> listCasos = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+
+                listCasos = ProcuradoriaCrud.getActiveCasos();
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN GetActiveCasos : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listCasos;
+    }
     
     public static ArrayList<Uzatrol> GetFuncionariosTipoRolByFlag(BigDecimal UztFlag) {
         ArrayList<Uzatrol> listRol = null;
