@@ -45,6 +45,31 @@ public class ProcuradoriaMethods {
         return listTipoRol;
     }
 
+    public static Uzatasign GetActiveAbogadosByIdCaso(BigDecimal uzatcasoId) {
+        Uzatasign objAsign = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (uzatcasoId != null) {
+                objAsign = ProcuradoriaCrud.getActiveAbogadosByIdCaso(uzatcasoId);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FINDROLBYFUNCIONARIO : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return objAsign;
+    }
+
     public static ArrayList<Uzatrol> FindRolByIdFuncionario(BigDecimal uztfuncionarioId, BigDecimal uztrolFlag) {
         ArrayList<Uzatrol> listRol = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -205,10 +230,8 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
-    
+
 //Modificado por Dennis Santamaria
-    
     public static ArrayList<Uzatdocs> FindDocsbyCaso_Fase(BigDecimal uztcasoId, BigDecimal uzfaseId) {
         ArrayList<Uzatdocs> listDocs = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -233,14 +256,14 @@ public class ProcuradoriaMethods {
         }
         return listDocs;
     }
-    
-     public static ArrayList<Uzatcaso> GetActiveCasos() {
+
+    public static ArrayList<Uzatcaso> GetActiveCasos() {
         ArrayList<Uzatcaso> listCasos = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
 
-                listCasos = ProcuradoriaCrud.getActiveCasos();
+            listCasos = ProcuradoriaCrud.getActiveCasos();
 
         } catch (Exception ex) {
             log.level.error("ERROR EN GetActiveCasos : ");
@@ -257,7 +280,7 @@ public class ProcuradoriaMethods {
         }
         return listCasos;
     }
-    
+
     public static ArrayList<Uzatrol> GetFuncionariosTipoRolByFlag(BigDecimal UztFlag) {
         ArrayList<Uzatrol> listRol = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -282,7 +305,7 @@ public class ProcuradoriaMethods {
         }
         return listRol;
     }
-    
+
     public static Boolean InsertRol(Uzatrol rol) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -306,7 +329,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Boolean UpdateRol(Uzatrol rol) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -330,7 +353,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Boolean InserFuncionario(Uzatfunci fun) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -354,13 +377,13 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Uzatfunci FindFuncionarioByCedulaOrIdBanner(String claveFuncionario) {
         Uzatfunci findFun = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-            if (claveFuncionario !=  null) {
+            if (claveFuncionario != null) {
                 findFun = ProcuradoriaCrud.findFuncionarioByCedulaOrIdBanner(claveFuncionario);
             }
 

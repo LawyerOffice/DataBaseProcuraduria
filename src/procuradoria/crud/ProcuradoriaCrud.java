@@ -215,6 +215,40 @@ public class ProcuradoriaCrud {
     /*
      BEGIN UZAPGFUNTR(?,?,?,?,?); END;
      */
+    public static Uzatasign getActiveAbogadosByIdCaso(final BigDecimal UztIdCaso) {
+        Uzatasign listR = null;
+        try {
+            listR = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<Uzatasign>() {
+
+                @Override
+                public Uzatasign execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPGACTCA(?,?); END;");
+                    f1.setBigDecimal(1, UztIdCaso);
+                    f1.registerOutParameter(2, OracleTypes.CURSOR);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(2);
+                    Uzatasign list = new Uzatasign();
+                    while (rs.next()) {
+                        list.getUzatfunci().setUzatfuncionarioId(rs.getBigDecimal(1));
+                        list.getUzatfunci().setUzatfuncionarioIdbanner(rs.getString(2));
+                        list.getUzatfunci().setUzatfuncionarioCedula(rs.getString(3));
+                        list.getUzatfunci().setUzatfuncionarioNombres(rs.getString(4));
+                        list.getUzatfunci().setUzatfuncionarioApellidos(rs.getString(5));
+                        list.getUzatfunci().setUzatfuncionarioEmail(rs.getString(6));
+                        list.getUzatfunci().setUzatfuncionarioMovil(rs.getString(7));
+                        list.setUzatasignarFechaIn(rs.getString(8));
+                        list.setUzatasignarMotivo(rs.getString(9));
+                    }
+                    rs.close();
+                    return list;
+                }
+            });
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+        return listR;
+    }
+
     public static ArrayList<Uzatrol> getFuncionariosTipoRolByFlag(final BigDecimal UztFlag) {
         ArrayList<Uzatrol> listR = null;
         try {
