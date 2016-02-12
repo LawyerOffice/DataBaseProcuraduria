@@ -94,6 +94,31 @@ public class ProcuradoriaMethods {
         }
         return listRol;
     }
+    
+    public static ArrayList<Uzatrol> FindRolsAndFuciByFlag(BigDecimal uztrolFlag) {
+        ArrayList<Uzatrol> listRol = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (uztrolFlag != null) {
+                listRol = ProcuradoriaCrud.findRolsAndFuciByFlag(uztrolFlag);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN >>> : "+ex.getMessage());
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listRol;
+    }
 
     public static ArrayList<Uzatfunci> ListFuncionarios(BigDecimal uztfuncionarioFlag) {
         ArrayList<Uzatfunci> listFuncionarios = null;

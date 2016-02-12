@@ -72,6 +72,43 @@ public class ProcuradoriaCrud {
         }
         return listRol;
     }
+    
+    public static ArrayList<Uzatrol> findRolsAndFuciByFlag(BigDecimal uztrolFlag) {
+        ArrayList<Uzatrol> listRol = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        QueryParameter joinfunci = new QueryParameter(QueryParameter.$TYPE_JOIN);
+        joinfunci.setJoinAlias("uzatfunci");
+        joinfunci.setJoinOrderNumber(1);
+        joinfunci.setColumnName("uzatfunci");
+        
+        QueryParameter jointrol = new QueryParameter(QueryParameter.$TYPE_JOIN);
+        joinfunci.setJoinAlias("uzattrol");
+        joinfunci.setJoinOrderNumber(2);
+        joinfunci.setColumnName("uzattrol");
+        
+        //uztrolFlag
+        QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_2.setColumnName("uzatrolFlag");
+        query_2.setWhereClause("=");
+        query_2.setValue(uztrolFlag);
+        
+        List parameList = new ArrayList();
+        parameList.add(joinfunci);
+        parameList.add(jointrol);
+        parameList.add(query_2);
+      
+        
+        List<Uzatrol> list = ds.customQuery(parameList, Uzatrol.class);
+        try {
+            if (!list.isEmpty()) {
+                listRol = (ArrayList<Uzatrol>) list;
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR  LISTROL : " + ex.toString());
+        }
+        return listRol;
+    }
 
     public static ArrayList<Uzatfunci> listFuncionarios(BigDecimal uztfuncionarioFlag) {
         ArrayList<Uzatfunci> listFuncionario = null;
