@@ -252,6 +252,47 @@ public class ProcuradoriaCrud {
     /*
      BEGIN UZAPGFUNTR(?,?,?,?,?); END;
      */
+    public static ArrayList<Uzatcomt> getFasesComentByIdCaso(final BigDecimal UztIdCaso) {
+        ArrayList<Uzatcomt> listR = null;
+        try {
+            listR = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatcomt>>() {
+
+                @Override
+                public ArrayList<Uzatcomt> execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPGFACBI(?,?); END;");
+                    f1.setBigDecimal(1, UztIdCaso);
+                    f1.registerOutParameter(2, OracleTypes.CURSOR);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(2);
+                    ArrayList<Uzatcomt> list = new ArrayList<>();
+                    while (rs.next()) {
+                        Uzatcomt ComtFase = new Uzatcomt();
+                        ComtFase.getId().setUzatfaseId(rs.getBigDecimal(1));
+                        ComtFase.getUzatfase().getId().setUzatfaseId(rs.getBigDecimal(1));
+                        ComtFase.getUzatfase().setUzatfaseFlag(rs.getBigDecimal(2));
+                        ComtFase.getUzatfase().setUzatfaseNumfase(rs.getBigDecimal(3));
+                        ComtFase.getUzatfase().setUzatfaseNombre(rs.getString(4));
+                        ComtFase.getUzatfase().setUzatfaseFechaIn(rs.getString(5));
+                        
+                        if(rs.getBigDecimal(2)==BigDecimal.ZERO) ComtFase.getUzatfase().setUzatfaseFechaOut(rs.getString(6));
+                        else ComtFase.getUzatfase().setUzatfaseFechaOut("-");
+                        
+                        ComtFase.getId().setUzatcomtId(rs.getBigDecimal(7));
+                        ComtFase.setUzatcomtDescripcion(rs.getString(8));
+                        ComtFase.setUzatcomtFecha(rs.getString(9));
+                        list.add(ComtFase);
+                    }
+                    rs.close();
+                    return list;
+                }
+
+            });
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+        return listR;
+    }
+    
     public static Uzatasign getActiveAbogadosByIdCaso(final BigDecimal UztIdCaso) {
         Uzatasign listR = null;
         try {

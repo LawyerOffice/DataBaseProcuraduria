@@ -45,6 +45,31 @@ public class ProcuradoriaMethods {
         return listTipoRol;
     }
 
+        public static ArrayList<Uzatcomt> GetFasesComentByIdCaso(BigDecimal uzatcasoId) {
+        ArrayList<Uzatcomt> objFasesComent = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (uzatcasoId != null) {
+                objFasesComent = ProcuradoriaCrud.getFasesComentByIdCaso(uzatcasoId);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FINDFASESANDCOMTBYIDCASO : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return objFasesComent;
+    }
+    
     public static Uzatasign GetActiveAbogadosByIdCaso(BigDecimal uzatcasoId) {
         Uzatasign objAsign = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
