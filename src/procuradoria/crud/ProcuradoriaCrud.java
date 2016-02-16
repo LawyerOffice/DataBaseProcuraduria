@@ -194,7 +194,7 @@ public class ProcuradoriaCrud {
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_1.setColumnName("uztcasoFlag");
+        query_1.setColumnName("uzatcasoFlag");
         query_1.setWhereClause("=");
         query_1.setValue(uztcasoFlag);
         List parameList = new ArrayList();

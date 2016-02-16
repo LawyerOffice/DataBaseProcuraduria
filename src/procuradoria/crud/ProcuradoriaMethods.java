@@ -242,7 +242,7 @@ public class ProcuradoriaMethods {
         try {
             listCasos = ProcuradoriaCrud.listCasosByFlag(uztcasoFlag);
         } catch (Exception ex) {
-            log.level.error("ERROR EN LISTTIPOROL : ");
+            log.level.error("ERROR EN LISTCASOBYFLAG : ");
             delegateException = ex;
         } finally {
             hss.close();
