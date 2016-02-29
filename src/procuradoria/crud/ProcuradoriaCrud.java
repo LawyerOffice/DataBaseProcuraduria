@@ -293,17 +293,18 @@ public class ProcuradoriaCrud {
         return listR;
     }
     
-    public static ArrayList<Uzatcita> getCitasCalendar() {
+    public static ArrayList<Uzatcita> getCitasCalendar(final String FechaActual) {
         ArrayList<Uzatcita> listR = null;
         try {
             listR = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatcita>>() {
 
                 @Override
                 public ArrayList<Uzatcita> execute(Connection cnctn) throws SQLException {
-                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPCITCAL(?); END;");
-                    f1.registerOutParameter(1, OracleTypes.CURSOR);
+                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPCITGEN(?,?); END;");
+                    f1.setString(1, FechaActual);
+                    f1.registerOutParameter(2, OracleTypes.CURSOR);
                     f1.execute();
-                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(2);
                     ArrayList<Uzatcita> list = new ArrayList<>();
                     while (rs.next()) {
                         Uzatcita Cita = new Uzatcita();

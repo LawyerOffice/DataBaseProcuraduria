@@ -45,12 +45,12 @@ public class ProcuradoriaMethods {
         return listTipoRol;
     }
 
-    public static ArrayList<Uzatcita> GetCitasCalendar() {
+    public static ArrayList<Uzatcita> GetCitasCalendar(String FechaActual) {
         ArrayList<Uzatcita> listCitas = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-                listCitas = ProcuradoriaCrud.getCitasCalendar();
+                listCitas = ProcuradoriaCrud.getCitasCalendar(FechaActual);
         } catch (Exception ex) {
             log.level.error("ERROR EN GETCITASCALENDAR : ");
             delegateException = ex;
