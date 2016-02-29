@@ -188,7 +188,7 @@ public class ProcuradoriaCrud {
         }
         return listJudicaturas;
     }
-
+    
     public static ArrayList<Uzatcaso> listCasosByFlag(BigDecimal uztcasoFlag) {
         ArrayList<Uzatcaso> listCasos = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -281,6 +281,48 @@ public class ProcuradoriaCrud {
                         ComtFase.setUzatcomtDescripcion(rs.getString(8));
                         ComtFase.setUzatcomtFecha(rs.getString(9));
                         list.add(ComtFase);
+                    }
+                    rs.close();
+                    return list;
+                }
+
+            });
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+        return listR;
+    }
+    
+    public static ArrayList<Uzatcita> getCitasCalendar() {
+        ArrayList<Uzatcita> listR = null;
+        try {
+            listR = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatcita>>() {
+
+                @Override
+                public ArrayList<Uzatcita> execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPCITCAL(?); END;");
+                    f1.registerOutParameter(1, OracleTypes.CURSOR);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
+                    ArrayList<Uzatcita> list = new ArrayList<>();
+                    while (rs.next()) {
+                        Uzatcita Cita = new Uzatcita();
+                        Cita.getId().setUzatcitaId(rs.getBigDecimal(1));
+                        Cita.getId().setUzatfaseId(rs.getBigDecimal(2));
+                        Cita.getUzatfase().getId().setUzatfaseId(rs.getBigDecimal(2));
+                        Cita.getId().setUzatcasoId(rs.getBigDecimal(3));
+                        Cita.getUzatfase().getId().setUzatcasoId(rs.getBigDecimal(3));
+                        Cita.getUzatfase().getUzatcaso().setUzatcasoId(rs.getBigDecimal(3));
+                        Cita.getUzatfase().getUzatcaso().setUzatcasoNumcausa(rs.getString(4));
+                        Cita.setUzatcitaFecha(rs.getString(5));
+                        Cita.setUzatcitaSala(rs.getString(6));
+                        Cita.getUzatfase().getUzatcaso().getUzatjudi().getId().setUzatjudiId(rs.getBigDecimal(7));
+                        Cita.getUzatfase().getUzatcaso().getUzatjudi().setUzatjudiDescripcion(rs.getString(8));
+                        Cita.getUzatfase().getUzatcaso().getUzatjudi().getId().setUzatmateriaId(rs.getBigDecimal(9));
+                        Cita.getUzatfase().getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaId(rs.getBigDecimal(9));
+                        Cita.getUzatfase().getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaDescripcion(rs.getString(10));
+
+                        list.add(Cita);
                     }
                     rs.close();
                     return list;

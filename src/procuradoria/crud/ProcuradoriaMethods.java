@@ -45,7 +45,29 @@ public class ProcuradoriaMethods {
         return listTipoRol;
     }
 
-        public static ArrayList<Uzatcomt> GetFasesComentByIdCaso(BigDecimal uzatcasoId) {
+    public static ArrayList<Uzatcita> GetCitasCalendar() {
+        ArrayList<Uzatcita> listCitas = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+                listCitas = ProcuradoriaCrud.getCitasCalendar();
+        } catch (Exception ex) {
+            log.level.error("ERROR EN GETCITASCALENDAR : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listCitas;
+    }
+
+    public static ArrayList<Uzatcomt> GetFasesComentByIdCaso(BigDecimal uzatcasoId) {
         ArrayList<Uzatcomt> objFasesComent = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
@@ -69,7 +91,7 @@ public class ProcuradoriaMethods {
         }
         return objFasesComent;
     }
-    
+
     public static Uzatasign GetActiveAbogadosByIdCaso(BigDecimal uzatcasoId) {
         Uzatasign objAsign = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -119,7 +141,7 @@ public class ProcuradoriaMethods {
         }
         return listRol;
     }
-    
+
     public static ArrayList<Uzatrol> FindRolsAndFuciByFlag(BigDecimal uztrolFlag) {
         ArrayList<Uzatrol> listRol = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -130,7 +152,7 @@ public class ProcuradoriaMethods {
             }
 
         } catch (Exception ex) {
-            log.level.error("ERROR EN >>> : "+ex.getMessage());
+            log.level.error("ERROR EN >>> : " + ex.getMessage());
             delegateException = ex;
         } finally {
             hss.close();
