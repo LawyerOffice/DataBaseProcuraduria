@@ -77,16 +77,18 @@ public class ProcuradoriaCrud {
         ArrayList<Uzatrol> listRol = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
+        
         QueryParameter joinfunci = new QueryParameter(QueryParameter.$TYPE_JOIN);
         joinfunci.setJoinAlias("uzatfunci");
         joinfunci.setJoinOrderNumber(1);
         joinfunci.setColumnName("uzatfunci");
+//        joinfunci.setj
         
         QueryParameter jointrol = new QueryParameter(QueryParameter.$TYPE_JOIN);
-        joinfunci.setJoinAlias("uzattrol");
-        joinfunci.setJoinOrderNumber(2);
-        joinfunci.setColumnName("uzattrol");
-        
+        jointrol.setJoinAlias("uzattrol");
+        jointrol.setJoinOrderNumber(2);
+        jointrol.setColumnName("uzattrol");
+          
         //uztrolFlag
         QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
         query_2.setColumnName("uzatrolFlag");
@@ -95,7 +97,7 @@ public class ProcuradoriaCrud {
         
         List parameList = new ArrayList();
         parameList.add(joinfunci);
-        parameList.add(jointrol);
+        //parameList.add(jointrol);
         parameList.add(query_2);
       
         

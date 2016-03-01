@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0
+// Generated Mar 1, 2016 11:18:31 AM by Hibernate Tools 3.6.0
 
 
 
@@ -13,6 +13,7 @@ public class UzatinvCa  implements java.io.Serializable {
      private Uzatcaso uzatcaso;
      private Uzatactor uzatactor;
      private String uzatinvolCa;
+     private String uzatinvTipo;
 
     public UzatinvCa() {
         this.id = new UzatinvCaId();
@@ -26,11 +27,12 @@ public class UzatinvCa  implements java.io.Serializable {
         this.uzatcaso = uzatcaso;
         this.uzatactor = uzatactor;
     }
-    public UzatinvCa(UzatinvCaId id, Uzatcaso uzatcaso, Uzatactor uzatactor, String uzatinvolCa) {
+    public UzatinvCa(UzatinvCaId id, Uzatcaso uzatcaso, Uzatactor uzatactor, String uzatinvolCa, String uzatinvTipo) {
        this.id = id;
        this.uzatcaso = uzatcaso;
        this.uzatactor = uzatactor;
        this.uzatinvolCa = uzatinvolCa;
+       this.uzatinvTipo = uzatinvTipo;
     }
    
     public UzatinvCaId getId() {
@@ -60,6 +62,13 @@ public class UzatinvCa  implements java.io.Serializable {
     
     public void setUzatinvolCa(String uzatinvolCa) {
         this.uzatinvolCa = uzatinvolCa;
+    }
+    public String getUzatinvTipo() {
+        return this.uzatinvTipo;
+    }
+    
+    public void setUzatinvTipo(String uzatinvTipo) {
+        this.uzatinvTipo = uzatinvTipo;
     }
 
 

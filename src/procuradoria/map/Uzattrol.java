@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Feb 5, 2016 12:46:40 PM by Hibernate Tools 3.6.0
+// Generated Mar 1, 2016 11:18:31 AM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -18,7 +18,6 @@ public class Uzattrol  implements java.io.Serializable {
      private Set uzatrols = new HashSet(0);
 
     public Uzattrol() {
-        this.uzattiporolId = new BigDecimal(BigInteger.ONE);
         this.uzattiporolId = new BigDecimal(BigInteger.ONE);
     }
 
