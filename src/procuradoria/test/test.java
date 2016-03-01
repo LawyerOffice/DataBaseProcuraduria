@@ -46,7 +46,8 @@ public class test {
 //        ArrayList<Uztrol> rols = ProcuradoriaMethods.GetFuncionariosTipoRolByFlag(BigDecimal.ONE);
 //        System.out.println(">> "+rols.size());
         
+        ArrayList<Uzatrol>  list  = ProcuradoriaMethods.FindRolsAndFuciByFlag(BigDecimal.ONE);
+        System.out.println(">> "+list.get(0).getUzatfunci().getUzatfuncionarioNombres());
     }
-    
     
 }

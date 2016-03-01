@@ -97,7 +97,7 @@ public class ProcuradoriaCrud {
         
         List parameList = new ArrayList();
         parameList.add(joinfunci);
-        //parameList.add(jointrol);
+        parameList.add(jointrol);
         parameList.add(query_2);
       
         
@@ -110,6 +110,49 @@ public class ProcuradoriaCrud {
             log.level.info("ERROR  LISTROL : " + ex.toString());
         }
         return listRol;
+    }
+    
+    public static ArrayList<Uzatrol> getTimeRealReport(final BigDecimal uzatflag) {
+        ArrayList<Uzatrol> listDzts = null;
+        try {
+            listDzts = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatrol>>() {
+
+                @Override
+                public ArrayList<Uzatrol> execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall(" { ? = call uzafasgfr(?) } ");
+                    f1.registerOutParameter(1, OracleTypes.CURSOR);
+                    f1.setBigDecimal(2, uzatflag);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
+                    ArrayList<Uzatrol> list = new ArrayList<>();
+                    while (rs.next()) {
+                        Uzatrol rol = new Uzatrol();
+                        rol.getId().setUzatfuncionarioId(rs.getBigDecimal(1));
+                        rol.getId().setUzatrolId(rs.getBigDecimal(2));
+                        rol.getId().setUzattiporolId(rs.getBigDecimal(3));
+                        rol.getUzatfunci().setUzatfuncionarioId(rs.getBigDecimal(1));
+                        rol.getUzatfunci().setUzatfuncionarioNombres(rs.getString(4));
+                        rol.getUzatfunci().setUzatfuncionarioApellidos(rs.getString(5));
+                        rol.getUzatfunci().setUzatfuncionarioIdbanner(rs.getString(6));
+                        rol.getUzatfunci().setUzatfuncionarioCedula(rs.getString(7));
+                        rol.getUzatfunci().setUzatfuncionarioEmail(rs.getString(8));
+                        rol.setUzatrolFechaIn(rs.getString(9));
+                        rol.getUzattrol().setUzattiporolId(rs.getBigDecimal(3));
+                        rol.getUzattrol().setUzattiporolDescripcion(rs.getString(10));
+                        list.add(rol);
+                    }
+                    rs.close();
+                    rs = null;
+
+                    return list;
+                }
+            });
+
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+
+        return listDzts;
     }
 
     public static ArrayList<Uzatfunci> listFuncionarios(BigDecimal uztfuncionarioFlag) {
