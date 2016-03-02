@@ -548,5 +548,80 @@ public class ProcuradoriaMethods {
             }
         }
         return listJudi;
-    }             
+    }  
+     
+    public static Uzatfunci FindFuncionarioByCedula(String cedula) {
+        Uzatfunci findFun = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (cedula != null) {
+                findFun = ProcuradoriaCrud.findFuncionarioByCedula(cedula);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FindFuncionarioByCedula : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findFun;
+    }     
+    
+    
+    public static Uzatcaso FindCasobyNumCausa(String numcausa) {
+        Uzatcaso findCaso = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (numcausa != null) {
+                findCaso = ProcuradoriaCrud.findCasobyNumCausa(numcausa);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN getCasobyNumCausa : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findCaso;
+    }    
+     
+    public static Boolean InsertNuevaAsignacion(Uzatasign asign) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (asign != null) {
+                exito = ProcuradoriaCrud.insertNuevaAsignacion(asign);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN InsertNuevaAsignacion : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
 }

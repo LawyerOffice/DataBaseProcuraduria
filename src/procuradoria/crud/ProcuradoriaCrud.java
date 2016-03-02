@@ -574,5 +574,78 @@ public class ProcuradoriaCrud {
         }
         return listJudi.get(0);
     }
+    
+    public static Uzatfunci findFuncionarioByCedula(String cedula) {
+        Uzatfunci findFun = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_5.setColumnName("uzatfuncionarioCedula");
+        query_5.setWhereClause("=");
+        query_5.setValue(cedula);
+
+        List<QueryParameter> Custadios_ = new ArrayList();
+        Custadios_.add(query_5);
+
+        QueryParameter orFun_ = new QueryParameter(QueryParameter.$TYPE_OR);
+        orFun_.setDetachedParameters(Custadios_);
+
+        List paramList = new ArrayList();
+        paramList.add(orFun_);
+
+        List<Uzatfunci> listfun = ds.customQuery(paramList, Uzatfunci.class);
+        try {
+            if (!listfun.isEmpty()) {
+                findFun = listfun.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo buscar equipo by Id");
+        }
+
+        return findFun;
+    } 
+    
+    public static Uzatcaso findCasobyNumCausa(String NumCausa) {
+        Uzatcaso findCaso = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_5.setColumnName("uzatcasoNumcausa");
+        query_5.setWhereClause("=");
+        query_5.setValue(NumCausa);
+
+        List<QueryParameter> Custadios_ = new ArrayList();
+        Custadios_.add(query_5);
+
+        QueryParameter orFun_ = new QueryParameter(QueryParameter.$TYPE_OR);
+        orFun_.setDetachedParameters(Custadios_);
+
+        List paramList = new ArrayList();
+        paramList.add(orFun_);
+
+        List<Uzatcaso> listfun = ds.customQuery(paramList, Uzatcaso.class);
+        try {
+            if (!listfun.isEmpty()) {
+                findCaso = listfun.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo buscar caso por numero de causa");
+        }
+
+        return findCaso;
+    }
+    
+        public static Boolean insertNuevaAsignacion(Uzatasign asign) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (asign != null) {
+            ds.save(asign);
+            exito = true;
+        }
+        return exito;
+    }
 }
 
