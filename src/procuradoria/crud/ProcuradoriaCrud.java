@@ -72,7 +72,7 @@ public class ProcuradoriaCrud {
         }
         return listRol;
     }
-        
+
     public static ArrayList<Uzatrol> getAsigFunciRol(final BigDecimal uzatflag) {
         ArrayList<Uzatrol> listDzts = null;
         try {
@@ -192,7 +192,7 @@ public class ProcuradoriaCrud {
         }
         return listJudicaturas;
     }
-    
+
     public static ArrayList<Uzatcaso> listCasosByFlag(BigDecimal uztcasoFlag) {
         ArrayList<Uzatcaso> listCasos = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -277,10 +277,13 @@ public class ProcuradoriaCrud {
                         ComtFase.getUzatfase().setUzatfaseNumfase(rs.getBigDecimal(3));
                         ComtFase.getUzatfase().setUzatfaseNombre(rs.getString(4));
                         ComtFase.getUzatfase().setUzatfaseFechaIn(rs.getString(5));
-                        
-                        if(rs.getBigDecimal(2)==BigDecimal.ZERO) ComtFase.getUzatfase().setUzatfaseFechaOut(rs.getString(6));
-                        else ComtFase.getUzatfase().setUzatfaseFechaOut("-");
-                        
+
+                        if (rs.getBigDecimal(2) == BigDecimal.ZERO) {
+                            ComtFase.getUzatfase().setUzatfaseFechaOut(rs.getString(6));
+                        } else {
+                            ComtFase.getUzatfase().setUzatfaseFechaOut("-");
+                        }
+
                         ComtFase.getId().setUzatcomtId(rs.getBigDecimal(7));
                         ComtFase.setUzatcomtDescripcion(rs.getString(8));
                         ComtFase.setUzatcomtFecha(rs.getString(9));
@@ -296,7 +299,7 @@ public class ProcuradoriaCrud {
         }
         return listR;
     }
-    
+
     public static ArrayList<Uzatcita> getCitasCalendar(final String FechaActual) {
         ArrayList<Uzatcita> listR = null;
         try {
@@ -339,7 +342,7 @@ public class ProcuradoriaCrud {
         }
         return listR;
     }
-    
+
     public static Uzatasign getActiveAbogadosByIdCaso(final BigDecimal UztIdCaso) {
         Uzatasign listR = null;
         try {
@@ -477,7 +480,7 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
+
     public static Boolean insertCaso(Uzatcaso caso) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -533,7 +536,7 @@ public class ProcuradoriaCrud {
         query_1.setColumnName("id.uzatmateriaId");
         query_1.setWhereClause("=");
         query_1.setValue(uzatmateriaid);
-        
+
         List parameList = new ArrayList();
         parameList.add(query_1);
         List<Uzatjudi> list = ds.customQuery(parameList, Uzatjudi.class);
@@ -546,7 +549,7 @@ public class ProcuradoriaCrud {
         }
         return listJudi;
     }
-    
+
     public static Uzatjudi findJudi(BigDecimal uzatmateriaid, BigDecimal uzatjudiid) {
         ArrayList<Uzatjudi> listJudi = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -555,12 +558,12 @@ public class ProcuradoriaCrud {
         query_1.setColumnName("id.uzatmateriaId");
         query_1.setWhereClause("=");
         query_1.setValue(uzatmateriaid);
-        
+
         QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
         query_2.setColumnName("id.uzatjudiId");
         query_2.setWhereClause("=");
         query_2.setValue(uzatjudiid);
-        
+
         List parameList = new ArrayList();
         parameList.add(query_1);
         parameList.add(query_2);
@@ -574,7 +577,7 @@ public class ProcuradoriaCrud {
         }
         return listJudi.get(0);
     }
-    
+
     public static Uzatfunci findFuncionarioByCedula(String cedula) {
         Uzatfunci findFun = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -604,8 +607,74 @@ public class ProcuradoriaCrud {
         }
 
         return findFun;
-    } 
-    
+    }
+
+    public static Number getCountCasosByFlag(final BigDecimal uzatflag) {
+        Number listDzts = null;
+        try {
+            listDzts = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<Number>() {
+
+                @Override
+                public Number execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFCOUNCA(?) } ");
+                    f1.registerOutParameter(1, OracleTypes.CURSOR);
+                    f1.setBigDecimal(2, uzatflag);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
+                    Number list = null;
+                    while (rs.next()) {
+                        list = rs.getBigDecimal(1);
+                    }
+                    rs.close();
+                    rs = null;
+
+                    return list;
+                }
+            });
+
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+
+        return listDzts;
+    }
+
+    public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal Flag, int first, int pageSize) {
+        ArrayList<Uzatcaso> findCaso = new ArrayList<>();
+        Number contador = getCountCasosByFlag(Flag);
+
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_5.setColumnName("uzatcasoFlag");
+        query_5.setWhereClause("=");
+        query_5.setValue(Flag);
+
+        List paramList = new ArrayList();
+        paramList.add(query_5);
+
+        List<Uzatcaso> listfun = ds.customQueryLazy(paramList, Uzatcaso.class, first, pageSize);
+
+        try {
+            if (!listfun.isEmpty()) {
+
+                Uzatcaso objCaso = new Uzatcaso();
+                for (int i = 0; i < contador.intValue(); i++) {
+                    findCaso.add(objCaso);
+                }
+
+                for (int y = first,z=0; y < listfun.size(); y++,z++) {
+                    findCaso.set(y, listfun.get(z));
+                }
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo encontrar casos disponibles.");
+        }
+
+        return findCaso;
+    }
+
     public static Uzatcaso findCasobyNumCausa(String NumCausa) {
         Uzatcaso findCaso = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -636,8 +705,8 @@ public class ProcuradoriaCrud {
 
         return findCaso;
     }
-    
-        public static Boolean insertNuevaAsignacion(Uzatasign asign) {
+
+    public static Boolean insertNuevaAsignacion(Uzatasign asign) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -648,4 +717,3 @@ public class ProcuradoriaCrud {
         return exito;
     }
 }
-
