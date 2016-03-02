@@ -142,13 +142,13 @@ public class ProcuradoriaMethods {
         return listRol;
     }
 
-    public static ArrayList<Uzatrol> FindRolsAndFuciByFlag(BigDecimal uztrolFlag) {
+    public static ArrayList<Uzatrol> GetAsigFunciRol(BigDecimal uztrolFlag) {
         ArrayList<Uzatrol> listRol = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
             if (uztrolFlag != null) {
-                listRol = ProcuradoriaCrud.findRolsAndFuciByFlag(uztrolFlag);
+                listRol = ProcuradoriaCrud.getAsigFunciRol(uztrolFlag);
             }
 
         } catch (Exception ex) {

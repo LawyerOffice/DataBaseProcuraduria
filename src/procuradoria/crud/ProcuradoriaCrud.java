@@ -72,47 +72,8 @@ public class ProcuradoriaCrud {
         }
         return listRol;
     }
-    
-    public static ArrayList<Uzatrol> findRolsAndFuciByFlag(BigDecimal uztrolFlag) {
-        ArrayList<Uzatrol> listRol = null;
-        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
-                getSessionFactory().getCurrentSession());
         
-        QueryParameter joinfunci = new QueryParameter(QueryParameter.$TYPE_JOIN);
-        joinfunci.setJoinAlias("uzatfunci");
-        joinfunci.setJoinOrderNumber(1);
-        joinfunci.setColumnName("uzatfunci");
-//        joinfunci.setj
-        
-        QueryParameter jointrol = new QueryParameter(QueryParameter.$TYPE_JOIN);
-        jointrol.setJoinAlias("uzattrol");
-        jointrol.setJoinOrderNumber(2);
-        jointrol.setColumnName("uzattrol");
-          
-        //uztrolFlag
-        QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_2.setColumnName("uzatrolFlag");
-        query_2.setWhereClause("=");
-        query_2.setValue(uztrolFlag);
-        
-        List parameList = new ArrayList();
-        parameList.add(joinfunci);
-        parameList.add(jointrol);
-        parameList.add(query_2);
-      
-        
-        List<Uzatrol> list = ds.customQuery(parameList, Uzatrol.class);
-        try {
-            if (!list.isEmpty()) {
-                listRol = (ArrayList<Uzatrol>) list;
-            }
-        } catch (Exception ex) {
-            log.level.info("ERROR  LISTROL : " + ex.toString());
-        }
-        return listRol;
-    }
-    
-    public static ArrayList<Uzatrol> getTimeRealReport(final BigDecimal uzatflag) {
+    public static ArrayList<Uzatrol> getAsigFunciRol(final BigDecimal uzatflag) {
         ArrayList<Uzatrol> listDzts = null;
         try {
             listDzts = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatrol>>() {
@@ -130,14 +91,12 @@ public class ProcuradoriaCrud {
                         rol.getId().setUzatfuncionarioId(rs.getBigDecimal(1));
                         rol.getId().setUzatrolId(rs.getBigDecimal(2));
                         rol.getId().setUzattiporolId(rs.getBigDecimal(3));
-                        rol.getUzatfunci().setUzatfuncionarioId(rs.getBigDecimal(1));
                         rol.getUzatfunci().setUzatfuncionarioNombres(rs.getString(4));
                         rol.getUzatfunci().setUzatfuncionarioApellidos(rs.getString(5));
                         rol.getUzatfunci().setUzatfuncionarioIdbanner(rs.getString(6));
                         rol.getUzatfunci().setUzatfuncionarioCedula(rs.getString(7));
                         rol.getUzatfunci().setUzatfuncionarioEmail(rs.getString(8));
                         rol.setUzatrolFechaIn(rs.getString(9));
-                        rol.getUzattrol().setUzattiporolId(rs.getBigDecimal(3));
                         rol.getUzattrol().setUzattiporolDescripcion(rs.getString(10));
                         list.add(rol);
                     }
