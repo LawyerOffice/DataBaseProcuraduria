@@ -303,6 +303,30 @@ public class ProcuradoriaMethods {
         return exito;
     }
 
+    public static Boolean InsertCaso(Uzatcaso caso) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (caso != null) {
+                exito = ProcuradoriaCrud.insertCaso(caso);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN Insert CASO : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+        
 //Modificado por Dennis Santamaria
     public static ArrayList<Uzatdocs> FindDocsbyCaso_Fase(BigDecimal uztcasoId, BigDecimal uzfaseId) {
         ArrayList<Uzatdocs> listDocs = null;
@@ -474,4 +498,55 @@ public class ProcuradoriaMethods {
         }
         return findFun;
     }
+    
+    
+     public static ArrayList<Uzatjudi> findjudibyMateriId(BigDecimal uzatmateriaId) {
+        ArrayList<Uzatjudi> listJudi = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (uzatmateriaId != null) {
+                listJudi = ProcuradoriaCrud.findjudibyMateriId(uzatmateriaId);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN findjudibyMateriId : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listJudi;
+    }
+         
+     public static Uzatjudi findjudi(BigDecimal uzatmateriaId, BigDecimal uzatjudiId) {
+        Uzatjudi listJudi = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (uzatmateriaId != null) {
+                listJudi = ProcuradoriaCrud.findJudi(uzatmateriaId,uzatjudiId);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN findjudi : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listJudi;
+    }             
 }

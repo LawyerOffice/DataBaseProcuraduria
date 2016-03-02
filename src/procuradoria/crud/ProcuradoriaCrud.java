@@ -518,6 +518,17 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
+    
+    public static Boolean insertCaso(Uzatcaso caso) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (caso != null) {
+            ds.save(caso);
+            exito = true;
+        }
+        return exito;
+    }
 
     public static Uzatfunci findFuncionarioByCedulaOrIdBanner(String claveFuncionario) {
         Uzatfunci findFun = null;
@@ -555,4 +566,54 @@ public class ProcuradoriaCrud {
         return findFun;
     }
 
+    public static ArrayList<Uzatjudi> findjudibyMateriId(BigDecimal uzatmateriaid) {
+        ArrayList<Uzatjudi> listJudi = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("id.uzatmateriaId");
+        query_1.setWhereClause("=");
+        query_1.setValue(uzatmateriaid);
+        
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        List<Uzatjudi> list = ds.customQuery(parameList, Uzatjudi.class);
+        try {
+            if (!list.isEmpty()) {
+                listJudi = (ArrayList<Uzatjudi>) list;
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR  LISTJUDI : " + ex.toString());
+        }
+        return listJudi;
+    }
+    
+    public static Uzatjudi findJudi(BigDecimal uzatmateriaid, BigDecimal uzatjudiid) {
+        ArrayList<Uzatjudi> listJudi = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("id.uzatmateriaId");
+        query_1.setWhereClause("=");
+        query_1.setValue(uzatmateriaid);
+        
+        QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_2.setColumnName("id.uzatjudiId");
+        query_2.setWhereClause("=");
+        query_2.setValue(uzatjudiid);
+        
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        parameList.add(query_2);
+        List<Uzatjudi> list = ds.customQuery(parameList, Uzatjudi.class);
+        try {
+            if (!list.isEmpty()) {
+                listJudi = (ArrayList<Uzatjudi>) list;
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR  LISTJUDI : " + ex.toString());
+        }
+        return listJudi.get(0);
+    }
 }
+

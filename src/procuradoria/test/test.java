@@ -34,8 +34,8 @@ public class test {
 //        ArrayList<Uztmateria> lis4 = ProcuradoriaMethods.ListMaterias();
 //        System.out.println(">> "+lis4.size());
 //        
-//        ArrayList<Uztjudi> list5 = ProcuradoriaMethods.listJudicaturas(new BigDecimal(101));
-//        System.out.println(">> "+list5.size());
+//        Uzatjudi list5 = ProcuradoriaMethods.findjudi(new BigDecimal(100), new BigDecimal(100));
+//        System.out.println(">> "+list5.getUzatjudiDescripcion());
 //        
 //        ArrayList<Uztcaso> list6 = ProcuradoriaMethods.ListCasosByFlag(BigDecimal.ZERO);
 //        System.out.println(">> "+list6);    
