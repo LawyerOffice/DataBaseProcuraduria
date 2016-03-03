@@ -664,7 +664,7 @@ public class ProcuradoriaCrud {
                     findCaso.add(objCaso);
                 }
 
-                for (int y = first,z=0; y < listfun.size(); y++,z++) {
+                for (int y = first,z=0; y < first+listfun.size(); y++,z++) {
                     findCaso.set(y, listfun.get(z));
                 }
             }
