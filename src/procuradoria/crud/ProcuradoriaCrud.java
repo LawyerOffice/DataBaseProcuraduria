@@ -113,6 +113,42 @@ public class ProcuradoriaCrud {
 
         return listDzts;
     }
+    
+    public static ArrayList<Uzatasign> getCasosAsigFunciByIdAsig(final BigDecimal uzatasignarId) {
+        ArrayList<Uzatasign> listDzts = null;
+        try {
+            listDzts = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatasign>>() {
+
+                @Override
+                public ArrayList<Uzatasign> execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFGCASG(?) } ");
+                    f1.registerOutParameter(1, OracleTypes.CURSOR);
+                    f1.setBigDecimal(2, uzatasignarId);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
+                    ArrayList<Uzatasign> list = new ArrayList<>();
+                    while (rs.next()) {
+                        Uzatasign asg = new Uzatasign();
+                        asg.setUzatasignarId(rs.getBigDecimal(1));
+                        asg.getUzatfunci().setUzatfuncionarioNombres(rs.getString(2));
+                        asg.getUzatfunci().setUzatfuncionarioApellidos(rs.getString(3));
+                        asg.getUzatcaso().setUzatcasoNumcausa(rs.getString(4));
+                        asg.setUzatasignarFechaIn(rs.getString(5));
+                        list.add(asg);
+                    }
+                    rs.close();
+                    rs = null;
+
+                    return list;
+                }
+            });
+
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+
+        return listDzts;
+    }
 
     public static ArrayList<Uzatfunci> listFuncionarios(BigDecimal uztfuncionarioFlag) {
         ArrayList<Uzatfunci> listFuncionario = null;
@@ -638,6 +674,8 @@ public class ProcuradoriaCrud {
 
         return listDzts;
     }
+    
+    
 
     public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
