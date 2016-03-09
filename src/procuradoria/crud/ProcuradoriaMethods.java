@@ -67,6 +67,31 @@ public class ProcuradoriaMethods {
         return listCitas;
     }
 
+    public static ArrayList<Uzatcomt> GetFasesComentByIdCasoAndIdFase(BigDecimal uzatcasoId,BigDecimal uzatfaseId) {
+        ArrayList<Uzatcomt> objFasesComent = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (uzatcasoId != null) {
+                objFasesComent = ProcuradoriaCrud.getFasesComentByIdCasoAndIdFase(uzatcasoId,uzatfaseId);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FINDFASESANDCOMTBYIDCASOANDIDFASE : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return objFasesComent;
+    }
+    
     public static ArrayList<Uzatcomt> GetFasesComentByIdCaso(BigDecimal uzatcasoId) {
         ArrayList<Uzatcomt> objFasesComent = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -260,6 +285,28 @@ public class ProcuradoriaMethods {
         return listMaterias;
     }
 
+    public static ArrayList<Uzatfase> listFasesByIdCaso(BigDecimal uztmateriaId) {
+        ArrayList<Uzatfase> listfases = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            listfases = ProcuradoriaCrud.listFasesByIdCaso(uztmateriaId);
+        } catch (Exception ex) {
+            log.level.error("ERROR EN LISTTIPOROL : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listfases;
+    }
+    
     public static ArrayList<Uzatjudi> listJudicaturas(BigDecimal uztmateriaId) {
         ArrayList<Uzatjudi> listJudicaturas = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();

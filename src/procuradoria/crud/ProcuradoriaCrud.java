@@ -209,6 +209,28 @@ public class ProcuradoriaCrud {
         return listMaterias;
     }
 
+        public static ArrayList<Uzatfase> listFasesByIdCaso(BigDecimal uztcasoId) {
+        ArrayList<Uzatfase> listFases = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("id.uzatcasoId");
+        query_1.setWhereClause("=");
+        query_1.setValue(uztcasoId);
+        
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        List<Uzatfase> list = ds.customQuery(parameList, Uzatfase.class);
+        try {
+            if (!list.isEmpty()) {
+                listFases = (ArrayList<Uzatfase>) list;
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR LISTAFASESBYID : " + ex.toString());
+        }
+        return listFases;
+    }
+    
     public static ArrayList<Uzatjudi> listJudicaturas(BigDecimal uztmateriaId) {
         ArrayList<Uzatjudi> listJudicaturas = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -293,6 +315,42 @@ public class ProcuradoriaCrud {
     /*
      BEGIN UZAPGFUNTR(?,?,?,?,?); END;
      */
+       
+        public static ArrayList<Uzatcomt> getFasesComentByIdCasoAndIdFase(final BigDecimal UztIdCaso, final BigDecimal UztIdFase) {
+        ArrayList<Uzatcomt> listR = null;
+        try {
+            listR = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatcomt>>() {
+
+                @Override
+                public ArrayList<Uzatcomt> execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPGCOMBI(?,?,?); END;");
+                    f1.setBigDecimal(1, UztIdCaso);
+                    f1.setBigDecimal(2, UztIdFase);
+                    f1.registerOutParameter(3, OracleTypes.CURSOR);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(3);
+                    ArrayList<Uzatcomt> list = new ArrayList<>();
+                    while (rs.next()) {
+                        Uzatcomt ComtFase = new Uzatcomt();
+                        ComtFase.getId().setUzatcasoId(rs.getBigDecimal(1));
+                        ComtFase.getId().setUzatfaseId(rs.getBigDecimal(2));
+                        ComtFase.getId().setUzatcomtId(rs.getBigDecimal(3));
+                        ComtFase.setUzatcomtDescripcion(rs.getString(4));
+                        ComtFase.setUzatcomtFecha(rs.getString(5));
+                        list.add(ComtFase);
+                    }
+                    rs.close();
+                    return list;
+                }
+
+            });
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+        return listR;
+    }
+    
+    
     public static ArrayList<Uzatcomt> getFasesComentByIdCaso(final BigDecimal UztIdCaso) {
         ArrayList<Uzatcomt> listR = null;
         try {
