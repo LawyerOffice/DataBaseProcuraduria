@@ -692,4 +692,28 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
+    
+    public static Boolean UpdateFunci(Uzatfunci funci) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (funci != null) {
+                exito = ProcuradoriaCrud.updateFuncionario(funci);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN UpdateFunci : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
 }

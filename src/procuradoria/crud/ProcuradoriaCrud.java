@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
+import org.hibernate.HibernateException;
 import org.hibernate.jdbc.ReturningWork;
 import procuradoria.map.*;
 import procuradoria.util.ProcuraduriaHibernateUtil;
@@ -261,8 +262,8 @@ public class ProcuradoriaCrud {
         return exito;
     }
 
-//Modificado por Dennis Santamaria
     public static ArrayList<Uzatdocs> findDocsByCaso_Fase(BigDecimal uztcasoId, BigDecimal uztfaseId) {
+        //Modificado por Dennis Santamaria
         ArrayList<Uzatdocs> listDoc = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -528,6 +529,7 @@ public class ProcuradoriaCrud {
         return exito;
     }
 
+    //Modificado por Dennis Santamaria
     public static Uzatfunci findFuncionarioByCedulaOrIdBanner(String claveFuncionario) {
         Uzatfunci findFun = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -668,7 +670,7 @@ public class ProcuradoriaCrud {
                 }
             });
 
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             log.level.info(">>> " + ex.toString());
         }
 
@@ -805,5 +807,17 @@ public class ProcuradoriaCrud {
             exito = true;
         }
         return exito;
+    }  
+   
+    public static Boolean updateFuncionario(Uzatfunci funci) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (funci != null) {
+            ds.update(funci);
+            exito = true;
+        }
+        return exito;
     }
+    
 }
