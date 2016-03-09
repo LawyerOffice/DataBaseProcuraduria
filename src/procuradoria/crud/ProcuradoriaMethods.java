@@ -620,7 +620,29 @@ public class ProcuradoriaMethods {
             }
         }
         return findCaso;
-    }    
+    }  
+    
+    public static ArrayList<Uzatasign> FindCasosAdminLazy(BigDecimal uzatfuncionarioId,BigDecimal uzatcasoFlag,BigDecimal uzatasignarFlag) {
+        ArrayList<Uzatasign> findCaso = new ArrayList<>();
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+                findCaso = ProcuradoriaCrud.findCasosAdminLazy(uzatfuncionarioId, uzatcasoFlag, uzatasignarFlag);
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FindCasosAdminLazy : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findCaso;
+    } 
     
     public static Uzatcaso FindCasobyNumCausa(String numcausa) {
         Uzatcaso findCaso = null;

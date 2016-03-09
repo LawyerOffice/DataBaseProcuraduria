@@ -19,6 +19,8 @@ public class Uzatasign  implements java.io.Serializable {
      private String uzatasignarFechaOut;
      private String uzatasignarMotivo;
      private BigDecimal uzatasignarFlag;
+     
+     private String ultimoNumFase;
 
     public Uzatasign() {
         this.id = new UzatasignId();
@@ -100,6 +102,14 @@ public class Uzatasign  implements java.io.Serializable {
     
     public void setUzatasignarFlag(BigDecimal uzatasignarFlag) {
         this.uzatasignarFlag = uzatasignarFlag;
+    }
+
+    public String getUltimoNumFase() {
+        return ultimoNumFase;
+    }
+
+    public void setUltimoNumFase(String ultimoNumFase) {
+        this.ultimoNumFase = ultimoNumFase;
     }
 
 

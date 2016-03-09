@@ -113,7 +113,7 @@ public class ProcuradoriaCrud {
 
         return listDzts;
     }
-    
+
     public static ArrayList<Uzatasign> getCasosAsigFunciByIdAsig(final BigDecimal uzatasignarId) {
         ArrayList<Uzatasign> listDzts = null;
         try {
@@ -674,8 +674,6 @@ public class ProcuradoriaCrud {
 
         return listDzts;
     }
-    
-    
 
     public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
@@ -702,12 +700,66 @@ public class ProcuradoriaCrud {
                     findCaso.add(objCaso);
                 }
 
-                for (int y = first,z=0; y < first+listfun.size(); y++,z++) {
+                for (int y = first, z = 0; y < first + listfun.size(); y++, z++) {
                     findCaso.set(y, listfun.get(z));
                 }
             }
         } catch (Exception ex) {
             log.level.info("No se pudo encontrar casos disponibles.");
+        }
+
+        return findCaso;
+    }
+
+    public static ArrayList<Uzatasign> findCasosAdminLazy(final BigDecimal uzatfuncionarioId,
+            final BigDecimal uzatcasoFlag,
+            final BigDecimal uzatasignarFlag) {
+        ArrayList<Uzatasign> findCaso = new ArrayList<>();
+       
+        try {
+            findCaso = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatasign>>() {
+
+                @Override
+                public ArrayList<Uzatasign> execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFGCAFFL(?,?,?) } ");
+                    f1.registerOutParameter(1, OracleTypes.CURSOR);
+                    f1.setBigDecimal(2, uzatasignarFlag);
+                    f1.setBigDecimal(3, uzatcasoFlag);
+                    f1.setBigDecimal(4, uzatfuncionarioId);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
+                    ArrayList<Uzatasign> list = new ArrayList<>();
+                    while (rs.next()) {
+                        Uzatasign asg = new Uzatasign();
+                        asg.getId().setUzatfuncionarioId(rs.getBigDecimal(1));
+                        asg.setUzatasignarId(rs.getBigDecimal(2));
+                        asg.getId().setUzatcasoId(rs.getBigDecimal(3));
+                        asg.setUzatasignarFlag(rs.getBigDecimal(4));
+                        asg.setUzatasignarFechaIn(rs.getString(5));
+                        asg.setUzatasignarFechaOut(rs.getString(6));
+                        asg.setUzatasignarMotivo(rs.getString(7));
+                        
+                        asg.getUzatcaso().setUzatcasoNumcausa(rs.getString(8));
+                        asg.getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaDescripcion(rs.getString(9));
+                        asg.getUzatcaso().getUzatjudi().setUzatjudiDescripcion(rs.getString(10));
+                        asg.getUzatcaso().setUzatcasoMotivo(rs.getString(11));
+                        asg.getUzatcaso().setUzatcasoDetalle(rs.getString(12));
+                        asg.getUzatcaso().setUzatcasoTipo(rs.getString(13));
+                        asg.getUzatcaso().setUzatcasoFechaIn(rs.getString(14));
+                        asg.getUzatcaso().setUzatcasoFechaOut(rs.getString(15));
+                        asg.getUzatcaso().setUzatcasoFlag(rs.getBigDecimal(16));
+                        asg.setUltimoNumFase(rs.getString(17));
+                        list.add(asg);
+                    }
+                    rs.close();
+                    rs = null;
+
+                    return list;
+                }
+            });
+
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
         }
 
         return findCaso;
