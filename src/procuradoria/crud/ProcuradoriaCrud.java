@@ -797,8 +797,7 @@ public class ProcuradoriaCrud {
                         asg.setUzatasignarFlag(rs.getBigDecimal(4));
                         asg.setUzatasignarFechaIn(rs.getString(5));
                         asg.setUzatasignarFechaOut(rs.getString(6));
-                        asg.setUzatasignarMotivo(rs.getString(7));
-                        
+                        asg.setUzatasignarMotivo(rs.getString(7));          
                         asg.getUzatcaso().setUzatcasoNumcausa(rs.getString(8));
                         asg.getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaDescripcion(rs.getString(9));
                         asg.getUzatcaso().getUzatjudi().setUzatjudiDescripcion(rs.getString(10));
@@ -808,7 +807,9 @@ public class ProcuradoriaCrud {
                         asg.getUzatcaso().setUzatcasoFechaIn(rs.getString(14));
                         asg.getUzatcaso().setUzatcasoFechaOut(rs.getString(15));
                         asg.getUzatcaso().setUzatcasoFlag(rs.getBigDecimal(16));
-                        asg.setUltimoNumFase(rs.getString(17));
+                        asg.getUltimaFaseActual().setUzatfaseNumfase(rs.getBigDecimal(17));
+                        asg.getUltimaFaseActual().setUzatfaseNombre(rs.getString(18));
+                        asg.getUltimaFaseActual().setUzatfaseFlag(rs.getBigDecimal(19));
                         list.add(asg);
                     }
                     rs.close();

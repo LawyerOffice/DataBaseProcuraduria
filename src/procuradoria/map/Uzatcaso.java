@@ -26,6 +26,7 @@ public class Uzatcaso  implements java.io.Serializable {
      private Set uzatasigns = new HashSet(0);
      private Set uzatfases = new HashSet(0);
      private Set uzatinvCas = new HashSet(0);
+     
 
     public Uzatcaso() {
         this.uzatcasoFlag = new BigDecimal(BigInteger.ONE);
