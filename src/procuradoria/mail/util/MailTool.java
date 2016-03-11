@@ -37,15 +37,15 @@ public class MailTool {
         userName = _userName;
     }
 
-    public Boolean sendEmailFile(String receiver, String file, String Nombre) {
+    public Boolean sendEmailFile(String receiver, String file, String Nombre, String numCausa, String numFase, String lugar, String fecha) {
         Boolean success = false;
         try {
             SendEmail sendEmail = new SendEmail();
             sendEmail.setDestinatario(receiver);
-            sendEmail.setSubject("Comprobante de Prestamo - Rapid Loans");
-            sendEmail.setSubject("Comprobante de Prestamo de Equipo Audiovisual.");
-            init("Uniadad de Servicios - ESPE", "ningun link");
-            sendEmail.setMensaje(getMessageComprobante(Nombre));
+            sendEmail.setSubject("Notificación de Cita - Lawyer Office");
+            sendEmail.setSubject("Alerta Lawyeers Office - Atención");
+            init("Unidad de Servicios - ESPE", "ningun link");
+            sendEmail.setMensaje(getMessageComprobante(Nombre, numCausa, numFase, lugar, fecha));
             sendEmail.setAttachemnt(file);
             sendEmail.cargarConfiguracion();
             success = sendEmail.enviarCorreo();
@@ -57,15 +57,19 @@ public class MailTool {
         return success;
     }
 
-    private String getMessageComprobante(String Nombre) throws Exception {
+    private String getMessageComprobante(String Nombre, String numCausa, String numFase, String lugar, String fecha) throws Exception {
         String message = "";
         try {
             byte[] encoded = Files.readAllBytes(new File(MailTool.class.getResource(
-                    "/rapidloans/mail/res/mail_cmp.html")
+                    "/procuradoria/mail/res/mail_cmp.html")
                     .toURI()).toPath());
             Charset encoding = Charset.forName("UTF-8");
             message = encoding.decode(ByteBuffer.wrap(encoded)).toString();
             message = message.replaceAll("XfileNameX", Nombre);
+            message = message.replaceAll("XnumCausaX", numCausa);
+            message = message.replaceAll("XnumFaseX", numFase);
+            message = message.replaceAll("XcitaSalaX", lugar);
+            message = message.replaceAll("XcitaFechaX", fecha);
 
         } catch (IOException ex) {
             log.level.error("No se pudo leer el archivo. IO Exception: ", ex);

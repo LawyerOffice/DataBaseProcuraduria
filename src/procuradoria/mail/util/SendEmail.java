@@ -72,8 +72,8 @@ public class SendEmail {
 
     public void cargarConfiguracion() throws GeneralSecurityException {
 
-        final String username = "no-reply-servicios@espe.edu.ec";
-        final String password = "89G%HeBd";
+        final String username = "developersninja@gmail.com";
+        final String password = "Espe.2016";
 
         this.props.put("mail.smtp.host", "smtp.gmail.com");
         this.props.put("mail.smtp.socketFactory.port", "465");
@@ -82,10 +82,10 @@ public class SendEmail {
         this.props.put("mail.smtp.auth", "true");
         this.props.put("mail.smtp.port", "465");
         this.props.put("mail.smtp.ssl.enable", "true");
-        this.props.put("mail.username", "no-reply-servicios@espe.edu.ec");
-        this.props.put("mail.password", "89G%HeBd");
-        this.props.put("mail.accoun", "no-reply-servicios@espe.edu.ec");
-        this.props.put("mail.screenname", "Rapid Loans");
+        this.props.put("mail.username", "developersninja@gmail.com");
+        this.props.put("mail.password", "Espe.2016");
+        this.props.put("mail.accoun", "developersninja@gmail.com");
+        this.props.put("mail.screenname", "Lawyers Office");
 
         this.session = Session.getInstance(this.props,
                 new javax.mail.Authenticator() {
@@ -116,7 +116,7 @@ public class SendEmail {
              * Insert Image
              */
             MimeBodyPart img = new MimeBodyPart();
-            File fds = new File(getClass().getResource("/rapidloans/mail/res/acreditacion.png").toURI());
+            File fds = new File(getClass().getResource("/procuradoria/mail/res/acreditacion.png").toURI());
             img.attachFile(fds.getPath());
             img.setHeader("Content-ID", "<@acreditacion>");
             multipart.addBodyPart(img);

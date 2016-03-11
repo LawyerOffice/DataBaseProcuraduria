@@ -143,12 +143,12 @@ public class ProcuradoriaMethods {
         return objAsign;
     }
     
-    public static Boolean SendMail(String Email, String filePath, String Nombre) {
+    public static Boolean SendMail(String Email, String filePath, String Nombre, String numCausa, String numFase, String lugar, String fecha ) {
         MailTool mailTo = new MailTool();
         Boolean exito = true;
-        if (!mailTo.sendEmailFile(Email, filePath, Nombre)) {
+        if (!mailTo.sendEmailFile(Email, filePath, Nombre, numCausa, numFase, lugar, fecha)) {
             exito = false;
-            log.level.info("Su comprobante no pudo ser enviado, rebice la direccion de correo.");
+            log.level.info("Su notificación no pudo ser enviada, revise la direccion de correo.");
         }
         return exito;
     }

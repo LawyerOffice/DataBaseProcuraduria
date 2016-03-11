@@ -796,6 +796,10 @@ public class ProcuradoriaCrud {
         return listDzts;
     }
 
+    public static ArrayList<Uzatcaso> findCasosLazybyFuncionario(BigDecimal Flag, int first, int pageSize, BigDecimal idfunci) {
+        return null;    
+    }
+    
     public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
         Number contador = getCountCasosByFlag(Flag);

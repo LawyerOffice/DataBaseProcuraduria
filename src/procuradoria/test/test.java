@@ -75,13 +75,24 @@ public class test {
 //        
 //        ArrayList<Uztrol> rols = ProcuradoriaMethods.GetFuncionariosTipoRolByFlag(BigDecimal.ONE);
 //        System.out.println(">> "+rols.size());
-        
+
 //        ArrayList<Uzatasign> listcasos = ProcuradoriaMethods.FindCasosAdminLazy(new BigDecimal(112), BigDecimal.ONE, BigDecimal.ONE);
 //        
 //        System.out.println(">> "+listcasos.size());
         
+
 //        Boolean successMAIL = ProcuradoriaMethods.SendMail(Email, filePath, Nombre);
 
+
+//        Boolean successMAIL = ProcuradoriaMethods.SendMail("dsantamariadiaz@gmail.com", "C:\\requerimientos.txt", "PRUEBA", "11111111111", "# 3", "2do Jusgado de lo Penal", "11/11/2016");
+//          if(successMAIL)
+//          {
+//              System.out.println("EXITO");
+//          }else
+//          {
+//              System.out.println("NO SE HA PODIDO ENVIAR CORREO");
+//          }
+        
     }
     
 }
