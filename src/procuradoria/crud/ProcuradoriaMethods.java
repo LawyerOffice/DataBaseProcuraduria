@@ -50,7 +50,7 @@ public class ProcuradoriaMethods {
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-                listCitas = ProcuradoriaCrud.getCitasCalendar(FechaActual);
+            listCitas = ProcuradoriaCrud.getCitasCalendar(FechaActual);
         } catch (Exception ex) {
             log.level.error("ERROR EN GETCITASCALENDAR : ");
             delegateException = ex;
@@ -67,13 +67,13 @@ public class ProcuradoriaMethods {
         return listCitas;
     }
 
-    public static ArrayList<Uzatcomt> GetFasesComentByIdCasoAndIdFase(BigDecimal uzatcasoId,BigDecimal uzatfaseId) {
+    public static ArrayList<Uzatcomt> GetFasesComentByIdCasoAndIdFase(BigDecimal uzatcasoId, BigDecimal uzatfaseId) {
         ArrayList<Uzatcomt> objFasesComent = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
             if (uzatcasoId != null) {
-                objFasesComent = ProcuradoriaCrud.getFasesComentByIdCasoAndIdFase(uzatcasoId,uzatfaseId);
+                objFasesComent = ProcuradoriaCrud.getFasesComentByIdCasoAndIdFase(uzatcasoId, uzatfaseId);
             }
 
         } catch (Exception ex) {
@@ -91,7 +91,7 @@ public class ProcuradoriaMethods {
         }
         return objFasesComent;
     }
-    
+
     public static ArrayList<Uzatcomt> GetFasesComentByIdCaso(BigDecimal uzatcasoId) {
         ArrayList<Uzatcomt> objFasesComent = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -191,7 +191,7 @@ public class ProcuradoriaMethods {
         }
         return listRol;
     }
-    
+
     public static ArrayList<Uzatasign> GetCasosAsigFunciByIdAsig(BigDecimal uzatasignarId) {
         ArrayList<Uzatasign> listRol = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -306,7 +306,7 @@ public class ProcuradoriaMethods {
         }
         return listfases;
     }
-    
+
     public static ArrayList<Uzatjudi> listJudicaturas(BigDecimal uztmateriaId) {
         ArrayList<Uzatjudi> listJudicaturas = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -398,7 +398,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-        
+
 //Modificado por Dennis Santamaria
     public static ArrayList<Uzatdocs> FindDocsbyCaso_Fase(BigDecimal uztcasoId, BigDecimal uzfaseId) {
         ArrayList<Uzatdocs> listDocs = null;
@@ -423,6 +423,31 @@ public class ProcuradoriaMethods {
             }
         }
         return listDocs;
+    }
+
+    public static ArrayList<Uzatcita> FindCitasbyCaso_Fase(BigDecimal uztcasoId, BigDecimal uzfaseId) {
+        ArrayList<Uzatcita> listCitas = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (uztcasoId != null && uzfaseId != null) {
+                listCitas = ProcuradoriaCrud.findCitasByCaso_Fase(uztcasoId, uzfaseId);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FindCitabyCaso_Fase : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listCitas;
     }
 
     public static ArrayList<Uzatcaso> GetActiveCasos() {
@@ -570,9 +595,8 @@ public class ProcuradoriaMethods {
         }
         return findFun;
     }
-    
-    
-     public static ArrayList<Uzatjudi> findjudibyMateriId(BigDecimal uzatmateriaId) {
+
+    public static ArrayList<Uzatjudi> findjudibyMateriId(BigDecimal uzatmateriaId) {
         ArrayList<Uzatjudi> listJudi = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
@@ -596,14 +620,14 @@ public class ProcuradoriaMethods {
         }
         return listJudi;
     }
-         
-     public static Uzatjudi findjudi(BigDecimal uzatmateriaId, BigDecimal uzatjudiId) {
+
+    public static Uzatjudi findjudi(BigDecimal uzatmateriaId, BigDecimal uzatjudiId) {
         Uzatjudi listJudi = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
             if (uzatmateriaId != null) {
-                listJudi = ProcuradoriaCrud.findJudi(uzatmateriaId,uzatjudiId);
+                listJudi = ProcuradoriaCrud.findJudi(uzatmateriaId, uzatjudiId);
             }
 
         } catch (Exception ex) {
@@ -620,8 +644,8 @@ public class ProcuradoriaMethods {
             }
         }
         return listJudi;
-    }  
-     
+    }
+
     public static Uzatfunci FindFuncionarioByCedula(String cedula) {
         Uzatfunci findFun = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -645,14 +669,14 @@ public class ProcuradoriaMethods {
             }
         }
         return findFun;
-    }     
-    
-    public static ArrayList<Uzatcaso> FindCasosLazy(BigDecimal Flag,int first, int pageSize) {
+    }
+
+    public static ArrayList<Uzatcaso> FindCasosLazy(BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-                findCaso = ProcuradoriaCrud.findCasosLazy(Flag,first,pageSize);
+            findCaso = ProcuradoriaCrud.findCasosLazy(Flag, first, pageSize);
         } catch (Exception ex) {
             log.level.error("ERROR EN FindCasosLazy : ");
             delegateException = ex;
@@ -667,14 +691,14 @@ public class ProcuradoriaMethods {
             }
         }
         return findCaso;
-    }  
-    
-    public static ArrayList<Uzatasign> FindCasosAdminLazy(BigDecimal uzatfuncionarioId,BigDecimal uzatcasoFlag,BigDecimal uzatasignarFlag) {
+    }
+
+    public static ArrayList<Uzatasign> FindCasosAdminLazy(BigDecimal uzatfuncionarioId, BigDecimal uzatcasoFlag, BigDecimal uzatasignarFlag) {
         ArrayList<Uzatasign> findCaso = new ArrayList<>();
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-                findCaso = ProcuradoriaCrud.findCasosAdminLazy(uzatfuncionarioId, uzatcasoFlag, uzatasignarFlag);
+            findCaso = ProcuradoriaCrud.findCasosAdminLazy(uzatfuncionarioId, uzatcasoFlag, uzatasignarFlag);
         } catch (Exception ex) {
             log.level.error("ERROR EN FindCasosAdminLazy : ");
             delegateException = ex;
@@ -689,8 +713,8 @@ public class ProcuradoriaMethods {
             }
         }
         return findCaso;
-    } 
-    
+    }
+
     public static Uzatcaso FindCasobyNumCausa(String numcausa) {
         Uzatcaso findCaso = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -714,8 +738,8 @@ public class ProcuradoriaMethods {
             }
         }
         return findCaso;
-    }    
-     
+    }
+
     public static Boolean InsertNuevaAsignacion(Uzatasign asign) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -739,7 +763,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Boolean UpdateFunci(Uzatfunci funci) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
