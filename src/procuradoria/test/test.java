@@ -80,7 +80,7 @@ public class test {
 //        
 //        System.out.println(">> "+listcasos.size());
         
-        //Boolean successMAIL = ProcuradoriaMethods.SendMail(Email, filePath, Nombre);
+//        Boolean successMAIL = ProcuradoriaMethods.SendMail(Email, filePath, Nombre);
 
     }
     
