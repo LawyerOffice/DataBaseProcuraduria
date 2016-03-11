@@ -6,6 +6,11 @@
 
 package procuradoria.test;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import procuradoria.crud.ProcuradoriaMethods;
+import procuradoria.map.Uzatasign;
+
 
 
 
@@ -71,6 +76,11 @@ public class test {
 //        ArrayList<Uztrol> rols = ProcuradoriaMethods.GetFuncionariosTipoRolByFlag(BigDecimal.ONE);
 //        System.out.println(">> "+rols.size());
         
+//        ArrayList<Uzatasign> listcasos = ProcuradoriaMethods.FindCasosAdminLazy(new BigDecimal(112), BigDecimal.ONE, BigDecimal.ONE);
+//        
+//        System.out.println(">> "+listcasos.size());
+        
+        //Boolean successMAIL = ProcuradoriaMethods.SendMail(Email, filePath, Nombre);
 
     }
     

@@ -8,6 +8,7 @@ package procuradoria.crud;
 import com.logger.L;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import procuradoria.mail.util.MailTool;
 import procuradoria.map.*;
 import procuradoria.util.*;
 
@@ -140,6 +141,16 @@ public class ProcuradoriaMethods {
             }
         }
         return objAsign;
+    }
+    
+    public static Boolean SendMail(String Email, String filePath, String Nombre) {
+        MailTool mailTo = new MailTool();
+        Boolean exito = true;
+        if (!mailTo.sendEmailFile(Email, filePath, Nombre)) {
+            exito = false;
+            log.level.info("Su comprobante no pudo ser enviado, rebice la direccion de correo.");
+        }
+        return exito;
     }
 
     public static ArrayList<Uzatrol> FindRolByIdFuncionario(BigDecimal uztfuncionarioId, BigDecimal uztrolFlag) {
