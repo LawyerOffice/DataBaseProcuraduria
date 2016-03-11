@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Mar 1, 2016 11:18:31 AM by Hibernate Tools 3.6.0
+// Generated Mar 11, 2016 1:10:52 AM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -26,11 +26,10 @@ public class Uzatcaso  implements java.io.Serializable {
      private Set uzatasigns = new HashSet(0);
      private Set uzatfases = new HashSet(0);
      private Set uzatinvCas = new HashSet(0);
-     
 
     public Uzatcaso() {
         this.uzatcasoFlag = new BigDecimal(BigInteger.ONE);
-        this.uzatcasoId = new  BigDecimal(BigInteger.ONE);
+        this.uzatcasoId = new BigDecimal(BigInteger.ONE);
         this.uzatjudi = new Uzatjudi();
     }
 

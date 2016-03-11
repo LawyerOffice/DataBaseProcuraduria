@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Mar 1, 2016 11:18:31 AM by Hibernate Tools 3.6.0
+// Generated Mar 11, 2016 1:10:52 AM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -16,11 +16,12 @@ public class Uzatcita  implements java.io.Serializable {
      private String uzatcitaSala;
      private String uzatcitaFecha;
      private BigDecimal uzatcitaFlag;
+     private BigDecimal uzatfuncionarioId;
 
     public Uzatcita() {
         this.id = new UzatcitaId();
-        this.uzatcitaFlag = new BigDecimal(BigInteger.ONE);
         this.uzatfase = new Uzatfase();
+        this.uzatfuncionarioId = new BigDecimal(BigInteger.ONE);
     }
 
 	
@@ -28,12 +29,13 @@ public class Uzatcita  implements java.io.Serializable {
         this.id = id;
         this.uzatfase = uzatfase;
     }
-    public Uzatcita(UzatcitaId id, Uzatfase uzatfase, String uzatcitaSala, String uzatcitaFecha, BigDecimal uzatcitaFlag) {
+    public Uzatcita(UzatcitaId id, Uzatfase uzatfase, String uzatcitaSala, String uzatcitaFecha, BigDecimal uzatcitaFlag, BigDecimal uzatfuncionarioId) {
        this.id = id;
        this.uzatfase = uzatfase;
        this.uzatcitaSala = uzatcitaSala;
        this.uzatcitaFecha = uzatcitaFecha;
        this.uzatcitaFlag = uzatcitaFlag;
+       this.uzatfuncionarioId = uzatfuncionarioId;
     }
    
     public UzatcitaId getId() {
@@ -70,6 +72,13 @@ public class Uzatcita  implements java.io.Serializable {
     
     public void setUzatcitaFlag(BigDecimal uzatcitaFlag) {
         this.uzatcitaFlag = uzatcitaFlag;
+    }
+    public BigDecimal getUzatfuncionarioId() {
+        return this.uzatfuncionarioId;
+    }
+    
+    public void setUzatfuncionarioId(BigDecimal uzatfuncionarioId) {
+        this.uzatfuncionarioId = uzatfuncionarioId;
     }
 
 

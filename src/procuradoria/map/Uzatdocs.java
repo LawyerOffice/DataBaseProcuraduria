@@ -1,7 +1,9 @@
 package procuradoria.map;
-// Generated Mar 1, 2016 11:18:31 AM by Hibernate Tools 3.6.0
+// Generated Mar 11, 2016 1:10:52 AM by Hibernate Tools 3.6.0
 
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Blob;
 
 /**
@@ -16,10 +18,12 @@ public class Uzatdocs  implements java.io.Serializable {
      private String uzatdocsFecha;
      private String uzatdocsCompromiso;
      private Blob uzatdocsArchivo;
+     private BigDecimal uzatfuncionarioId;
 
     public Uzatdocs() {
         this.id = new UzatdocsId();
         this.uzatfase = new Uzatfase();
+        this.uzatfuncionarioId = new BigDecimal(BigInteger.ONE);
     }
 
 	
@@ -27,13 +31,14 @@ public class Uzatdocs  implements java.io.Serializable {
         this.id = id;
         this.uzatfase = uzatfase;
     }
-    public Uzatdocs(UzatdocsId id, Uzatfase uzatfase, String uzatdocsCasilla, String uzatdocsFecha, String uzatdocsCompromiso, Blob uzatdocsArchivo) {
+    public Uzatdocs(UzatdocsId id, Uzatfase uzatfase, String uzatdocsCasilla, String uzatdocsFecha, String uzatdocsCompromiso, Blob uzatdocsArchivo, BigDecimal uzatfuncionarioId) {
        this.id = id;
        this.uzatfase = uzatfase;
        this.uzatdocsCasilla = uzatdocsCasilla;
        this.uzatdocsFecha = uzatdocsFecha;
        this.uzatdocsCompromiso = uzatdocsCompromiso;
        this.uzatdocsArchivo = uzatdocsArchivo;
+       this.uzatfuncionarioId = uzatfuncionarioId;
     }
    
     public UzatdocsId getId() {
@@ -77,6 +82,13 @@ public class Uzatdocs  implements java.io.Serializable {
     
     public void setUzatdocsArchivo(Blob uzatdocsArchivo) {
         this.uzatdocsArchivo = uzatdocsArchivo;
+    }
+    public BigDecimal getUzatfuncionarioId() {
+        return this.uzatfuncionarioId;
+    }
+    
+    public void setUzatfuncionarioId(BigDecimal uzatfuncionarioId) {
+        this.uzatfuncionarioId = uzatfuncionarioId;
     }
 
 

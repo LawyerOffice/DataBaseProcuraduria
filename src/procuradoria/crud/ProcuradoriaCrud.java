@@ -73,6 +73,39 @@ public class ProcuradoriaCrud {
         }
         return listRol;
     }
+    
+    public static ArrayList<Uzatrol> findByIdFunci(String uzatfuncionarioCedula, String uzatfuncionarioIdbanner) {
+        
+        ArrayList<Uzatrol> listRol = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        
+        //uzatfuncionarioCedula
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("uzatfuncionarioCedula");
+        query_1.setWhereClause("=");
+        query_1.setValue(uzatfuncionarioCedula);
+        
+        //uzatfuncionarioIdbanner
+        QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_2.setColumnName("uzatfuncionarioIdbanner");
+        query_2.setWhereClause("=");
+        query_2.setValue(uzatfuncionarioIdbanner);
+        
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        parameList.add(query_2);
+        
+        List<Uzatrol> list = ds.customQuery(parameList, Uzatrol.class);
+        try {
+            if (!list.isEmpty()) {
+                listRol = (ArrayList<Uzatrol>) list;
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR  LISTROL : " + ex.toString());
+        }
+        return listRol;
+    }
 
     public static ArrayList<Uzatrol> getAsigFunciRol(final BigDecimal uzatflag) {
         ArrayList<Uzatrol> listDzts = null;
