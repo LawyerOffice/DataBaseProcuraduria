@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import procuradoria.crud.ProcuradoriaMethods;
 import procuradoria.map.Uzatasign;
+import procuradoria.map.Uzatdocs;
+import procuradoria.pdf.util.DocumentsPdf;
 
 
 
@@ -70,8 +72,23 @@ public class test {
 //        ArrayList<Uztcaso> list6 = ProcuradoriaMethods.ListCasosByFlag(BigDecimal.ZERO);
 //        System.out.println(">> "+list6);    
 //        
-//        DocumentsPdf  pdf = new DocumentsPdf();
-//        pdf.CovertPdfToByteArray("prueba_archivo", "prueba_archivo");
+        
+        //PRUEBAS DEL PDF///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        DocumentsPdf  pdf = new DocumentsPdf();
+//        
+//        Uzatdocs doc = new Uzatdocs();
+//        doc.getId().setUzatcasoId(BigDecimal.valueOf(100));
+//        doc.getId().setUzatfaseId(BigDecimal.valueOf(133));
+//        doc.setUzatdocsCasilla("Ninguna");
+//        doc.setUzatdocsCompromiso("Asistir a la sesión");
+//        doc.setUzatdocsFecha("12/03/2016 00:00:00");
+//        doc.setUzatfuncionarioId(BigDecimal.valueOf(114));
+//        pdf.CovertPdfToByteArray(doc,"C:\\Users\\FANNY\\Desktop\\Daniel Galarza\\EDO\\GalarzaDaniel_DeberesTercerParcial.pdf", "Deberes"); //CARGA
+//        
+        ArrayList<Uzatdocs> listDocs = ProcuradoriaMethods.FindDocsbyCaso_Fase(BigDecimal.valueOf(100), BigDecimal.valueOf(100));
+        pdf.byteArrayToFile(listDocs.get(0)); //DESCARGA
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //        
 //        ArrayList<Uztrol> rols = ProcuradoriaMethods.GetFuncionariosTipoRolByFlag(BigDecimal.ONE);
 //        System.out.println(">> "+rols.size());
