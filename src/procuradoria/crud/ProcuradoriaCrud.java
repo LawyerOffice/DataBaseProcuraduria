@@ -95,7 +95,18 @@ public class ProcuradoriaCrud {
                     ArrayList<Uzatrol> list = new ArrayList<>();
                     while (rs.next()) {
                         Uzatrol rol = new Uzatrol();
-                        //rol.get
+                        rol.getUzatfunci().setUzatfuncionarioId(rs.getBigDecimal(1));
+                        rol.getUzatfunci().setUzatfuncionarioNombres(rs.getString(2));
+                        rol.getUzatfunci().setUzatfuncionarioApellidos(rs.getString(3));
+                        rol.getUzatfunci().setUzatfuncionarioCedula(rs.getString(4));
+                        rol.getUzatfunci().setUzatfuncionarioIdbanner(rs.getString(5));
+                        rol.getUzatfunci().setUzatfuncionarioEmail(rs.getString(6));
+                        rol.getUzatfunci().setUzatfuncionarioFlag(rs.getBigDecimal(7));
+                        rol.setUzatrolFechaIn(rs.getString(8));
+                        rol.setUzatrolFechaOut(rs.getString(9));
+                        rol.setUzatrolFlag(rs.getBigDecimal(10));
+                        rol.getUzattrol().setUzattiporolId(rs.getBigDecimal(11));
+                        rol.getUzattrol().setUzattiporolDescripcion(rs.getString(12));
                         list.add(rol);
                     }
                     rs.close();
