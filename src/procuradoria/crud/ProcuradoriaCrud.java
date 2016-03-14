@@ -78,7 +78,7 @@ public class ProcuradoriaCrud {
             final BigDecimal uzatfuncionarioFlag, final BigDecimal uzatrolFlag) {
 
         ArrayList<Uzatrol> listDzts = null;
-        Uzatrol fun = new Uzatrol();
+        Uzatrol fun = null;
         try {
             listDzts = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatrol>>() {
 
