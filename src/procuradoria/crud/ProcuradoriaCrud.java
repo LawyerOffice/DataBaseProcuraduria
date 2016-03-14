@@ -74,56 +74,44 @@ public class ProcuradoriaCrud {
         return listRol;
     }
 
-    public static Uzatfunci findByIdFunciByCedFunci(String uzatfuncionarioIdbanner, String uzatfuncionarioCedula, BigDecimal uzatfuncionarioFlag) {
+    public static Uzatrol findByIdFunciByCedFunci(final String uzatfuncionarioIdbanner, final String uzatfuncionarioCedula,
+            final BigDecimal uzatfuncionarioFlag, final BigDecimal uzatrolFlag) {
 
-        Uzatfunci listFunci = null;
-        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
-                getSessionFactory().getCurrentSession());
-
-        //uzatfuncionarioCedula
-        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_1.setColumnName("uzatfuncionarioCedula");
-        query_1.setWhereClause("=");
-        query_1.setValue(uzatfuncionarioCedula);
-
-        //uzatfuncionarioIdbanner
-        QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_2.setColumnName("uzatfuncionarioIdbanner");
-        query_2.setWhereClause("=");
-        query_2.setValue(uzatfuncionarioIdbanner);
-
-        //
-        QueryParameter query_3 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_3.setColumnName("uzatfuncionarioFlag");
-        query_3.setWhereClause("=");
-        query_3.setValue(uzatfuncionarioFlag);
-
-        List parameList = new ArrayList();
-        parameList.add(query_1);
-        parameList.add(query_2);
-        parameList.add(query_3);
-
-        List<Uzatfunci> list = ds.customQuery(parameList, Uzatfunci.class);
+        ArrayList<Uzatrol> listDzts = null;
+        Uzatrol fun = new Uzatrol();
         try {
-            if (!list.isEmpty()) {
-                listFunci =  list.get(0);
-            }
+            listDzts = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatrol>>() {
+
+                @Override
+                public ArrayList<Uzatrol> execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFGFRTR(?,?,?,?) } ");
+                    f1.registerOutParameter(1, OracleTypes.CURSOR);
+                    f1.setString(2, uzatfuncionarioIdbanner);
+                    f1.setString(3, uzatfuncionarioCedula);
+                    f1.setBigDecimal(4, uzatfuncionarioFlag);
+                    f1.setBigDecimal(5, uzatrolFlag);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
+                    ArrayList<Uzatrol> list = new ArrayList<>();
+                    while (rs.next()) {
+                        Uzatrol rol = new Uzatrol();
+                        //rol.get
+                        list.add(rol);
+                    }
+                    rs.close();
+                    rs = null;
+
+                    return list;
+                }
+            });
+
         } catch (Exception ex) {
-            log.level.info("ERROR  LISTROL : " + ex.toString());
+            log.level.info(">>> " + ex.toString());
         }
-        return listFunci;
-    }
-    
-    
-     public static Uzatfunci findByIdFunciRolTipoRol(String uzatfuncionarioId,String uzatfuncionarioCedula, BigDecimal uzatfuncionarioFlag) {
-
-        Uzatfunci listFunci = null;
-        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
-                getSessionFactory().getCurrentSession());
-
-       
-        
-        return listFunci;
+        if (!listDzts.isEmpty()) {
+            fun = listDzts.get(0);
+        }
+        return fun;
     }
 
     public static ArrayList<Uzatrol> getAsigFunciRol(final BigDecimal uzatflag) {

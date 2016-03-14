@@ -178,13 +178,13 @@ public class ProcuradoriaMethods {
         return listRol;
     }
 
-    public static Uzatfunci FindByIdFunciByCedFunci(String uzatfuncionarioIdbanner, String uzatfuncionarioCedula, BigDecimal uzatfuncionarioFlag) {
-        Uzatfunci listFunci = null;
+    public static Uzatrol FindByIdFunciByCedFunci(String uzatfuncionarioIdbanner, String uzatfuncionarioCedula, BigDecimal uzatfuncionarioFlag, BigDecimal uzatrolFlag) {
+        Uzatrol listFunci = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
             if (uzatfuncionarioCedula != null && uzatfuncionarioIdbanner != null) {
-                listFunci = ProcuradoriaCrud.findByIdFunciByCedFunci(uzatfuncionarioIdbanner, uzatfuncionarioCedula, uzatfuncionarioFlag);
+                listFunci = ProcuradoriaCrud.findByIdFunciByCedFunci(uzatfuncionarioIdbanner, uzatfuncionarioCedula, uzatfuncionarioFlag, uzatrolFlag);
             }
 
         } catch (Exception ex) {
