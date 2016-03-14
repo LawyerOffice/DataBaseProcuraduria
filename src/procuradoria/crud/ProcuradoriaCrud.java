@@ -73,38 +73,57 @@ public class ProcuradoriaCrud {
         }
         return listRol;
     }
-    
-    public static ArrayList<Uzatrol> findByIdFunci(String uzatfuncionarioCedula, String uzatfuncionarioIdbanner) {
-        
-        ArrayList<Uzatrol> listRol = null;
+
+    public static Uzatfunci findByIdFunciByCedFunci(String uzatfuncionarioIdbanner, String uzatfuncionarioCedula, BigDecimal uzatfuncionarioFlag) {
+
+        Uzatfunci listFunci = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        
+
         //uzatfuncionarioCedula
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
         query_1.setColumnName("uzatfuncionarioCedula");
         query_1.setWhereClause("=");
         query_1.setValue(uzatfuncionarioCedula);
-        
+
         //uzatfuncionarioIdbanner
         QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
         query_2.setColumnName("uzatfuncionarioIdbanner");
         query_2.setWhereClause("=");
         query_2.setValue(uzatfuncionarioIdbanner);
-        
+
+        //
+        QueryParameter query_3 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_3.setColumnName("uzatfuncionarioFlag");
+        query_3.setWhereClause("=");
+        query_3.setValue(uzatfuncionarioFlag);
+
         List parameList = new ArrayList();
         parameList.add(query_1);
         parameList.add(query_2);
-        
-        List<Uzatrol> list = ds.customQuery(parameList, Uzatrol.class);
+        parameList.add(query_3);
+
+        List<Uzatfunci> list = ds.customQuery(parameList, Uzatfunci.class);
         try {
             if (!list.isEmpty()) {
-                listRol = (ArrayList<Uzatrol>) list;
+                listFunci =  list.get(0);
             }
         } catch (Exception ex) {
             log.level.info("ERROR  LISTROL : " + ex.toString());
         }
-        return listRol;
+        return listFunci;
+    }
+    
+    
+     public static Uzatfunci findByIdFunciRolTipoRol(String uzatfuncionarioId,String uzatfuncionarioCedula, BigDecimal uzatfuncionarioFlag) {
+
+        Uzatfunci listFunci = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+       
+        
+        return listFunci;
     }
 
     public static ArrayList<Uzatrol> getAsigFunciRol(final BigDecimal uzatflag) {
@@ -242,7 +261,7 @@ public class ProcuradoriaCrud {
         return listMaterias;
     }
 
-        public static ArrayList<Uzatfase> listFasesByIdCaso(BigDecimal uztcasoId) {
+    public static ArrayList<Uzatfase> listFasesByIdCaso(BigDecimal uztcasoId) {
         ArrayList<Uzatfase> listFases = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -250,7 +269,7 @@ public class ProcuradoriaCrud {
         query_1.setColumnName("id.uzatcasoId");
         query_1.setWhereClause("=");
         query_1.setValue(uztcasoId);
-        
+
         List parameList = new ArrayList();
         parameList.add(query_1);
         List<Uzatfase> list = ds.customQuery(parameList, Uzatfase.class);
@@ -263,7 +282,7 @@ public class ProcuradoriaCrud {
         }
         return listFases;
     }
-    
+
     public static ArrayList<Uzatjudi> listJudicaturas(BigDecimal uztmateriaId) {
         ArrayList<Uzatjudi> listJudicaturas = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -344,7 +363,7 @@ public class ProcuradoriaCrud {
         }
         return listCitas;
     }
-    
+
     public static ArrayList<Uzatdocs> findDocsByCaso_Fase(BigDecimal uztcasoId, BigDecimal uztfaseId) {
         //Modificado por Dennis Santamaria
         ArrayList<Uzatdocs> listDoc = null;
@@ -376,8 +395,7 @@ public class ProcuradoriaCrud {
     /*
      BEGIN UZAPGFUNTR(?,?,?,?,?); END;
      */
-       
-        public static ArrayList<Uzatcomt> getFasesComentByIdCasoAndIdFase(final BigDecimal UztIdCaso, final BigDecimal UztIdFase) {
+    public static ArrayList<Uzatcomt> getFasesComentByIdCasoAndIdFase(final BigDecimal UztIdCaso, final BigDecimal UztIdFase) {
         ArrayList<Uzatcomt> listR = null;
         try {
             listR = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatcomt>>() {
@@ -410,8 +428,7 @@ public class ProcuradoriaCrud {
         }
         return listR;
     }
-    
-    
+
     public static ArrayList<Uzatcomt> getFasesComentByIdCaso(final BigDecimal UztIdCaso) {
         ArrayList<Uzatcomt> listR = null;
         try {
@@ -797,9 +814,9 @@ public class ProcuradoriaCrud {
     }
 
     public static ArrayList<Uzatcaso> findCasosLazybyFuncionario(BigDecimal Flag, int first, int pageSize, BigDecimal idfunci) {
-        return null;    
+        return null;
     }
-    
+
     public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
         Number contador = getCountCasosByFlag(Flag);
@@ -840,7 +857,7 @@ public class ProcuradoriaCrud {
             final BigDecimal uzatcasoFlag,
             final BigDecimal uzatasignarFlag) {
         ArrayList<Uzatasign> findCaso = new ArrayList<>();
-       
+
         try {
             findCaso = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatasign>>() {
 
@@ -862,7 +879,7 @@ public class ProcuradoriaCrud {
                         asg.setUzatasignarFlag(rs.getBigDecimal(4));
                         asg.setUzatasignarFechaIn(rs.getString(5));
                         asg.setUzatasignarFechaOut(rs.getString(6));
-                        asg.setUzatasignarMotivo(rs.getString(7));          
+                        asg.setUzatasignarMotivo(rs.getString(7));
                         asg.getUzatcaso().setUzatcasoNumcausa(rs.getString(8));
                         asg.getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaDescripcion(rs.getString(9));
                         asg.getUzatcaso().getUzatjudi().setUzatjudiDescripcion(rs.getString(10));
@@ -931,8 +948,8 @@ public class ProcuradoriaCrud {
             exito = true;
         }
         return exito;
-    }  
-   
+    }
+
     public static Boolean updateFuncionario(Uzatfunci funci) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -943,5 +960,5 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
+
 }

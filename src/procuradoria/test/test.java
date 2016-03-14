@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import procuradoria.crud.ProcuradoriaMethods;
 import procuradoria.map.Uzatasign;
 import procuradoria.map.Uzatdocs;
+import procuradoria.map.Uzatfunci;
 import procuradoria.pdf.util.DocumentsPdf;
 
 
@@ -74,19 +75,19 @@ public class test {
 //        
         
         //PRUEBAS DEL PDF///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        DocumentsPdf  pdf = new DocumentsPdf();
-//        
-//        Uzatdocs doc = new Uzatdocs();
-//        doc.getId().setUzatcasoId(BigDecimal.valueOf(100));
-//        doc.getId().setUzatfaseId(BigDecimal.valueOf(133));
-//        doc.setUzatdocsCasilla("Ninguna");
-//        doc.setUzatdocsCompromiso("Asistir a la sesión");
-//        doc.setUzatdocsFecha("12/03/2016 00:00:00");
-//        doc.setUzatfuncionarioId(BigDecimal.valueOf(114));
-//        pdf.CovertPdfToByteArray(doc,"C:\\Users\\FANNY\\Desktop\\Daniel Galarza\\EDO\\GalarzaDaniel_DeberesTercerParcial.pdf", "Deberes"); //CARGA
-//        
-        ArrayList<Uzatdocs> listDocs = ProcuradoriaMethods.FindDocsbyCaso_Fase(BigDecimal.valueOf(100), BigDecimal.valueOf(100));
-        pdf.byteArrayToFile(listDocs.get(0)); //DESCARGA
+//        DocumentsPdf  pdf = new DocumentsPdf();
+////        
+////        Uzatdocs doc = new Uzatdocs();
+////        doc.getId().setUzatcasoId(BigDecimal.valueOf(100));
+////        doc.getId().setUzatfaseId(BigDecimal.valueOf(133));
+////        doc.setUzatdocsCasilla("Ninguna");
+////        doc.setUzatdocsCompromiso("Asistir a la sesión");
+////        doc.setUzatdocsFecha("12/03/2016 00:00:00");
+////        doc.setUzatfuncionarioId(BigDecimal.valueOf(114));
+////        pdf.CovertPdfToByteArray(doc,"C:\\Users\\FANNY\\Desktop\\Daniel Galarza\\EDO\\GalarzaDaniel_DeberesTercerParcial.pdf", "Deberes"); //CARGA
+////        
+//        ArrayList<Uzatdocs> listDocs = ProcuradoriaMethods.FindDocsbyCaso_Fase(BigDecimal.valueOf(100), BigDecimal.valueOf(100));
+//        pdf.byteArrayToFile(listDocs.get(0)); //DESCARGA
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //        
@@ -109,6 +110,9 @@ public class test {
 //          {
 //              System.out.println("NO SE HA PODIDO ENVIAR CORREO");
 //          }
+        
+//        Uzatfunci usuario  = ProcuradoriaMethods.FindByIdFunciByCedFunci("L00000181","1804110474", BigDecimal.ONE);
+//        System.out.println(">> "+usuario.getUzatfuncionarioId());
         
     }
     

@@ -142,8 +142,8 @@ public class ProcuradoriaMethods {
         }
         return objAsign;
     }
-    
-    public static Boolean SendMail(String Email, String filePath, String Nombre, String numCausa, String numFase, String lugar, String fecha ) {
+
+    public static Boolean SendMail(String Email, String filePath, String Nombre, String numCausa, String numFase, String lugar, String fecha) {
         MailTool mailTo = new MailTool();
         Boolean exito = true;
         if (!mailTo.sendEmailFile(Email, filePath, Nombre, numCausa, numFase, lugar, fecha)) {
@@ -176,6 +176,31 @@ public class ProcuradoriaMethods {
             }
         }
         return listRol;
+    }
+
+    public static Uzatfunci FindByIdFunciByCedFunci(String uzatfuncionarioIdbanner, String uzatfuncionarioCedula, BigDecimal uzatfuncionarioFlag) {
+        Uzatfunci listFunci = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (uzatfuncionarioCedula != null && uzatfuncionarioIdbanner != null) {
+                listFunci = ProcuradoriaCrud.findByIdFunciByCedFunci(uzatfuncionarioIdbanner, uzatfuncionarioCedula, uzatfuncionarioFlag);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FINDROLBYFUNCIONARIO : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listFunci;
     }
 
     public static ArrayList<Uzatrol> GetAsigFunciRol(BigDecimal uztrolFlag) {
