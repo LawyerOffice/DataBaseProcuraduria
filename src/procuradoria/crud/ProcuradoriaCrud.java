@@ -280,14 +280,6 @@ public class ProcuradoriaCrud {
             log.level.info("ERROR LISTAFASESBYID : " + ex.toString());
         }
 
-        for (int i = 0; i < listFases.size(); i++) {
-            if (listFases.get(i).getUzatfaseFlag() == BigDecimal.ZERO) {
-                listFases.get(i).setStateFaseDisabled(Boolean.TRUE);
-            } else {
-                listFases.get(i).setStateFaseDisabled(Boolean.FALSE);
-            }
-        }
-
         return listFases;
     }
 
