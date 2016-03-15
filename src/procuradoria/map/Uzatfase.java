@@ -24,6 +24,8 @@ public class Uzatfase  implements java.io.Serializable {
      private Set uzatinvFfs = new HashSet(0);
      private Set uzatcomts = new HashSet(0);
      private Set uzatcitas = new HashSet(0);
+     
+     private Boolean StateFaseDisabled;
 
     public Uzatfase() {
         this.id = new UzatfaseId();
@@ -126,6 +128,14 @@ public class Uzatfase  implements java.io.Serializable {
     
     public void setUzatcitas(Set uzatcitas) {
         this.uzatcitas = uzatcitas;
+    }
+
+    public Boolean getStateFaseDisabled() {
+        return StateFaseDisabled;
+    }
+
+    public void setStateFaseDisabled(Boolean StateFaseDisabled) {
+        this.StateFaseDisabled = StateFaseDisabled;
     }
 
 
