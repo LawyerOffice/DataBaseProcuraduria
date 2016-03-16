@@ -776,6 +776,7 @@ public class ProcuradoriaMethods {
         return findCaso;
     }
 
+    
     public static Boolean InsertNuevaAsignacion(Uzatasign asign) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -823,4 +824,31 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
+    
+    
+        public static Uzatcaso findCasobyId(BigDecimal id) {
+        Uzatcaso findCaso = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (id != null) {
+                findCaso = ProcuradoriaCrud.findCasobyId(id);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FindCasobyId : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findCaso;
+    }
+        
 }
