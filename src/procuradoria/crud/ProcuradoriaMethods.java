@@ -365,6 +365,28 @@ public class ProcuradoriaMethods {
         return listJudicaturas;
     }
 
+        public static Uzatcaso CasoByIdCaso(BigDecimal uztcasoId) {
+        Uzatcaso listCasos = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            listCasos = ProcuradoriaCrud.casoByIdCaso(uztcasoId);
+        } catch (Exception ex) {
+            log.level.error("ERROR EN LISTCASOBYIDCASO : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listCasos;
+    }
+    
     public static ArrayList<Uzatcaso> ListCasosByFlag(BigDecimal uztcasoFlag) {
         ArrayList<Uzatcaso> listCasos = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -411,6 +433,55 @@ public class ProcuradoriaMethods {
         return exito;
     }
 
+    
+    public static Boolean InsertComentario(Uzatcomt comt) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (comt != null) {
+                exito = ProcuradoriaCrud.insertComentario(comt);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN Insert COMENTARIO : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+    
+        public static Boolean InsertFase(Uzatfase fase) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (fase != null) {
+                exito = ProcuradoriaCrud.insertFase(fase);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN Insert FASE : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+    
     public static Boolean InsertCaso(Uzatcaso caso) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();

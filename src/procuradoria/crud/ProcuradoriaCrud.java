@@ -304,6 +304,27 @@ public class ProcuradoriaCrud {
         return listJudicaturas;
     }
 
+        public static Uzatcaso casoByIdCaso(BigDecimal uztcasoId) {
+        Uzatcaso listCasos = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("uzatcasoId");
+        query_1.setWhereClause("=");
+        query_1.setValue(uztcasoId);
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        List<Uzatcaso> list = ds.customQuery(parameList, Uzatcaso.class);
+        try {
+            if (!list.isEmpty()) {
+                listCasos = (Uzatcaso) list.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR LISTAJUDICATURAS : " + ex.toString());
+        }
+        return listCasos;
+    }
+    
     public static ArrayList<Uzatcaso> listCasosByFlag(BigDecimal uztcasoFlag) {
         ArrayList<Uzatcaso> listCasos = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -653,7 +674,29 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-
+    
+    public static Boolean insertComentario(Uzatcomt comt) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (comt != null) {
+            ds.save(comt);
+            exito = true;
+        }
+        return exito;
+    }
+    
+        public static Boolean insertFase(Uzatfase fase) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (fase != null) {
+            ds.save(fase);
+            exito = true;
+        }
+        return exito;
+    }
+    
     public static Boolean insertCaso(Uzatcaso caso) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
