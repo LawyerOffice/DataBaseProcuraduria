@@ -675,6 +675,17 @@ public class ProcuradoriaCrud {
         return exito;
     }
     
+    public static Boolean insertCita(Uzatcita cita) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (cita != null) {
+            ds.save(cita);
+            exito = true;
+        }
+        return exito;
+    }
+    
     public static Boolean insertComentario(Uzatcomt comt) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
