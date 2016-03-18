@@ -920,7 +920,7 @@ public class ProcuradoriaMethods {
     }
     
     
-        public static Uzatcaso findCasobyId(BigDecimal id) {
+    public static Uzatcaso findCasobyId(BigDecimal id) {
         Uzatcaso findCaso = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
@@ -945,4 +945,28 @@ public class ProcuradoriaMethods {
         return findCaso;
     }
         
+    public static Uzatactor findActorbyCedula(String cedula) {
+        Uzatactor findActor = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (cedula != null) {
+                findActor = ProcuradoriaCrud.findActorbyCedula(cedula);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN findActorbyCedula : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findActor;
+    }                
 }

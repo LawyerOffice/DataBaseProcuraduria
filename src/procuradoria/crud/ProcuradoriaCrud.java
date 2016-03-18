@@ -1040,4 +1040,28 @@ public class ProcuradoriaCrud {
         return findCaso;
        
     }
+    
+        public static Uzatactor findActorbyCedula(String cedula) {
+        Uzatactor findActor = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("uzatactorCedula");
+        query_1.setWhereClause("=");
+        query_1.setValue(cedula);
+        
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        List<Uzatactor> list = ds.customQuery(parameList, Uzatactor.class);
+        try {
+            if (!list.isEmpty()) {
+                findActor = list.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR  findActorbyCedula : " + ex.toString());
+        }
+        return findActor;
+       
+    }
 }
