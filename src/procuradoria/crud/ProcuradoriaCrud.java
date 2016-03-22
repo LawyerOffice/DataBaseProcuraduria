@@ -868,9 +868,10 @@ public class ProcuradoriaCrud {
 
                 @Override
                 public BigDecimal execute(Connection cnctn) throws SQLException {
-                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFCOUNCA(?) } ");
+                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFCONTCF(?,?) } ");
                     f1.registerOutParameter(1, OracleTypes.NUMBER);
                     f1.setBigDecimal(2, uzatflag);
+                    f1.setBigDecimal(3, uzatfuncionarioId);
                     f1.execute();
                     NUMBER count = ((OracleCallableStatement) f1).getNUMBER(1);
                     return count.bigDecimalValue();
@@ -922,7 +923,7 @@ public class ProcuradoriaCrud {
 
     public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal uzatfuncionarioId, BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
-        BigDecimal contador = getCountCasosByFlag(Flag);
+        BigDecimal contador = getCountCasosByFlagByIdFunci(Flag, uzatfuncionarioId);
 
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
