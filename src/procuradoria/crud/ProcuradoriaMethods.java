@@ -822,6 +822,28 @@ public class ProcuradoriaMethods {
         }
         return findCaso;
     }
+    
+    public static ArrayList<Uzatcaso> FindCasosLazy(BigDecimal uzatfuncionarioId,BigDecimal Flag, int first, int pageSize) {
+        ArrayList<Uzatcaso> findCaso = new ArrayList<>();
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            findCaso = ProcuradoriaCrud.findCasosLazy(uzatfuncionarioId, Flag, first, pageSize);
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FindCasosLazy : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findCaso;
+    }
 
     public static ArrayList<Uzatasign> FindCasosAdminLazy(BigDecimal uzatfuncionarioId, BigDecimal uzatcasoFlag, BigDecimal uzatasignarFlag) {
         ArrayList<Uzatasign> findCaso = new ArrayList<>();

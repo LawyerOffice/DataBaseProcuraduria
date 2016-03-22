@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
+import oracle.sql.NUMBER;
 import org.hibernate.HibernateException;
 import org.hibernate.jdbc.ReturningWork;
 import procuradoria.map.*;
@@ -304,7 +305,7 @@ public class ProcuradoriaCrud {
         return listJudicaturas;
     }
 
-        public static Uzatcaso casoByIdCaso(BigDecimal uztcasoId) {
+    public static Uzatcaso casoByIdCaso(BigDecimal uztcasoId) {
         Uzatcaso listCasos = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -324,7 +325,7 @@ public class ProcuradoriaCrud {
         }
         return listCasos;
     }
-    
+
     public static ArrayList<Uzatcaso> listCasosByFlag(BigDecimal uztcasoFlag) {
         ArrayList<Uzatcaso> listCasos = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -674,7 +675,7 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
+
     public static Boolean insertCita(Uzatcita cita) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -685,7 +686,7 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
+
     public static Boolean insertComentario(Uzatcomt comt) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -696,8 +697,8 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
-        public static Boolean insertFase(Uzatfase fase) {
+
+    public static Boolean insertFase(Uzatfase fase) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -707,7 +708,7 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
+
     public static Boolean insertCaso(Uzatcaso caso) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -837,26 +838,19 @@ public class ProcuradoriaCrud {
         return findFun;
     }
 
-    public static Number getCountCasosByFlag(final BigDecimal uzatflag) {
-        Number listDzts = null;
+    public static BigDecimal getCountCasosByFlag(final BigDecimal uzatflag) {
+        BigDecimal countNum = null;
         try {
-            listDzts = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<Number>() {
+            countNum = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<BigDecimal>() {
 
                 @Override
-                public Number execute(Connection cnctn) throws SQLException {
+                public BigDecimal execute(Connection cnctn) throws SQLException {
                     CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFCOUNCA(?) } ");
-                    f1.registerOutParameter(1, OracleTypes.CURSOR);
+                    f1.registerOutParameter(1, OracleTypes.NUMBER);
                     f1.setBigDecimal(2, uzatflag);
                     f1.execute();
-                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
-                    Number list = null;
-                    while (rs.next()) {
-                        list = rs.getBigDecimal(1);
-                    }
-                    rs.close();
-                    rs = null;
-
-                    return list;
+                    NUMBER count = ((OracleCallableStatement) f1).getNUMBER(1);
+                    return count.bigDecimalValue();
                 }
             });
 
@@ -864,7 +858,7 @@ public class ProcuradoriaCrud {
             log.level.info(">>> " + ex.toString());
         }
 
-        return listDzts;
+        return countNum;
     }
 
     public static ArrayList<Uzatcaso> findCasosLazybyFuncionario(BigDecimal Flag, int first, int pageSize, BigDecimal idfunci) {
@@ -873,7 +867,7 @@ public class ProcuradoriaCrud {
 
     public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
-        Number contador = getCountCasosByFlag(Flag);
+        BigDecimal contador = getCountCasosByFlag(Flag);
 
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -885,6 +879,49 @@ public class ProcuradoriaCrud {
 
         List paramList = new ArrayList();
         paramList.add(query_5);
+
+        List<Uzatcaso> listfun = ds.customQueryLazy(paramList, Uzatcaso.class, first, pageSize);
+
+        try {
+            if (!listfun.isEmpty()) {
+
+                Uzatcaso objCaso = new Uzatcaso();
+                for (int i = 0; i < contador.intValue(); i++) {
+                    findCaso.add(objCaso);
+                }
+
+                for (int y = first, z = 0; y < first + listfun.size(); y++, z++) {
+                    findCaso.set(y, listfun.get(z));
+                }
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo encontrar casos disponibles.");
+        }
+
+        return findCaso;
+    }
+
+    public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal uzatfuncionarioId, BigDecimal Flag, int first, int pageSize) {
+        ArrayList<Uzatcaso> findCaso = new ArrayList<>();
+        BigDecimal contador = getCountCasosByFlag(Flag);
+
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        
+        QueryParameter query_4 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_4.setColumnName("uzatcasoFlag");
+        query_4.setWhereClause("=");
+        query_4.setValue(uzatfuncionarioId);
+
+        QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_5.setColumnName("uzatcasoFlag");
+        query_5.setWhereClause("=");
+        query_5.setValue(Flag);
+
+        List paramList = new ArrayList();
+        paramList.add(query_4);
+        paramList.add(query_5);
+        
 
         List<Uzatcaso> listfun = ds.customQueryLazy(paramList, Uzatcaso.class, first, pageSize);
 
@@ -1015,18 +1052,16 @@ public class ProcuradoriaCrud {
         return exito;
     }
 
-    
-    
     public static Uzatcaso findCasobyId(BigDecimal id) {
         Uzatcaso findCaso = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        
+
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
         query_1.setColumnName("uzatcasoId");
         query_1.setWhereClause("=");
         query_1.setValue(id);
-        
+
         List parameList = new ArrayList();
         parameList.add(query_1);
         List<Uzatcaso> list = ds.customQuery(parameList, Uzatcaso.class);
@@ -1038,19 +1073,19 @@ public class ProcuradoriaCrud {
             log.level.info("ERROR  findCasobyId : " + ex.toString());
         }
         return findCaso;
-       
+
     }
-    
-        public static Uzatactor findActorbyCedula(String cedula) {
+
+    public static Uzatactor findActorbyCedula(String cedula) {
         Uzatactor findActor = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        
+
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
         query_1.setColumnName("uzatactorCedula");
         query_1.setWhereClause("=");
         query_1.setValue(cedula);
-        
+
         List parameList = new ArrayList();
         parameList.add(query_1);
         List<Uzatactor> list = ds.customQuery(parameList, Uzatactor.class);
@@ -1062,9 +1097,9 @@ public class ProcuradoriaCrud {
             log.level.info("ERROR  findActorbyCedula : " + ex.toString());
         }
         return findActor;
-       
+
     }
-        
+
     public static Boolean updateActor(Uzatactor actor) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -1075,7 +1110,7 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
+
     public static Boolean updateCaso(Uzatcaso caso) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -1085,8 +1120,8 @@ public class ProcuradoriaCrud {
             exito = true;
         }
         return exito;
-    }    
-    
+    }
+
     public static Boolean insertInvolCa(UzatinvCa involca) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
