@@ -1064,4 +1064,37 @@ public class ProcuradoriaCrud {
         return findActor;
        
     }
+        
+    public static Boolean updateActor(Uzatactor actor) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (actor != null) {
+            ds.update(actor);
+            exito = true;
+        }
+        return exito;
+    }
+    
+    public static Boolean updateCaso(Uzatcaso caso) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (caso != null) {
+            ds.update(caso);
+            exito = true;
+        }
+        return exito;
+    }    
+    
+    public static Boolean insertInvolCa(UzatinvCa involca) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (involca != null) {
+            ds.save(involca);
+            exito = true;
+        }
+        return exito;
+    }
 }

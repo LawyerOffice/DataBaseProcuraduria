@@ -968,5 +968,77 @@ public class ProcuradoriaMethods {
             }
         }
         return findActor;
-    }                
+    }          
+    
+    public static Boolean UpdateActor(Uzatactor actor) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (actor != null) {
+                exito = ProcuradoriaCrud.updateActor(actor);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN UpdateActor : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+    
+    public static Boolean UpdateCaso(Uzatcaso caso) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (caso != null) {
+                exito = ProcuradoriaCrud.updateCaso(caso);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN UpdateCaso : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+    
+    public static Boolean InsertInvolCa(UzatinvCa involca) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (involca != null) {
+                exito = ProcuradoriaCrud.insertInvolCa(involca);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN InsertInvolCa : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
 }
