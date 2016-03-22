@@ -861,10 +861,6 @@ public class ProcuradoriaCrud {
         return countNum;
     }
 
-    public static ArrayList<Uzatcaso> findCasosLazybyFuncionario(BigDecimal Flag, int first, int pageSize, BigDecimal idfunci) {
-        return null;
-    }
-
     public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
         BigDecimal contador = getCountCasosByFlag(Flag);
@@ -1131,5 +1127,18 @@ public class ProcuradoriaCrud {
             exito = true;
         }
         return exito;
+    }
+    
+    public static Boolean insertAsign(Uzatasign asign) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        
+        if (asign != null) {
+            ds.save(asign);
+            exito = true;
+        }   
+        
+        return exito;       
     }
 }
