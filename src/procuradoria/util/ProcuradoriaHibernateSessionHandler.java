@@ -15,15 +15,15 @@ import org.hibernate.SessionFactory;
  */
 public class ProcuradoriaHibernateSessionHandler {
     
-    private SessionFactory RapidLoansSession;
+    private SessionFactory ProcuraduriaSession;
     private final static L log = new L(ProcuradoriaHibernateSessionHandler.class);
 
     public ProcuradoriaHibernateSessionHandler() {
 
-        RapidLoansSession = ProcuraduriaHibernateUtil.getSessionFactory();
+        ProcuraduriaSession = ProcuraduriaHibernateUtil.getSessionFactory();
 
         try {
-            RapidLoansSession.getCurrentSession().beginTransaction();
+            ProcuraduriaSession.getCurrentSession().beginTransaction();
 
         } catch (Exception e) {
             log.level.error("Error en la sesion de Hibernate", e);
@@ -32,15 +32,15 @@ public class ProcuradoriaHibernateSessionHandler {
 
     public void close() {
         try {
-            RapidLoansSession.getCurrentSession().getTransaction().commit();
+            ProcuraduriaSession.getCurrentSession().getTransaction().commit();
         } catch (Exception e) {
-            if (RapidLoansSession.getCurrentSession().getTransaction().isActive()) {
+            if (ProcuraduriaSession.getCurrentSession().getTransaction().isActive()) {
                 log.level.error("Trying to rollback database transaction after exception. Módulo RapidLoans_Users.", e);
-                RapidLoansSession.getCurrentSession().getTransaction().rollback();
+                ProcuraduriaSession.getCurrentSession().getTransaction().rollback();
             }
             log.level.error("Error al cerrar la sesion de Hibernate", e);
         } finally {
-            RapidLoansSession.getCurrentSession().close();
+            ProcuraduriaSession.getCurrentSession().close();
         }
 
     }

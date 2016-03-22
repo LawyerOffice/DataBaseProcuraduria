@@ -860,6 +860,29 @@ public class ProcuradoriaCrud {
 
         return countNum;
     }
+    
+    public static BigDecimal getCountCasosByFlagByIdFunci(final BigDecimal uzatflag, final BigDecimal uzatfuncionarioId) {
+        BigDecimal countNum = null;
+        try {
+            countNum = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<BigDecimal>() {
+
+                @Override
+                public BigDecimal execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFCOUNCA(?) } ");
+                    f1.registerOutParameter(1, OracleTypes.NUMBER);
+                    f1.setBigDecimal(2, uzatflag);
+                    f1.execute();
+                    NUMBER count = ((OracleCallableStatement) f1).getNUMBER(1);
+                    return count.bigDecimalValue();
+                }
+            });
+
+        } catch (HibernateException ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+
+        return countNum;
+    }
 
     public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
@@ -903,34 +926,39 @@ public class ProcuradoriaCrud {
 
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        
-        QueryParameter query_4 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_4.setColumnName("uzatfuncionarioId");
-        query_4.setWhereClause("=");
-        query_4.setValue(uzatfuncionarioId);
+
+        QueryParameter joincaso = new QueryParameter(QueryParameter.$TYPE_JOIN);
+        joincaso.setJoinAlias("uzatcaso");
+        joincaso.setJoinOrderNumber(1);
+        joincaso.setColumnName("uzatcaso");
 
         QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_5.setColumnName("uzatcasoFlag");
+        query_5.setColumnName("uzatcaso.uzatcasoFlag");
         query_5.setWhereClause("=");
         query_5.setValue(Flag);
 
+        QueryParameter query_4 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_4.setColumnName("id.uzatfuncionarioId");
+        query_4.setWhereClause("=");
+        query_4.setValue(uzatfuncionarioId);
+
         List paramList = new ArrayList();
+        paramList.add(joincaso);
         paramList.add(query_4);
         paramList.add(query_5);
-        
 
-        List<Uzatcaso> listfun = ds.customQueryLazy(paramList, Uzatcaso.class, first, pageSize);
+        List<Uzatasign> listcaso = ds.customQueryLazy(paramList, Uzatasign.class,first, pageSize);
 
         try {
-            if (!listfun.isEmpty()) {
+            if (!listcaso.isEmpty()) {
 
                 Uzatcaso objCaso = new Uzatcaso();
                 for (int i = 0; i < contador.intValue(); i++) {
                     findCaso.add(objCaso);
                 }
 
-                for (int y = first, z = 0; y < first + listfun.size(); y++, z++) {
-                    findCaso.set(y, listfun.get(z));
+                for (int y = first, z = 0; y < first + listcaso.size(); y++, z++) {
+                    findCaso.set(y, listcaso.get(z).getUzatcaso());
                 }
             }
         } catch (Exception ex) {
@@ -1128,17 +1156,17 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
+
     public static Boolean insertAsign(Uzatasign asign) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        
+
         if (asign != null) {
             ds.save(asign);
             exito = true;
-        }   
-        
-        return exito;       
+        }
+
+        return exito;
     }
 }

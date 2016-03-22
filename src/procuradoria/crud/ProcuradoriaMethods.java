@@ -830,7 +830,7 @@ public class ProcuradoriaMethods {
         try {
             findCaso = ProcuradoriaCrud.findCasosLazy(uzatfuncionarioId, Flag, first, pageSize);
         } catch (Exception ex) {
-            log.level.error("ERROR EN FindCasosLazy : ");
+            log.level.error("ERROR EN FindCasosLazy : "+ex.getMessage());
             delegateException = ex;
         } finally {
             hss.close();
