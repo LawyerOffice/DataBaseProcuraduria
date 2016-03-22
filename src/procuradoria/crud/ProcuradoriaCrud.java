@@ -905,7 +905,7 @@ public class ProcuradoriaCrud {
                 getSessionFactory().getCurrentSession());
         
         QueryParameter query_4 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_4.setColumnName("uzatcasoFlag");
+        query_4.setColumnName("uzatfuncionarioId");
         query_4.setWhereClause("=");
         query_4.setValue(uzatfuncionarioId);
 
