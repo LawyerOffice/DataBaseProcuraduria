@@ -1170,4 +1170,17 @@ public class ProcuradoriaCrud {
 
         return exito;
     }
+    
+    public static Boolean insertActor(Uzatactor actor) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        System.out.println("");
+        if (actor != null) {
+            ds.save(actor);
+            exito = true;
+        }
+
+        return exito;
+    }
 }

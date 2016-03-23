@@ -1087,4 +1087,28 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
+    
+    public static Boolean insertActor(Uzatactor actor) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (actor != null) {
+                exito = ProcuradoriaCrud.insertActor(actor);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN insertActor : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
 }
