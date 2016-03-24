@@ -708,6 +708,17 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
+    
+    public static Boolean updateFase(Uzatfase fase) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (fase != null) {
+            ds.update(fase);
+            exito = true;
+        }
+        return exito;
+    }
 
     public static Boolean insertCaso(Uzatcaso caso) {
         Boolean exito = false;
@@ -922,6 +933,55 @@ public class ProcuradoriaCrud {
     }
 
     public static ArrayList<Uzatcaso> findCasosLazy(BigDecimal uzatfuncionarioId, BigDecimal Flag, int first, int pageSize) {
+        ArrayList<Uzatcaso> findCaso = new ArrayList<>();
+        BigDecimal contador = getCountCasosByFlagByIdFunci(Flag, uzatfuncionarioId);
+
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        QueryParameter joincaso = new QueryParameter(QueryParameter.$TYPE_JOIN);
+        joincaso.setJoinAlias("uzatcaso");
+        joincaso.setJoinOrderNumber(1);
+        joincaso.setColumnName("uzatcaso");
+
+        QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_5.setColumnName("uzatcaso.uzatcasoFlag");
+        query_5.setWhereClause("=");
+        query_5.setValue(Flag);
+
+        QueryParameter query_4 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_4.setColumnName("id.uzatfuncionarioId");
+        query_4.setWhereClause("=");
+        query_4.setValue(uzatfuncionarioId);
+
+        List paramList = new ArrayList();
+        paramList.add(joincaso);
+        paramList.add(query_4);
+        paramList.add(query_5);
+
+        List<Uzatasign> listcaso = ds.customQueryLazy(paramList, Uzatasign.class,first, pageSize);
+
+        try {
+            if (!listcaso.isEmpty()) {
+
+                Uzatcaso objCaso = new Uzatcaso();
+                for (int i = 0; i < contador.intValue(); i++) {
+                    findCaso.add(objCaso);
+                }
+
+                for (int y = first, z = 0; y < first + listcaso.size(); y++, z++) {
+                    findCaso.set(y, listcaso.get(z).getUzatcaso());
+                }
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo encontrar casos disponibles.");
+        }
+
+        return findCaso;
+    }
+    
+    
+    public static ArrayList<Uzatcaso> findFaseByCasoByNumFase(BigDecimal uzatfuncionarioId, BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
         BigDecimal contador = getCountCasosByFlagByIdFunci(Flag, uzatfuncionarioId);
 
