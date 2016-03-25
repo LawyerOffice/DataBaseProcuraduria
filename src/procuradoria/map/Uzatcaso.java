@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Mar 11, 2016 1:10:52 AM by Hibernate Tools 3.6.0
+// Generated Mar 25, 2016 3:25:02 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -23,13 +23,15 @@ public class Uzatcaso  implements java.io.Serializable {
      private String uzatcasoFechaIn;
      private String uzatcasoFechaOut;
      private String uzatcasoResolucion;
+     private BigDecimal uzatcasoVisible;
      private Set uzatasigns = new HashSet(0);
      private Set uzatfases = new HashSet(0);
      private Set uzatinvCas = new HashSet(0);
 
     public Uzatcaso() {
-        this.uzatcasoFlag = new BigDecimal(BigInteger.ONE);
+        this.uzatcasoFlag = new BigDecimal(BigInteger.ZERO);
         this.uzatcasoId = new BigDecimal(BigInteger.ONE);
+        this.uzatcasoVisible = new BigDecimal(BigInteger.ONE);
         this.uzatjudi = new Uzatjudi();
     }
 
@@ -38,7 +40,7 @@ public class Uzatcaso  implements java.io.Serializable {
         this.uzatcasoId = uzatcasoId;
         this.uzatjudi = uzatjudi;
     }
-    public Uzatcaso(BigDecimal uzatcasoId, Uzatjudi uzatjudi, BigDecimal uzatcasoFlag, String uzatcasoNumcausa, String uzatcasoMotivo, String uzatcasoDetalle, String uzatcasoTipo, String uzatcasoFechaIn, String uzatcasoFechaOut, String uzatcasoResolucion, Set uzatasigns, Set uzatfases, Set uzatinvCas) {
+    public Uzatcaso(BigDecimal uzatcasoId, Uzatjudi uzatjudi, BigDecimal uzatcasoFlag, String uzatcasoNumcausa, String uzatcasoMotivo, String uzatcasoDetalle, String uzatcasoTipo, String uzatcasoFechaIn, String uzatcasoFechaOut, String uzatcasoResolucion, BigDecimal uzatcasoVisible, Set uzatasigns, Set uzatfases, Set uzatinvCas) {
        this.uzatcasoId = uzatcasoId;
        this.uzatjudi = uzatjudi;
        this.uzatcasoFlag = uzatcasoFlag;
@@ -49,6 +51,7 @@ public class Uzatcaso  implements java.io.Serializable {
        this.uzatcasoFechaIn = uzatcasoFechaIn;
        this.uzatcasoFechaOut = uzatcasoFechaOut;
        this.uzatcasoResolucion = uzatcasoResolucion;
+       this.uzatcasoVisible = uzatcasoVisible;
        this.uzatasigns = uzatasigns;
        this.uzatfases = uzatfases;
        this.uzatinvCas = uzatinvCas;
@@ -123,6 +126,13 @@ public class Uzatcaso  implements java.io.Serializable {
     
     public void setUzatcasoResolucion(String uzatcasoResolucion) {
         this.uzatcasoResolucion = uzatcasoResolucion;
+    }
+    public BigDecimal getUzatcasoVisible() {
+        return this.uzatcasoVisible;
+    }
+    
+    public void setUzatcasoVisible(BigDecimal uzatcasoVisible) {
+        this.uzatcasoVisible = uzatcasoVisible;
     }
     public Set getUzatasigns() {
         return this.uzatasigns;

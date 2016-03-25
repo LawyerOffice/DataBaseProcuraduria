@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Mar 11, 2016 1:10:52 AM by Hibernate Tools 3.6.0
+// Generated Mar 25, 2016 3:25:02 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;

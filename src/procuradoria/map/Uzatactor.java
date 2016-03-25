@@ -1,8 +1,9 @@
 package procuradoria.map;
-// Generated Mar 11, 2016 1:10:52 AM by Hibernate Tools 3.6.0
+// Generated Mar 25, 2016 3:25:02 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,16 +21,18 @@ public class Uzatactor  implements java.io.Serializable {
      private String uzatactorMovil;
      private String uzatactorEmail;
      private String uzatactorInstitutcion;
+     private String uzatactorIdbanner;
      private Set uzatinvCas = new HashSet(0);
 
     public Uzatactor() {
+        this.uzatactorId = new BigDecimal(BigInteger.ONE);
     }
 
 	
     public Uzatactor(BigDecimal uzatactorId) {
         this.uzatactorId = uzatactorId;
     }
-    public Uzatactor(BigDecimal uzatactorId, String uzatactorNombres, String uzatactorApellidos, String uzatactorCedula, String uzatactorDireccion, String uzatactorMovil, String uzatactorEmail, String uzatactorInstitutcion, Set uzatinvCas) {
+    public Uzatactor(BigDecimal uzatactorId, String uzatactorNombres, String uzatactorApellidos, String uzatactorCedula, String uzatactorDireccion, String uzatactorMovil, String uzatactorEmail, String uzatactorInstitutcion, String uzatactorIdbanner, Set uzatinvCas) {
        this.uzatactorId = uzatactorId;
        this.uzatactorNombres = uzatactorNombres;
        this.uzatactorApellidos = uzatactorApellidos;
@@ -38,6 +41,7 @@ public class Uzatactor  implements java.io.Serializable {
        this.uzatactorMovil = uzatactorMovil;
        this.uzatactorEmail = uzatactorEmail;
        this.uzatactorInstitutcion = uzatactorInstitutcion;
+       this.uzatactorIdbanner = uzatactorIdbanner;
        this.uzatinvCas = uzatinvCas;
     }
    
@@ -96,6 +100,13 @@ public class Uzatactor  implements java.io.Serializable {
     
     public void setUzatactorInstitutcion(String uzatactorInstitutcion) {
         this.uzatactorInstitutcion = uzatactorInstitutcion;
+    }
+    public String getUzatactorIdbanner() {
+        return this.uzatactorIdbanner;
+    }
+    
+    public void setUzatactorIdbanner(String uzatactorIdbanner) {
+        this.uzatactorIdbanner = uzatactorIdbanner;
     }
     public Set getUzatinvCas() {
         return this.uzatinvCas;
