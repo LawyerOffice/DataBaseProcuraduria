@@ -1259,9 +1259,22 @@ public class ProcuradoriaCrud {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        System.out.println("");
+        
         if (actor != null) {
             ds.save(actor);
+            exito = true;
+        }
+
+        return exito;
+    }
+    
+    public static Boolean insertinvff(UzatinvFf involff) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        
+        if (involff != null) {
+            ds.save(involff);
             exito = true;
         }
 
