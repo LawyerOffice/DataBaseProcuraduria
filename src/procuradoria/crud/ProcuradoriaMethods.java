@@ -92,6 +92,31 @@ public class ProcuradoriaMethods {
         }
         return objFasesComent;
     }
+    
+    public static BigDecimal GetUltimaFaseIdByCaso(BigDecimal uzatcaso,BigDecimal uzatfaseFlag) {
+        BigDecimal uzatfaseid = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if(uzatcaso != null && uzatfaseFlag != null){
+                uzatfaseid = ProcuradoriaCrud.getUltimaFaseIdByCaso(uzatcaso, uzatfaseFlag);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FINDFASESANDCOMTBYIDCASOANDIDFASE : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return uzatfaseid;
+    }
 
     public static ArrayList<Uzatcomt> GetFasesComentByIdCaso(BigDecimal uzatcasoId) {
         ArrayList<Uzatcomt> objFasesComent = null;

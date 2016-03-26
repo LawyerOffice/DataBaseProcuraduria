@@ -871,6 +871,30 @@ public class ProcuradoriaCrud {
 
         return countNum;
     }
+
+    public static BigDecimal getUltimaFaseIdByCaso(final BigDecimal uzatcaso,final BigDecimal uzatfaseFlag) {
+        BigDecimal countNum = null;
+        try {
+            countNum = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<BigDecimal>() {
+
+                @Override
+                public BigDecimal execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFGIDFBC(?,?) } ");
+                    f1.registerOutParameter(1, OracleTypes.NUMBER);
+                    f1.setBigDecimal(2, uzatcaso);
+                    f1.setBigDecimal(3, uzatfaseFlag);
+                    f1.execute();
+                    NUMBER count = ((OracleCallableStatement) f1).getNUMBER(1);
+                    return count.bigDecimalValue();
+                }
+            });
+
+        } catch (HibernateException ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+
+        return countNum;
+    }
     
     public static BigDecimal getCountCasosByFlagByIdFunci(final BigDecimal uzatflag, final BigDecimal uzatfuncionarioId) {
         BigDecimal countNum = null;
