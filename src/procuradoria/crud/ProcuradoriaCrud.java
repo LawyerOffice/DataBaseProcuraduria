@@ -524,6 +524,7 @@ public class ProcuradoriaCrud {
                         Cita.getUzatfase().getUzatcaso().getUzatjudi().getId().setUzatmateriaId(rs.getBigDecimal(9));
                         Cita.getUzatfase().getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaId(rs.getBigDecimal(9));
                         Cita.getUzatfase().getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaDescripcion(rs.getString(10));
+                        Cita.setUzatfuncionarioId(rs.getBigDecimal(11));
 
                         list.add(Cita);
                     }
