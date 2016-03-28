@@ -1,5 +1,5 @@
 package procuradoria.map;
-// Generated Mar 25, 2016 3:25:02 PM by Hibernate Tools 3.6.0
+// Generated Mar 28, 2016 5:02:18 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -23,12 +23,12 @@ public class Uzatasign  implements java.io.Serializable {
      private Uzatfase UltimaFaseActual;
 
     public Uzatasign() {
-        this.UltimaFaseActual = new Uzatfase();
         this.id = new UzatasignId();
-        this.uzatasignarFlag =  new BigDecimal(BigInteger.ZERO);
-        this.uzatasignarId = new BigDecimal(BigInteger.ZERO);
         this.uzatcaso = new Uzatcaso();
-        this.uzatfunci = new Uzatfunci();
+        this.uzatfunci = new Uzatfunci(); 
+        this.uzatasignarId = new BigDecimal(BigInteger.ONE);
+        this.uzatasignarFlag = new BigDecimal(BigInteger.ZERO);
+        this.UltimaFaseActual = new Uzatfase();
     }
 
 	

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 25, 2016 3:25:03 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated Mar 28, 2016 5:02:19 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="procuradoria.map.Uzatcita" table="UZATCITA" schema="ESPE">
         <composite-id name="id" class="procuradoria.map.UzatcitaId">
@@ -30,6 +30,9 @@
         </property>
         <property name="uzatfuncionarioId" type="big_decimal">
             <column name="UZATFUNCIONARIO_ID" precision="38" scale="0" />
+        </property>
+        <property name="uzatcitaDescripcion" type="string">
+            <column name="UZATCITA_DESCRIPCION" length="300" />
         </property>
     </class>
 </hibernate-mapping>
