@@ -1182,4 +1182,29 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
+    
+    public static Uzatactor findActorbyIDBanner(String id) {
+        Uzatactor findActor = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (id != null) {
+                findActor = ProcuradoriaCrud.findActorbyIDBanner(id);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN findActorbyIDBanner : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findActor;
+    }
 }
