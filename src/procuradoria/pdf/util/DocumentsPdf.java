@@ -25,6 +25,23 @@ import procuradoria.map.Uzatdocs;
  */
 public class DocumentsPdf {
 
+    public static Boolean SaveDocument(Uzatdocs docs, byte[] file) {
+
+        Boolean exito=false;
+
+        try {
+            java.sql.Blob blob = null;
+            blob = new SerialBlob(file);
+            docs.setUzatdocsArchivo(blob);
+            exito = ProcuradoriaMethods.InsertDocs(docs);
+
+        } catch (SQLException ex) {
+            //Logger.getLogger(DocumentsPdf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return exito;
+    }
+    
     public static Boolean CovertPdfToByteArray(Uzatdocs docs, String Url, String filename) {
 
         FileInputStream in = null;
@@ -59,20 +76,9 @@ public class DocumentsPdf {
 
             int blobLength = (int) blob.length();
             byte[] bArray = blob.getBytes(1, blobLength);
-
             blob.free();
-
-            // Create file  
-            OutputStream out = new FileOutputStream("out.pdf");
-
-//          CON CUALQUIERA DE LOS DOS MÉTODOS SIRVE.            
-            out.write(bArray);
-//            out.close();
-
-//            for (Byte b : bArray) {
-//                out.write(b);
-//            }
-            
+            OutputStream out = new FileOutputStream("out.pdf");            
+            out.write(bArray);    
             out.close();
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
