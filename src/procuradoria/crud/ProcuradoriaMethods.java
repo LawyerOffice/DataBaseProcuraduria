@@ -1207,4 +1207,31 @@ public class ProcuradoriaMethods {
         }
         return findActor;
     }
+    
+    public static int findNumerosdeCasosbyMateri(String materi) {
+        int temp = 0;
+        
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        
+        try {
+            if (materi != null) {
+                temp = ProcuradoriaCrud.findNumerosdeCasosbyMateri(materi);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN findNumerosdeCasosbyMateri : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return temp;
+    }
 }

@@ -1306,4 +1306,29 @@ public class ProcuradoriaCrud {
         return findActor;
 
     }
+    
+    public static int findNumerosdeCasosbyMateri(String materi) {
+        Uzatcaso findCaso = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        
+        List paramList = new ArrayList();
+
+        List<Uzatcaso> listfun = ds.customQuery(paramList, Uzatcaso.class);
+        
+        int temp = 0;
+     
+        try {
+            if (!listfun.isEmpty()) {
+                for (int i = 0; i < listfun.size(); i++) {
+                    if(listfun.get(i).getUzatjudi().getUzatmateri().getUzatmateriaId().equals(new BigDecimal(materi)))
+                        temp++;
+                }
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo buscar caso por numero de causa");
+        }
+
+        return temp;
+    }
 }
