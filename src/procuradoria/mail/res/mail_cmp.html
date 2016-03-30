@@ -107,10 +107,11 @@
                 text-align: inherit;
             }
 
-            table.row { 
-                padding: 0px; 
-                width: 100%;
-                position: relative;
+            table.row {
+	padding: 0px;
+	width: 100%;
+	position: relative;
+	background-color: #ECF8FF;
             }
 
             table.container table.row {
@@ -337,7 +338,9 @@
                 word-break: normal;
             }
 
-            h1 {font-size: 40px;}
+            h1 {
+	font-size: 30px;
+}
             h2 {font-size: 36px;}
             h3 {font-size: 32px;}
             h4 {font-size: 28px;}
@@ -725,9 +728,9 @@
             }
 
             .template-label {
-                color: #ffffff;
-                font-weight: bold;
-                font-size: 11px;
+	color: #000000;
+	font-weight: bold;
+	font-size: 11px;
             }
 
             .callout .wrapper {
@@ -735,8 +738,8 @@
             }
 
             .callout .panel {
-                background: #ECF8FF;
-                border-color: #b9e5ff;
+	background: #FFFFFF;
+	border-color: #000000;
             }
 
             .header {
@@ -775,6 +778,14 @@
                 }
             }
 
+        #apDiv1 {
+	position: absolute;
+	width: 146px;
+	height: 132px;
+	z-index: 1;
+	left: 455px;
+	top: 33px;
+}
         </style>
     </head>
     <body>
@@ -783,24 +794,18 @@
                 <td class="center" align="center" valign="top">
                     <center>
 
-                        <table class="row header">
+                      <table class="row header">
                             <tr>
-                                <td class="center" align="center">
+                                <td align="center" bgcolor="#0066FF" class="center">
                                     <center>
 
                                         <table class="container">
-                                            <tr>
+                                            <tr bgcolor="#FFFFFF">
                                                 <td class="wrapper last">
 
                                                     <table class="twelve columns">
                                                         <tr>
-                                                            <td class="six sub-columns">
-                                                                <img src="cid:@acreditacion" width="158" height="138"/>
-                                                            </td>
-                                                            <td class="six sub-columns last" style="text-align:right; vertical-align:middle;">
-                                                                <span class="template-label">LAWYERS OFFICE</span>
-                                                            </td>
-                                                            <td class="expander"></td>
+                                                            <td class="six sub-columns"><img src="acreditacion.png" alt="" /></td>
                                                         </tr>
                                                     </table>
 
@@ -813,8 +818,9 @@
                             </tr>
                         </table>
 
-                        <table class="container">
-                            <tr>
+                        <div id="apDiv1"><img src="espe-google-marketing.jpg" alt="" height="142" /></div>
+                        <table width="754" class="container">
+                            <tr bgcolor="#0099FF">
                                 <td>
 
                                     <table class="row">
@@ -824,21 +830,46 @@
                                                 <table class="twelve columns">
                                                     <tr>
                                                         <td>
-                                                            <h1>Saludos</h1>
+                                                            <h1>Saludos,</h1>
                                                             <p class="lead">XfileNameX</p>
-                                                            <p class="lead"  >
+                                                            <p class="lead">&nbsp;</p>
+                                                          <p class="lead"  >
                                                                 Este email es una alerta de la siguiente cita: </p>
                                                             
-                                                            <p>Caso: XnumCausaX <br/>
-                                                            
-                                                            Fase: XnumFaseX <br/>
-                                                            
-                                                            Lugar: XcitaSalaX <br/>
-                                                            
-                                                            Fecha y Hora: XcitaFechaX </p>
-                                                            <p> </p>
-                                                        </td>
-                                                        <td class="expander"></td>
+                                                          <table width="562" border="0">
+                                                            <tr>
+                                                              <th width="148" scope="row">Número de causa:</th>
+                                                              <td width="404">XnumCausaX</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <th scope="row">Número de fase:</th>
+                                                              <td>XnumFaseX</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <th scope="row">Nombre de la fase:</th>
+                                                              <td>XnomFaseX</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <th scope="row">Judicatura:</th>
+                                                              <td>XnomJudiX</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <th scope="row">Materia:</th>
+                                                              <td>XnomMateX</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <th scope="row">Sala:</th>
+                                                              <td>XcitaSalaX</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <th scope="row">Fecha y Hora:</th>
+                                                              <td>XcitaFechaX</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <th scope="row">Descripción:</th>
+                                                              <td>XdesCitaX</td>
+                                                            </tr>
+                                                          </table></td>
                                                     </tr>
                                                 </table>
 
@@ -847,21 +878,20 @@
                                     </table>
 
                                     <table class="row callout">
-                                        <tr>
-                                            <td class="wrapper last">
+                                        <tr bgcolor="#FFFFFF">
+                                            <td bgcolor="#ECF8FF" class="wrapper last">
 
-                                                <table class="twelve columns">
+                                              <table width="621" class="twelve columns">
                                                     <tr>
-                                                        <td class="panel">
-                                                            <p>Por favor dar atención a la presente, y tomar las acciones adecuadas del caso.</p>
+                                                        <td bgcolor="#FFFFFF" class="panel">
+                                                            <p>Por favor dar atención a la presente y tomar las acciones adecuadas del caso.</p>
                                                         </td>
-                                                        <td class="expander"></td>
                                                     </tr>
-                                                </table>
+                                              </table>
 
-                                            </td>
-                                        </tr>
-                                    </table>
+                                          </td>
+                                      </tr>
+                                  </table>
 
                                     <table class="row">
                                         <tr>
@@ -871,19 +901,18 @@
                                                     <tr>
                                                         <td align="center">
                                                             <center>
-                                                                <p style="text-align:center;"><a href="#">UTICS</a> | <a href="https://miespe.espe.edu.ec/">UFA - ESPE</a> | <a href="#">Ingeniería en Sistemas e Informática</a></p>
+                                                                <p style="text-align:center;"><a href="http://utic.espe.edu.ec/">UTICS</a> | <a href="http://www.espe.edu.ec/">ESPE Home</a></p>
                                                             </center>
                                                         </td>
-                                                        <td class="expander"></td>
                                                     </tr>
                                                 </table>
 
                                             </td>
                                         </tr>
                                     </table>
-                                </td>
-                            </tr>
-                        </table>
+                              </td>
+                          </tr>
+                      </table>
 
                     </center>
                 </td>
