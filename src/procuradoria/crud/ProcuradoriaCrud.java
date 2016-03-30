@@ -710,7 +710,7 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
+
     public static Boolean updateFase(Uzatfase fase) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -874,7 +874,7 @@ public class ProcuradoriaCrud {
         return countNum;
     }
 
-    public static BigDecimal getUltimaFaseIdByCaso(final BigDecimal uzatcaso,final BigDecimal uzatfaseFlag) {
+    public static BigDecimal getUltimaFaseIdByCaso(final BigDecimal uzatcaso, final BigDecimal uzatfaseFlag) {
         BigDecimal countNum = null;
         try {
             countNum = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<BigDecimal>() {
@@ -897,7 +897,7 @@ public class ProcuradoriaCrud {
 
         return countNum;
     }
-    
+
     public static BigDecimal getCountCasosByFlagByIdFunci(final BigDecimal uzatflag, final BigDecimal uzatfuncionarioId) {
         BigDecimal countNum = null;
         try {
@@ -985,7 +985,7 @@ public class ProcuradoriaCrud {
         paramList.add(query_4);
         paramList.add(query_5);
 
-        List<Uzatasign> listcaso = ds.customQueryLazy(paramList, Uzatasign.class,first, pageSize);
+        List<Uzatasign> listcaso = ds.customQueryLazy(paramList, Uzatasign.class, first, pageSize);
 
         try {
             if (!listcaso.isEmpty()) {
@@ -1005,8 +1005,7 @@ public class ProcuradoriaCrud {
 
         return findCaso;
     }
-    
-    
+
     public static ArrayList<Uzatcaso> findFaseByCasoByNumFase(BigDecimal uzatfuncionarioId, BigDecimal Flag, int first, int pageSize) {
         ArrayList<Uzatcaso> findCaso = new ArrayList<>();
         BigDecimal contador = getCountCasosByFlagByIdFunci(Flag, uzatfuncionarioId);
@@ -1034,7 +1033,7 @@ public class ProcuradoriaCrud {
         paramList.add(query_4);
         paramList.add(query_5);
 
-        List<Uzatasign> listcaso = ds.customQueryLazy(paramList, Uzatasign.class,first, pageSize);
+        List<Uzatasign> listcaso = ds.customQueryLazy(paramList, Uzatasign.class, first, pageSize);
 
         try {
             if (!listcaso.isEmpty()) {
@@ -1050,6 +1049,62 @@ public class ProcuradoriaCrud {
             }
         } catch (Exception ex) {
             log.level.info("No se pudo encontrar casos disponibles.");
+        }
+
+        return findCaso;
+    }
+
+    public static ArrayList<Uzatasign> findCasosAdminLazyByNumCausa(final BigDecimal uzatfuncionarioId,
+            final BigDecimal uzatcasoFlag,
+            final BigDecimal uzatasignarFlag,final String numCausa) {
+        ArrayList<Uzatasign> findCaso = new ArrayList<>();
+
+        try {
+            findCaso = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<ArrayList<Uzatasign>>() {
+
+                @Override
+                public ArrayList<Uzatasign> execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFGCANUM(?,?,?,?) } ");
+                    f1.registerOutParameter(1, OracleTypes.CURSOR);
+                    f1.setBigDecimal(2, uzatasignarFlag);
+                    f1.setBigDecimal(3, uzatcasoFlag);
+                    f1.setBigDecimal(4, uzatfuncionarioId);
+                    f1.setString(5, numCausa);
+                    f1.execute();
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
+                    ArrayList<Uzatasign> list = new ArrayList<>();
+                    while (rs.next()) {
+                        Uzatasign asg = new Uzatasign();
+                        asg.getId().setUzatfuncionarioId(rs.getBigDecimal(1));
+                        asg.setUzatasignarId(rs.getBigDecimal(2));
+                        asg.getId().setUzatcasoId(rs.getBigDecimal(3));
+                        asg.setUzatasignarFlag(rs.getBigDecimal(4));
+                        asg.setUzatasignarFechaIn(rs.getString(5));
+                        asg.setUzatasignarFechaOut(rs.getString(6));
+                        asg.setUzatasignarMotivo(rs.getString(7));
+                        asg.getUzatcaso().setUzatcasoNumcausa(rs.getString(8));
+                        asg.getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaDescripcion(rs.getString(9));
+                        asg.getUzatcaso().getUzatjudi().setUzatjudiDescripcion(rs.getString(10));
+                        asg.getUzatcaso().setUzatcasoMotivo(rs.getString(11));
+                        asg.getUzatcaso().setUzatcasoDetalle(rs.getString(12));
+                        asg.getUzatcaso().setUzatcasoTipo(rs.getString(13));
+                        asg.getUzatcaso().setUzatcasoFechaIn(rs.getString(14));
+                        asg.getUzatcaso().setUzatcasoFechaOut(rs.getString(15));
+                        asg.getUzatcaso().setUzatcasoFlag(rs.getBigDecimal(16));
+                        asg.getUltimaFaseActual().setUzatfaseNumfase(rs.getBigDecimal(17));
+                        asg.getUltimaFaseActual().setUzatfaseNombre(rs.getString(18));
+                        asg.getUltimaFaseActual().setUzatfaseFlag(rs.getBigDecimal(19));
+                        list.add(asg);
+                    }
+                    rs.close();
+                    rs = null;
+
+                    return list;
+                }
+            });
+
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
         }
 
         return findCaso;
@@ -1256,12 +1311,12 @@ public class ProcuradoriaCrud {
 
         return exito;
     }
-    
+
     public static Boolean insertActor(Uzatactor actor) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        
+
         if (actor != null) {
             ds.save(actor);
             exito = true;
@@ -1269,12 +1324,12 @@ public class ProcuradoriaCrud {
 
         return exito;
     }
-    
+
     public static Boolean insertinvff(UzatinvFf involff) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        
+
         if (involff != null) {
             ds.save(involff);
             exito = true;
@@ -1282,7 +1337,7 @@ public class ProcuradoriaCrud {
 
         return exito;
     }
-    
+
     public static Uzatactor findActorbyIDBanner(String id) {
         Uzatactor findActor = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
