@@ -305,6 +305,33 @@ public class ProcuradoriaCrud {
         return listJudicaturas;
     }
 
+    public static Uzatcaso casoByNumCausaFlagVisible(String uztnumCausa,BigDecimal uztflagVisible) {
+        Uzatcaso listCasos = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("uzatcasoNumcausa");
+        query_1.setWhereClause("=");
+        query_1.setValue(uztnumCausa);
+        
+        QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_2.setColumnName("uzatcasoVisible");
+        query_2.setWhereClause("=");
+        query_2.setValue(uztflagVisible);
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        parameList.add(query_2);
+        List<Uzatcaso> list = ds.customQuery(parameList, Uzatcaso.class);
+        try {
+            if (!list.isEmpty()) {
+                listCasos = (Uzatcaso) list.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR LISTAJUDICATURAS : " + ex.toString());
+        }
+        return listCasos;
+    }
+    
     public static Uzatcaso casoByIdCaso(BigDecimal uztcasoId) {
         Uzatcaso listCasos = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -526,7 +553,7 @@ public class ProcuradoriaCrud {
                         Cita.getUzatfase().getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaDescripcion(rs.getString(10));
                         Cita.setUzatfuncionarioId(rs.getBigDecimal(11));
                         Cita.setUzatcitaDescripcion(rs.getString(12));
-
+                        
                         list.add(Cita);
                     }
                     rs.close();

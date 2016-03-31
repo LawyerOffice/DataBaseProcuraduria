@@ -390,6 +390,28 @@ public class ProcuradoriaMethods {
         return listJudicaturas;
     }
 
+    public static Uzatcaso CasoByNumCausaFlagVisible(String uztnumCausa ,BigDecimal uztflagVisible) {
+        Uzatcaso listCasos = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            listCasos = ProcuradoriaCrud.casoByNumCausaFlagVisible(uztnumCausa,uztflagVisible);
+        } catch (Exception ex) {
+            log.level.error("ERROR EN LISTCASOBYNUMCAUSAFLAGVISIBLE : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return listCasos;
+    }
+    
     public static Uzatcaso CasoByIdCaso(BigDecimal uztcasoId) {
         Uzatcaso listCasos = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
