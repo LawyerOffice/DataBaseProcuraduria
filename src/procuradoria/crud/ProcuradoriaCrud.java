@@ -1478,36 +1478,27 @@ public class ProcuradoriaCrud {
         try {
             exito = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<Boolean>() {
 
-//                @Override
-//                public ArrayList<Uzatcomt> execute(Connection cnctn) throws SQLException {
-//                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPGCOMBI(?,?,?); END;");
-//                    f1.setBigDecimal(1, UztIdCaso);
-//                    f1.setBigDecimal(2, UztIdFase);
-//                    f1.registerOutParameter(3, OracleTypes.CURSOR);
-//                    f1.execute();
-//                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(3);
-//                    ArrayList<Uzatcomt> list = new ArrayList<>();
-//                    while (rs.next()) {
-//                        Uzatcomt ComtFase = new Uzatcomt();
-//                        ComtFase.getId().setUzatcasoId(rs.getBigDecimal(1));
-//                        ComtFase.getId().setUzatfaseId(rs.getBigDecimal(2));
-//                        ComtFase.getId().setUzatcomtId(rs.getBigDecimal(3));
-//                        ComtFase.setUzatcomtDescripcion(rs.getString(4));
-//                        ComtFase.setUzatcomtFecha(rs.getString(5));
-//                        list.add(ComtFase);
-//                    }
-//                    rs.close();
-//                    return list;
-//                }
                 @Override
                 public Boolean execute(Connection cnctn) throws SQLException {
-                    PreparedStatement pstmt = cnctn.prepareStatement("");
-                    return null;
-                    
+                    PreparedStatement pstmt = cnctn.prepareStatement("INSERT INTO UZATDOCS (UZATCASO_ID, UZATFASE_ID, UZATDOCS_CASILLA, UZATDOCS_FECHA, UZATDOCS_COMPROMISO, UZATDOCS_ARCHIVO, UZATFUNCIONARIO_ID) "
+                            + "VALUES (?, ?, ?, ?, ?, empty_blob(), ?);");
+                    pstmt.setBigDecimal(1, document.getId().getUzatcasoId());
+                    pstmt.setBigDecimal(2, document.getId().getUzatfaseId());
+                    pstmt.setString(3, document.getUzatdocsCasilla());
+                    pstmt.setString(4, document.getUzatdocsFecha());
+                    pstmt.setString(5, document.getUzatdocsCompromiso());
+                    pstmt.setBinaryStream(6, document.getUzatdocsPdf(), document.getUzatdocsPdfSize());
+                    pstmt.setBigDecimal(7, document.getUzatfuncionarioId());
+                    Boolean exito = pstmt.execute();
+                    if (exito) {
+                        cnctn.commit();
+                    }
+                    return exito;
+
                 }
 
             });
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             log.level.info(">>> " + ex.toString());
         }
         return exito;

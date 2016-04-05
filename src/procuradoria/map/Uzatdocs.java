@@ -2,6 +2,7 @@ package procuradoria.map;
 // Generated Mar 28, 2016 5:02:18 PM by Hibernate Tools 3.6.0
 
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Blob;
@@ -19,6 +20,9 @@ public class Uzatdocs  implements java.io.Serializable {
      private String uzatdocsCompromiso;
      private Blob uzatdocsArchivo;
      private BigDecimal uzatfuncionarioId;
+     
+     private InputStream uzatdocsPdf;
+     private Long uzatdocsPdfSize;
 
     public Uzatdocs() {
         this.id = new UzatdocsId();
@@ -89,6 +93,22 @@ public class Uzatdocs  implements java.io.Serializable {
     
     public void setUzatfuncionarioId(BigDecimal uzatfuncionarioId) {
         this.uzatfuncionarioId = uzatfuncionarioId;
+    }
+
+    public InputStream getUzatdocsPdf() {
+        return uzatdocsPdf;
+    }
+
+    public void setUzatdocsPdf(InputStream uzatdocsPdf) {
+        this.uzatdocsPdf = uzatdocsPdf;
+    }
+
+    public Long getUzatdocsPdfSize() {
+        return uzatdocsPdfSize;
+    }
+
+    public void setUzatdocsPdfSize(Long uzatdocsPdfSize) {
+        this.uzatdocsPdfSize = uzatdocsPdfSize;
     }
 
 
