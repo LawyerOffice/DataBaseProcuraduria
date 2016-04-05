@@ -872,6 +872,31 @@ public class ProcuradoriaMethods {
         return listJudi;
     }
 
+        public static Uzatfunci FindFuncionarioByIdFunci(BigDecimal IdFunci) {
+        Uzatfunci findFun = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (IdFunci != null) {
+                findFun = ProcuradoriaCrud.findFuncionarioByIdFunci(IdFunci);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FindFuncionarioByCedula : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findFun;
+    }
+    
     public static Uzatfunci FindFuncionarioByCedula(String cedula) {
         Uzatfunci findFun = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();

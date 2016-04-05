@@ -871,6 +871,31 @@ public class ProcuradoriaCrud {
         }
         return listJudi.get(0);
     }
+    
+        public static Uzatfunci findFuncionarioByIdFunci(BigDecimal IdFunci) {
+        Uzatfunci findFun = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_5.setColumnName("uzatfuncionarioId");
+        query_5.setWhereClause("=");
+        query_5.setValue(IdFunci);
+
+        List paramList = new ArrayList();
+        paramList.add(query_5);
+
+        List<Uzatfunci> listfun = ds.customQuery(paramList, Uzatfunci.class);
+        try {
+            if (!listfun.isEmpty()) {
+                findFun = listfun.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo buscar funcionario by Id");
+        }
+
+        return findFun;
+    }
 
     public static Uzatfunci findFuncionarioByCedula(String cedula) {
         Uzatfunci findFun = null;

@@ -27,12 +27,15 @@ public class Uzatcaso  implements java.io.Serializable {
      private Set uzatasigns = new HashSet(0);
      private Set uzatfases = new HashSet(0);
      private Set uzatinvCas = new HashSet(0);
+     
+     private Uzatfunci funcionarioAsignado;
 
     public Uzatcaso() {
         this.uzatcasoFlag = new BigDecimal(BigInteger.ZERO);
         this.uzatcasoId = new BigDecimal(BigInteger.ONE);
         this.uzatcasoVisible = new BigDecimal(BigInteger.ZERO);
         this.uzatjudi = new Uzatjudi();
+        this.funcionarioAsignado = new Uzatfunci();
     }
 
 	
@@ -154,6 +157,14 @@ public class Uzatcaso  implements java.io.Serializable {
     
     public void setUzatinvCas(Set uzatinvCas) {
         this.uzatinvCas = uzatinvCas;
+    }
+
+    public Uzatfunci getFuncionarioAsignado() {
+        return funcionarioAsignado;
+    }
+
+    public void setFuncionarioAsignado(Uzatfunci funcionarioAsignado) {
+        this.funcionarioAsignado = funcionarioAsignado;
     }
 
 
