@@ -6,6 +6,7 @@
 package procuradoria.crud;
 
 import com.logger.L;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import procuradoria.mail.util.MailTool;
@@ -456,6 +457,30 @@ public class ProcuradoriaMethods {
         return listCasos;
     }
 
+    public static Boolean InsertDocs(Uzatdocs docs, InputStream pdfBytes, long pdfSize) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (docs != null) {
+                exito = ProcuradoriaCrud.insertDocs(docs, pdfBytes, pdfSize);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN LISTTIPOROL : "+ex.getMessage());
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+    
     public static Boolean InsertDocs(Uzatdocs docs) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -465,7 +490,7 @@ public class ProcuradoriaMethods {
                 exito = ProcuradoriaCrud.insertDocs(docs);
             }
         } catch (Exception ex) {
-            log.level.error("ERROR EN LISTTIPOROL : ");
+            log.level.error("ERROR EN LISTTIPOROL : "+ex.getMessage());
             delegateException = ex;
         } finally {
             hss.close();

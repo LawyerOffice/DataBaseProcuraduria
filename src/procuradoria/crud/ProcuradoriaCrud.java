@@ -8,16 +8,22 @@ package procuradoria.crud;
 import com.dao.DAOServices;
 import com.dao.QueryParameter;
 import com.logger.L;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 import oracle.sql.NUMBER;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.jdbc.ReturningWork;
 import procuradoria.map.*;
@@ -305,7 +311,7 @@ public class ProcuradoriaCrud {
         return listJudicaturas;
     }
 
-    public static Uzatcaso casoByNumCausaFlagVisible(String uztnumCausa,BigDecimal uztflagVisible) {
+    public static Uzatcaso casoByNumCausaFlagVisible(String uztnumCausa, BigDecimal uztflagVisible) {
         Uzatcaso listCasos = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -313,7 +319,7 @@ public class ProcuradoriaCrud {
         query_1.setColumnName("uzatcasoNumcausa");
         query_1.setWhereClause("=");
         query_1.setValue(uztnumCausa);
-        
+
         QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
         query_2.setColumnName("uzatcasoVisible");
         query_2.setWhereClause("=");
@@ -331,7 +337,7 @@ public class ProcuradoriaCrud {
         }
         return listCasos;
     }
-    
+
     public static Uzatcaso casoByIdCaso(BigDecimal uztcasoId) {
         Uzatcaso listCasos = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -372,6 +378,25 @@ public class ProcuradoriaCrud {
             log.level.info("ERROR LISTAJUDICATURAS : " + ex.toString());
         }
         return listCasos;
+    }
+
+    public static Boolean insertDocs(Uzatdocs docs, InputStream pdfBytes, long pdfSize) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (docs != null) {
+            try {
+                Blob blob = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().getLobHelper()
+                        .createBlob(pdfBytes, pdfSize);
+                docs.setUzatdocsArchivo(blob);
+                ds.save(docs);
+                blob.free();
+                exito = true;
+            } catch (SQLException ex) {
+                log.level.info("INSERTANDO PDF BLOB" + ex.getMessage());
+            }
+        }
+        return exito;
     }
 
     public static Boolean insertDocs(Uzatdocs docs) {
@@ -553,7 +578,7 @@ public class ProcuradoriaCrud {
                         Cita.getUzatfase().getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaDescripcion(rs.getString(10));
                         Cita.setUzatfuncionarioId(rs.getBigDecimal(11));
                         Cita.setUzatcitaDescripcion(rs.getString(12));
-                        
+
                         list.add(Cita);
                     }
                     rs.close();
@@ -1083,7 +1108,7 @@ public class ProcuradoriaCrud {
 
     public static ArrayList<Uzatasign> findCasosAdminLazyByNumCausa(final BigDecimal uzatfuncionarioId,
             final BigDecimal uzatcasoFlag,
-            final BigDecimal uzatasignarFlag,final String numCausa) {
+            final BigDecimal uzatasignarFlag, final String numCausa) {
         ArrayList<Uzatasign> findCaso = new ArrayList<>();
 
         try {
@@ -1388,23 +1413,24 @@ public class ProcuradoriaCrud {
         return findActor;
 
     }
-    
+
     public static int findNumerosdeCasosbyMateri(String materi) {
         Uzatcaso findCaso = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        
+
         List paramList = new ArrayList();
 
         List<Uzatcaso> listfun = ds.customQuery(paramList, Uzatcaso.class);
-        
+
         int temp = 0;
-     
+
         try {
             if (!listfun.isEmpty()) {
                 for (int i = 0; i < listfun.size(); i++) {
-                    if(listfun.get(i).getUzatjudi().getUzatmateri().getUzatmateriaId().equals(new BigDecimal(materi)))
+                    if (listfun.get(i).getUzatjudi().getUzatmateri().getUzatmateriaId().equals(new BigDecimal(materi))) {
                         temp++;
+                    }
                 }
             }
         } catch (Exception ex) {
@@ -1413,4 +1439,45 @@ public class ProcuradoriaCrud {
 
         return temp;
     }
+
+    public static Boolean insertDocument(final Uzatdocs document) {
+        Boolean exito = true;
+        try {
+            exito = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<Boolean>() {
+
+//                @Override
+//                public ArrayList<Uzatcomt> execute(Connection cnctn) throws SQLException {
+//                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAPGCOMBI(?,?,?); END;");
+//                    f1.setBigDecimal(1, UztIdCaso);
+//                    f1.setBigDecimal(2, UztIdFase);
+//                    f1.registerOutParameter(3, OracleTypes.CURSOR);
+//                    f1.execute();
+//                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(3);
+//                    ArrayList<Uzatcomt> list = new ArrayList<>();
+//                    while (rs.next()) {
+//                        Uzatcomt ComtFase = new Uzatcomt();
+//                        ComtFase.getId().setUzatcasoId(rs.getBigDecimal(1));
+//                        ComtFase.getId().setUzatfaseId(rs.getBigDecimal(2));
+//                        ComtFase.getId().setUzatcomtId(rs.getBigDecimal(3));
+//                        ComtFase.setUzatcomtDescripcion(rs.getString(4));
+//                        ComtFase.setUzatcomtFecha(rs.getString(5));
+//                        list.add(ComtFase);
+//                    }
+//                    rs.close();
+//                    return list;
+//                }
+                @Override
+                public Boolean execute(Connection cnctn) throws SQLException {
+                    PreparedStatement pstmt = cnctn.prepareStatement("");
+                    return null;
+                    
+                }
+
+            });
+        } catch (Exception ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+        return exito;
+    }
+
 }

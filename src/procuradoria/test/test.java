@@ -75,33 +75,26 @@ public class test {
 //        
         
         //PRUEBAS DEL PDF///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//        DocumentsPdf  pdf = new DocumentsPdf();
-////        
-////        Uzatdocs doc = new Uzatdocs();
-////        doc.getId().setUzatcasoId(BigDecimal.valueOf(100));
-////        doc.getId().setUzatfaseId(BigDecimal.valueOf(133));
-////        doc.setUzatdocsCasilla("Ninguna");
-////        doc.setUzatdocsCompromiso("Asistir a la sesión");
-////        doc.setUzatdocsFecha("12/03/2016 00:00:00");
-////        doc.setUzatfuncionarioId(BigDecimal.valueOf(114));
-////        pdf.CovertPdfToByteArray(doc,"C:\\Users\\FANNY\\Desktop\\Daniel Galarza\\EDO\\GalarzaDaniel_DeberesTercerParcial.pdf", "Deberes"); //CARGA
-////        
+//////        DocumentsPdf  pdf = new DocumentsPdf();
+//////        
+//////        Uzatdocs doc = new Uzatdocs();
+//////        doc.getId().setUzatcasoId(BigDecimal.valueOf(100));
+//////        doc.getId().setUzatfaseId(BigDecimal.valueOf(133));
+//////        doc.setUzatdocsCasilla("Ninguna");
+//////        doc.setUzatdocsCompromiso("Asistir a la sesión");
+//////        doc.setUzatdocsFecha("04/04/2016 00:00:00");
+//////        doc.setUzatfuncionarioId(BigDecimal.valueOf(113));
+//////        Boolean CovertPdfToByteArray = pdf.CovertPdfToByteArray(doc,"D:\\Listado_Estudiantes_NRC.pdf"); //CARGA
 //        ArrayList<Uzatdocs> listDocs = ProcuradoriaMethods.FindDocsbyCaso_Fase(BigDecimal.valueOf(100), BigDecimal.valueOf(100));
 //        pdf.byteArrayToFile(listDocs.get(0)); //DESCARGA
-        
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //        
 //        ArrayList<Uztrol> rols = ProcuradoriaMethods.GetFuncionariosTipoRolByFlag(BigDecimal.ONE);
 //        System.out.println(">> "+rols.size());
-
 //        ArrayList<Uzatasign> listcasos = ProcuradoriaMethods.FindCasosAdminLazy(new BigDecimal(112), BigDecimal.ONE, BigDecimal.ONE);
 //        
 //        System.out.println(">> "+listcasos.size());
-        
-
 //        Boolean successMAIL = ProcuradoriaMethods.SendMail(Email, filePath, Nombre);
-
-
 //        Boolean successMAIL = ProcuradoriaMethods.SendMail("dsantamariadiaz@gmail.com", "C:\\requerimientos.txt", "PRUEBA", "11111111111", "# 3", "2do Jusgado de lo Penal", "11/11/2016");
 //          if(successMAIL)
 //          {
@@ -110,7 +103,6 @@ public class test {
 //          {
 //              System.out.println("NO SE HA PODIDO ENVIAR CORREO");
 //          }
-        
 //        Uzatfunci usuario  = ProcuradoriaMethods.FindByIdFunciByCedFunci("L00000181","1804110474", BigDecimal.ONE);
 //        System.out.println(">> "+usuario.getUzatfuncionarioId());
         
