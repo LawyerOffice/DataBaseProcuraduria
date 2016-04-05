@@ -578,7 +578,15 @@ public class ProcuradoriaCrud {
                         Cita.getUzatfase().getUzatcaso().getUzatjudi().getUzatmateri().setUzatmateriaDescripcion(rs.getString(10));
                         Cita.setUzatfuncionarioId(rs.getBigDecimal(11));
                         Cita.setUzatcitaDescripcion(rs.getString(12));
-
+                        Cita.getUzatfase().getUzatcaso().getFuncionarioAsignado().setUzatfuncionarioId(rs.getBigDecimal(13));
+                        Cita.getUzatfase().getUzatcaso().getFuncionarioAsignado().setUzatfuncionarioEmail(rs.getString(14));
+                        Cita.getUzatfase().getUzatcaso().getFuncionarioAsignado().setUzatfuncionarioNombres(rs.getString(15));
+                        Cita.getUzatfase().getUzatcaso().getFuncionarioAsignado().setUzatfuncionarioApellidos(rs.getString(16));
+                        Cita.getUzatfase().getUzatcaso().getFuncionarioAsignado().setUzatfuncionarioCedula(rs.getString(17));
+                        Cita.getUzatfase().getUzatcaso().getFuncionarioAsignado().setUzatfuncionarioIdbanner(rs.getString(18));
+                        Cita.getUzatfase().getUzatcaso().getFuncionarioAsignado().setUzatfuncionarioMovil(rs.getString(19));
+                        Cita.setUzatcitaFlag(rs.getBigDecimal(20));
+                        
                         list.add(Cita);
                     }
                     rs.close();
