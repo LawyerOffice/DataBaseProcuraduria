@@ -912,14 +912,8 @@ public class ProcuradoriaCrud {
         query_5.setWhereClause("=");
         query_5.setValue(cedula);
 
-        List<QueryParameter> Custadios_ = new ArrayList();
-        Custadios_.add(query_5);
-
-        QueryParameter orFun_ = new QueryParameter(QueryParameter.$TYPE_OR);
-        orFun_.setDetachedParameters(Custadios_);
-
         List paramList = new ArrayList();
-        paramList.add(orFun_);
+        paramList.add(query_5);
 
         List<Uzatfunci> listfun = ds.customQuery(paramList, Uzatfunci.class);
         try {
