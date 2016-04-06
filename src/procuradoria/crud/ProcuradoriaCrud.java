@@ -18,12 +18,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 import oracle.sql.NUMBER;
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.jdbc.ReturningWork;
 import procuradoria.map.*;
@@ -586,7 +583,7 @@ public class ProcuradoriaCrud {
                         Cita.getUzatfase().getUzatcaso().getFuncionarioAsignado().setUzatfuncionarioIdbanner(rs.getString(18));
                         Cita.getUzatfase().getUzatcaso().getFuncionarioAsignado().setUzatfuncionarioMovil(rs.getString(19));
                         Cita.setUzatcitaFlag(rs.getBigDecimal(20));
-                        
+
                         list.add(Cita);
                     }
                     rs.close();
@@ -879,8 +876,8 @@ public class ProcuradoriaCrud {
         }
         return listJudi.get(0);
     }
-    
-        public static Uzatfunci findFuncionarioByIdFunci(BigDecimal IdFunci) {
+
+    public static Uzatfunci findFuncionarioByIdFunci(BigDecimal IdFunci) {
         Uzatfunci findFun = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -1539,7 +1536,7 @@ public class ProcuradoriaCrud {
                     pstmt.setString(3, document.getUzatdocsCasilla());
                     pstmt.setString(4, document.getUzatdocsFecha());
                     pstmt.setString(5, document.getUzatdocsCompromiso());
-                    pstmt.setBinaryStream(6, document.getUzatdocsPdf(), document.getUzatdocsPdfSize());
+                    pstmt.setBlob(6, document.getUzatdocsArchivo());
                     pstmt.setBigDecimal(7, document.getUzatfuncionarioId());
                     Boolean exito = pstmt.execute();
                     if (exito) {

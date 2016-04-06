@@ -22,32 +22,31 @@ import org.apache.commons.io.IOUtils;
 import procuradoria.crud.ProcuradoriaMethods;
 import procuradoria.map.Uzatdocs;
 
-
 /**
  *
  * @author Ivan
  */
 public class DocumentsPdf {
-    
+
     private final static L log = new L(DocumentsPdf.class);
 
     public static Boolean SaveDocument(Uzatdocs docs, InputStream pdfBytes) {
         Boolean exito = false;
-        try {          
+        try {
             byte[] bFile = IOUtils.toByteArray(pdfBytes);
             java.sql.Blob blob = null;
             blob = new SerialBlob(bFile);
             docs.setUzatdocsArchivo(blob);
             exito = ProcuradoriaMethods.InsertDocs(docs);
         } catch (IOException ex) {
-            log.level.info(">> IO PDF: "+ex.getMessage());
+            log.level.info(">> IO PDF: " + ex.getMessage());
         } catch (SQLException ex) {
-            log.level.info(">> SQL PDF: "+ex.getMessage());
+            log.level.info(">> SQL PDF: " + ex.getMessage());
         }
-         return exito;
+        return exito;
     }
 
-    public static Boolean CovertPdfToByteArray(Uzatdocs docs, String Url) {
+    public static Boolean CovertPdfToByteArray(Uzatdocs docs, String Url, InputStream input) {
 
         FileInputStream in = null;
         File file = new File(Url);
@@ -65,19 +64,94 @@ public class DocumentsPdf {
             exito = ProcuradoriaMethods.InsertDocs(docs);
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(DocumentsPdf.class.getName()).log(Level.SEVERE, null, ex);
+            log.level.info(">> FileNotFoundException "+ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(DocumentsPdf.class.getName()).log(Level.SEVERE, null, ex);
+            log.level.info(">> IOExceptionn "+ex.getMessage());
         } catch (SQLException ex) {
-            Logger.getLogger(DocumentsPdf.class.getName()).log(Level.SEVERE, null, ex);
+            log.level.info(">> SQLException "+ex.getMessage());
         }
 
         return exito;
     }
 
+    public static Boolean CovertPdfToByteArray(Uzatdocs docs, String Url) {
+        Boolean exito = false;
+        try {
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+            
+            File outputFile = new File(Url);
+
+            inputStream = docs.getUzatdocsPdf();
+            outputStream = new FileOutputStream(outputFile);
+            byte[] buffer = new byte[25600];
+            int bytesRead = 0;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            if (outputStream != null) {
+                outputStream.close();
+            }
+            if (inputStream != null) {
+                inputStream.close();
+            }
+
+            ///////cvu377
+            FileInputStream in = null;
+            File file = new File(Url);
+            byte[] bFile = new byte[(int) file.length()];
+            FileInputStream fileInputStream;
+
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+            java.sql.Blob blob = null;
+            blob = new SerialBlob(bFile);
+            docs.setUzatdocsArchivo(blob);
+            exito = ProcuradoriaMethods.InsertDocumemts(docs);
+
+        } catch (FileNotFoundException ex) {
+            log.level.info(">> FileNotFoundException "+ex.getMessage());
+        } catch (IOException ex) {
+            log.level.info(">> IOExceptionn "+ex.getMessage());
+        } catch (SQLException ex) {
+            log.level.info(">> SQLException "+ex.getMessage());
+        }
+
+        return exito;
+    }
+
+    public static Boolean CovertPdfToByteArray(Uzatdocs docs, InputStream in) {
+        try {
+            File file = null;
+            byte[] bFile = new byte[(int) file.length()];
+            byte[] list = IOUtils.toByteArray(in);
+            FileInputStream fileInputStream;
+            Boolean exito = false;
+
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+            java.sql.Blob blob = null;
+            blob = new SerialBlob(bFile);
+            docs.setUzatdocsArchivo(blob);
+            exito = ProcuradoriaMethods.InsertDocs(docs);
+
+            return exito;
+
+        } catch (IOException ex) {
+            Logger.getLogger(DocumentsPdf.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DocumentsPdf.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public static void byteArrayToFile(Uzatdocs doc) {
         try {
-            Blob blob = doc.getUzatdocsArchivo();
+            Blob  blob = doc.getUzatdocsArchivo();
 
             int blobLength = (int) blob.length();
             byte[] bArray = blob.getBytes(1, blobLength);
