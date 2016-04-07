@@ -1553,5 +1553,76 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
+    
+    public static Boolean insertMateria(Uzatmateri materia) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
 
+        if (materia != null) {
+            ds.save(materia);
+            exito = true;
+        }
+
+        return exito;
+    }    
+    
+    public static Boolean insertJudicatura(Uzatjudi judicatura) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        if (judicatura != null) {
+            ds.save(judicatura);
+            exito = true;
+        }
+
+        return exito;
+    } 
+    
+    public static Boolean updateMateria(Uzatmateri materia) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (materia != null) {
+            ds.update(materia);
+            exito = true;
+        }
+        return exito;
+    }
+    
+    public static Boolean updateJudicatura(Uzatjudi judicatura) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (judicatura != null) {
+            ds.update(judicatura);
+            exito = true;
+        }
+        return exito;
+    }
+
+    public static Uzatmateri findMateriabyId(BigDecimal id) {
+        Uzatmateri findMateria = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("uzatmateriaId");
+        query_1.setWhereClause("=");
+        query_1.setValue(id);
+
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        List<Uzatmateri> list = ds.customQuery(parameList, Uzatmateri.class);
+        try {
+            if (!list.isEmpty()) {
+                findMateria = list.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR  findMateriabyId : " + ex.toString());
+        }
+        return findMateria;
+
+    }
 }

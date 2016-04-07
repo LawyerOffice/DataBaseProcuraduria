@@ -1374,4 +1374,125 @@ public class ProcuradoriaMethods {
         }
         return temp;
     }
+    
+    public static Boolean insertMateria(Uzatmateri materia) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (materia != null) {
+                exito = ProcuradoriaCrud.insertMateria(materia);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN insertMateria : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+    
+    public static Boolean insertJudicatura(Uzatjudi judicatura) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (judicatura != null) {
+                exito = ProcuradoriaCrud.insertJudicatura(judicatura);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN insertJudicatura : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+    
+    public static Boolean UpdateMateria(Uzatmateri materia) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (materia != null) {
+                exito = ProcuradoriaCrud.updateMateria(materia);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN UpdateMateria : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+    
+    public static Boolean UpdateJudicatura(Uzatjudi judicatura) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (judicatura != null) {
+                exito = ProcuradoriaCrud.updateJudicatura(judicatura);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN UpdateJudicatura : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+    
+    public static Uzatmateri FindMateriabyId(BigDecimal id) {
+        Uzatmateri materi = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (id != null) {
+                materi = ProcuradoriaCrud.findMateriabyId(id);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FindMateriabyId : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return materi;
+    }
 }
