@@ -10,6 +10,7 @@ import com.dao.QueryParameter;
 import com.logger.L;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -1055,10 +1056,16 @@ public class ProcuradoriaCrud {
         query_4.setColumnName("id.uzatfuncionarioId");
         query_4.setWhereClause("=");
         query_4.setValue(uzatfuncionarioId);
+        
+        QueryParameter query_6 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_6.setColumnName("uzatasignarFlag");
+        query_6.setWhereClause("=");
+        query_6.setValue(new BigDecimal(BigInteger.ONE));
 
         List paramList = new ArrayList();
         paramList.add(joincaso);
         paramList.add(query_4);
+        paramList.add(query_6);
         paramList.add(query_5);
 
         List<Uzatasign> listcaso = ds.customQueryLazy(paramList, Uzatasign.class, first, pageSize);
