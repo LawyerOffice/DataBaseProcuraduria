@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 28, 2016 5:02:19 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 07/04/2016 02:59:13 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="procuradoria.map.UzatinvFf" table="UZATINV_FF" schema="ESPE">
         <composite-id name="id" class="procuradoria.map.UzatinvFfId">

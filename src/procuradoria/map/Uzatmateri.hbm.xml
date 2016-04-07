@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 28, 2016 5:02:19 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 07/04/2016 02:59:13 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="procuradoria.map.Uzatmateri" table="UZATMATERI" schema="ESPE">
         <id name="uzatmateriaId" type="big_decimal">
@@ -10,6 +10,12 @@
         </id>
         <property name="uzatmateriaDescripcion" type="string">
             <column name="UZATMATERIA_DESCRIPCION" length="350" />
+        </property>
+        <property name="uzatmateriaFecha" type="string">
+            <column name="UZATMATERIA_FECHA" length="20" />
+        </property>
+        <property name="uzatfuncionarioId" type="big_decimal">
+            <column name="UZATFUNCIONARIO_ID" precision="38" scale="0" />
         </property>
         <set name="uzatjudis" table="UZATJUDI" inverse="true" lazy="true" fetch="select">
             <key>

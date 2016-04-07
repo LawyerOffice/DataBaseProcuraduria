@@ -9,19 +9,19 @@
     <property name="hibernate.connection.password">3SP3UFA</property>
     <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <mapping resource="procuradoria/map/Uzatmateri.hbm.xml"/>
+    <mapping resource="procuradoria/map/UzatinvFf.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatactor.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatdocs.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatcita.hbm.xml"/>
     <mapping resource="procuradoria/map/UzatinvCa.hbm.xml"/>
     <mapping resource="procuradoria/map/Uzatasign.hbm.xml"/>
     <mapping resource="procuradoria/map/Uzatfunci.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uzattrol.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uzatcita.hbm.xml"/>
-    <mapping resource="procuradoria/map/UzatinvFf.hbm.xml"/>
     <mapping resource="procuradoria/map/Uzatjudi.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uzatactor.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uzatcaso.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatmateri.hbm.xml"/>
     <mapping resource="procuradoria/map/Uzatrol.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uzatdocs.hbm.xml"/>
-    <mapping resource="procuradoria/map/Uzatfase.hbm.xml"/>
     <mapping resource="procuradoria/map/Uzatcomt.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatfase.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzatcaso.hbm.xml"/>
+    <mapping resource="procuradoria/map/Uzattrol.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
