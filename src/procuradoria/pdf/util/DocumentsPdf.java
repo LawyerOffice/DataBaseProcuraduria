@@ -6,17 +6,17 @@
 package procuradoria.pdf.util;
 
 import com.logger.L;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sql.rowset.serial.SerialBlob;
 import org.apache.commons.io.IOUtils;
 import procuradoria.crud.ProcuradoriaMethods;
@@ -64,11 +64,11 @@ public class DocumentsPdf {
             exito = ProcuradoriaMethods.InsertDocs(docs);
 
         } catch (FileNotFoundException ex) {
-            log.level.info(">> FileNotFoundException "+ex.getMessage());
+            log.level.info(">> FileNotFoundException " + ex.getMessage());
         } catch (IOException ex) {
-            log.level.info(">> IOExceptionn "+ex.getMessage());
+            log.level.info(">> IOExceptionn " + ex.getMessage());
         } catch (SQLException ex) {
-            log.level.info(">> SQLException "+ex.getMessage());
+            log.level.info(">> SQLException " + ex.getMessage());
         }
 
         return exito;
@@ -79,7 +79,7 @@ public class DocumentsPdf {
         try {
             InputStream inputStream = null;
             OutputStream outputStream = null;
-            
+
             File outputFile = new File(Url);
 
             inputStream = docs.getUzatdocsPdf();
@@ -111,11 +111,11 @@ public class DocumentsPdf {
             exito = ProcuradoriaMethods.InsertDocumemts(docs);
 
         } catch (FileNotFoundException ex) {
-            log.level.info(">> FileNotFoundException "+ex.getMessage());
+            log.level.info(">> FileNotFoundException " + ex.getMessage());
         } catch (IOException ex) {
-            log.level.info(">> IOExceptionn "+ex.getMessage());
+            log.level.info(">> IOExceptionn " + ex.getMessage());
         } catch (SQLException ex) {
-            log.level.info(">> SQLException "+ex.getMessage());
+            log.level.info(">> SQLException " + ex.getMessage());
         }
 
         return exito;
@@ -140,18 +140,40 @@ public class DocumentsPdf {
             return exito;
 
         } catch (IOException ex) {
-            Logger.getLogger(DocumentsPdf.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            log.level.info(">> IOException " + ex.getMessage());
         } catch (SQLException ex) {
-            Logger.getLogger(DocumentsPdf.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            log.level.info(">> SQLException " + ex.getMessage());
         }
         return null;
     }
 
+    public static Boolean CreateFilePDF(Uzatdocs document, String filePath) {
+        Boolean exito = false;
+        try {
+            String fileName = document.getId().getUzatdocsId() + ".pdf";
+            Blob blob = document.getUzatdocsArchivo();
+            int blobLength = (int) blob.length();
+            byte[] bArray = blob.getBytes(1, blobLength);
+            OutputStream out = new FileOutputStream(filePath + fileName);
+            out.write(bArray);
+            out.close();
+            exito = true;
+        } catch (Exception ex) {
+            log.level.info(">> Exception " + ex.getMessage());
+        }
+        return exito;
+    }
+
+    public static void RemoveFilePDF(String filePath) {
+        File tmppdf = new File(filePath);
+        if (tmppdf.exists()) {
+            tmppdf.delete();
+        }
+    }
+
     public static void byteArrayToFile(Uzatdocs doc) {
         try {
-            Blob  blob = doc.getUzatdocsArchivo();
+            Blob blob = doc.getUzatdocsArchivo();
 
             int blobLength = (int) blob.length();
             byte[] bArray = blob.getBytes(1, blobLength);
@@ -159,8 +181,8 @@ public class DocumentsPdf {
             OutputStream out = new FileOutputStream("out.pdf");
             out.write(bArray);
             out.close();
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+        } catch (Exception ex) {
+            log.level.info(">> Exception " + ex.getMessage());
         }
     }
 
