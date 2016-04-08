@@ -1625,4 +1625,29 @@ public class ProcuradoriaCrud {
         return findMateria;
 
     }
+    
+    public static Uzatfunci findFuncionarioByIDBanner(String idbanner) {
+        Uzatfunci findFun = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_5.setColumnName("uzatfuncionarioIdbanner");
+        query_5.setWhereClause("=");
+        query_5.setValue(idbanner);
+
+        List paramList = new ArrayList();
+        paramList.add(query_5);
+
+        List<Uzatfunci> listfun = ds.customQuery(paramList, Uzatfunci.class);
+        try {
+            if (!listfun.isEmpty()) {
+                findFun = listfun.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo buscar equipo by Id");
+        }
+
+        return findFun;
+    }
 }

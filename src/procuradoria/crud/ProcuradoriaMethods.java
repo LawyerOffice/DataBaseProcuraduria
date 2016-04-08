@@ -1495,4 +1495,29 @@ public class ProcuradoriaMethods {
         }
         return materi;
     }
+    
+    public static Uzatfunci FindFuncionarioByIDBanner(String idbanner) {
+        Uzatfunci findFun = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (idbanner != null) {
+                findFun = ProcuradoriaCrud.findFuncionarioByIDBanner(idbanner);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FindFuncionarioByIDBanner : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findFun;
+    }
 }
