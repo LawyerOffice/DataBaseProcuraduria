@@ -1056,7 +1056,7 @@ public class ProcuradoriaCrud {
         query_4.setColumnName("id.uzatfuncionarioId");
         query_4.setWhereClause("=");
         query_4.setValue(uzatfuncionarioId);
-        
+
         QueryParameter query_6 = new QueryParameter(QueryParameter.$TYPE_WHERE);
         query_6.setColumnName("uzatasignarFlag");
         query_6.setWhereClause("=");
@@ -1204,7 +1204,7 @@ public class ProcuradoriaCrud {
                     CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFGCAREA(?) } ");
                     f1.registerOutParameter(1, OracleTypes.CURSOR);
                     f1.setString(2, uzatfuncionarioId);
-                    
+
                     f1.execute();
                     ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
                     ArrayList<Uzatasign> list = new ArrayList<>();
@@ -1244,7 +1244,7 @@ public class ProcuradoriaCrud {
 
         return findCaso;
     }
-    
+
     public static ArrayList<Uzatasign> findCasosAdminLazy(final BigDecimal uzatfuncionarioId,
             final BigDecimal uzatcasoFlag,
             final BigDecimal uzatasignarFlag) {
@@ -1439,6 +1439,32 @@ public class ProcuradoriaCrud {
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
 
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("id.uzatcasoId");
+        query_1.setWhereClause("=");
+        query_1.setValue(asign.getId().getUzatcasoId());
+
+        List parameList1 = new ArrayList();
+        parameList1.add(query_1);
+
+        ArrayList<Uzatasign> update_caso = (ArrayList<Uzatasign>) ds.customQuery(parameList1, Uzatasign.class);
+
+        if (!update_caso.isEmpty()) {
+            for (Uzatasign update_asign : update_caso) {
+                if (update_asign.getUzatasignarFechaOut() == null) {
+                    update_asign.setUzatasignarFechaOut(asign.getUzatasignarFechaIn());
+                    ds.update(update_asign);
+                }
+            }
+        }
+
+        if (!update_caso.isEmpty()) {
+            for (Uzatasign update_asign : update_caso) {
+                update_asign.setUzatasignarFlag(BigDecimal.ZERO);
+                ds.update(update_asign);
+            }
+        }
+
         if (asign != null) {
             ds.save(asign);
             exito = true;
@@ -1553,7 +1579,7 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
+
     public static Boolean insertMateria(Uzatmateri materia) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -1565,8 +1591,8 @@ public class ProcuradoriaCrud {
         }
 
         return exito;
-    }    
-    
+    }
+
     public static Boolean insertJudicatura(Uzatjudi judicatura) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -1578,8 +1604,8 @@ public class ProcuradoriaCrud {
         }
 
         return exito;
-    } 
-    
+    }
+
     public static Boolean updateMateria(Uzatmateri materia) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -1590,7 +1616,7 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-    
+
     public static Boolean updateJudicatura(Uzatjudi judicatura) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -1625,7 +1651,7 @@ public class ProcuradoriaCrud {
         return findMateria;
 
     }
-    
+
     public static Uzatfunci findFuncionarioByIDBanner(String idbanner) {
         Uzatfunci findFun = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
