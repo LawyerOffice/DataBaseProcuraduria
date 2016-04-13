@@ -34,7 +34,7 @@ public class Uzatcaso implements java.io.Serializable {
         this.uzatcasoId = new BigDecimal(BigInteger.ZERO);
         this.uzatjudi = new Uzatjudi();
         this.uzatcasoFlag = new BigDecimal(BigInteger.ZERO);
-        this.uzatcasoVisible = new BigDecimal(BigInteger.ZERO);
+        this.uzatcasoVisible = new BigDecimal(BigInteger.ONE);
         this.uzatcasoVincu = new BigDecimal(BigInteger.ZERO);
     }
 
