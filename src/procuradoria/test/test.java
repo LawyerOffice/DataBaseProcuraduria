@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package procuradoria.test;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.Timer;
 import procuradoria.crud.ProcuradoriaMethods;
-import procuradoria.map.Uzatasign;
-import procuradoria.map.Uzatdocs;
-import procuradoria.map.Uzatfunci;
-import procuradoria.pdf.util.DocumentsPdf;
-
-
-
 
 /**
  *
@@ -52,8 +45,6 @@ public class test {
 //        
 //        ArrayList<Uztrol> rols = ProcuradoriaMethods.GetFuncionariosTipoRolByFlag(BigDecimal.ONE);
 //        System.out.println(">> "+rols.size());
-        
-
         // TODO code application logic here
 //        ArrayList<Uzttiporol>  list1 = ProcuradoriaMethods.ListTipoRol();
 //        System.out.println(">> "+list1.size());
@@ -73,7 +64,6 @@ public class test {
 //        ArrayList<Uztcaso> list6 = ProcuradoriaMethods.ListCasosByFlag(BigDecimal.ZERO);
 //        System.out.println(">> "+list6);    
 //        
-        
         //PRUEBAS DEL PDF///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////        DocumentsPdf  pdf = new DocumentsPdf();
 //////        
@@ -94,18 +84,40 @@ public class test {
 //        ArrayList<Uzatasign> listcasos = ProcuradoriaMethods.FindCasosAdminLazy(new BigDecimal(112), BigDecimal.ONE, BigDecimal.ONE);
 //        
 //        System.out.println(">> "+listcasos.size());
-//        Boolean successMAIL = ProcuradoriaMethods.SendMail(Email, filePath, Nombre);
-//        Boolean successMAIL = ProcuradoriaMethods.SendMail("dsantamariadiaz@gmail.com", "C:\\requerimientos.txt", "PRUEBA", "11111111111", "# 3", "2do Jusgado de lo Penal", "11/11/2016");
-//          if(successMAIL)
-//          {
-//              System.out.println("EXITO");
-//          }else
-//          {
-//              System.out.println("NO SE HA PODIDO ENVIAR CORREO");
-//          }
+        ///dsantamariadiaz@gmail.com
+        // Boolean successMAIL1 = ProcuradoriaMethods.SendMail(Email, filePath, Nombre);
+        Boolean successMAIL2 = ProcuradoriaMethods.SendMail("dsantamariadiaz@gmail.com", "C:\\requerimientos.txt", "PRUEBA", "11111111111", "# 3", "2do Jusgado de lo Penal", "11/11/2016");
+        if (successMAIL2) {
+            System.out.println("EXITO");
+        } else {
+            System.out.println("NO SE HA PODIDO ENVIAR CORREO");
+        }
 //        Uzatfunci usuario  = ProcuradoriaMethods.FindByIdFunciByCedFunci("L00000181","1804110474", BigDecimal.ONE);
 //        System.out.println(">> "+usuario.getUzatfuncionarioId());
-        
+        Date horaDespertar = new Date(System.currentTimeMillis());
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(horaDespertar);
+        System.out.println(c.get(Calendar.DAY_OF_WEEK));
+        // Si la hora es posterior a las 8am se programa la alarma para el dia siguiente
+        if (c.get(Calendar.HOUR_OF_DAY) >= 22) {
+            c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR) + 1);
+        }
+
+        c.set(Calendar.HOUR_OF_DAY, 17);
+        c.set(Calendar.MINUTE, 20);
+        c.set(Calendar.SECOND, 0);
+
+        horaDespertar = c.getTime();
+        System.out.println(horaDespertar);
+        System.out.println(c.get(Calendar.DAY_OF_WEEK));
+        // El despertador suena cada 24h (una vez al dia)
+        int tiempoRepeticion = 86400000;
+
+        // Programamos el despertador para que "suene" a las 8am todos los dias 
+        Timer temporizador = new Timer();
+        temporizador.schedule(new Temporizador(), horaDespertar, tiempoRepeticion);
+
     }
-    
+
 }
