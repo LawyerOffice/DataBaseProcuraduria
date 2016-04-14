@@ -1520,4 +1520,30 @@ public class ProcuradoriaMethods {
         }
         return findFun;
     }
+    
+    public static Uzatmateri findMateribyJudiId(BigDecimal judiID) {
+        Uzatmateri findMateri = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (judiID != null) {
+                findMateri = ProcuradoriaCrud.findMateribyJudiId(judiID);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN findMateribyJudiId : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findMateri;
+    }
+    
 }

@@ -1301,33 +1301,33 @@ public class ProcuradoriaCrud {
     }
 
     public static Uzatcaso findCasobyNumCausa(String NumCausa) {
+        
         Uzatcaso findCaso = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
 
-        QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_5.setColumnName("uzatcasoNumcausa");
-        query_5.setWhereClause("=");
-        query_5.setValue(NumCausa);
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("uzatcasoNumcausa");
+        query_1.setWhereClause("=");
+        query_1.setValue(NumCausa);
 
-        List<QueryParameter> Custadios_ = new ArrayList();
-        Custadios_.add(query_5);
-
-        QueryParameter orFun_ = new QueryParameter(QueryParameter.$TYPE_OR);
-        orFun_.setDetachedParameters(Custadios_);
-
-        List paramList = new ArrayList();
-        paramList.add(orFun_);
-
-        List<Uzatcaso> listfun = ds.customQuery(paramList, Uzatcaso.class);
+        QueryParameter joincaso = new QueryParameter(QueryParameter.$TYPE_JOIN);
+        joincaso.setJoinAlias("casoJudi");
+        joincaso.setJoinOrderNumber(1);
+        joincaso.setColumnName("uzatjudi");
+        
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        parameList.add(joincaso);
+        
+        List<Uzatcaso> list = ds.customQuery(parameList, Uzatcaso.class);
         try {
-            if (!listfun.isEmpty()) {
-                findCaso = listfun.get(0);
+            if (!list.isEmpty()) {
+                findCaso = list.get(0);
             }
         } catch (Exception ex) {
-            log.level.info("No se pudo buscar caso por numero de causa");
+            log.level.info("ERROR  findCasobyId : " + ex.toString());
         }
-
         return findCaso;
     }
 
@@ -1675,5 +1675,67 @@ public class ProcuradoriaCrud {
         }
 
         return findFun;
+    }   
+    
+    public static Uzatmateri findMateribyJudiId(BigDecimal judiID) {
+        
+        Uzatmateri findmateri = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("id.uzatjudiId");
+        query_1.setWhereClause("=");
+        query_1.setValue(judiID);
+
+        QueryParameter joincaso = new QueryParameter(QueryParameter.$TYPE_JOIN);
+        joincaso.setJoinAlias("materiJudi");
+        joincaso.setJoinOrderNumber(1);
+        joincaso.setColumnName("uzatmateri");
+        
+        List parameList = new ArrayList();
+        parameList.add(query_1);
+        parameList.add(joincaso);
+        
+        List<Uzatjudi> list = ds.customQuery(parameList, Uzatjudi.class);
+        try {
+            if (!list.isEmpty()) {
+                findmateri = list.get(0).getUzatmateri();
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR  findCasobyId : " + ex.toString());
+        }
+        return findmateri;
     }
+    
+//    public static Uzatcaso findActorbyCasoId(BigDecimal casoId) {
+//        
+//        Uzatcaso findActor = null;
+//        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+//                getSessionFactory().getCurrentSession());
+//
+//        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+//        query_1.setColumnName("uzatcasoId");
+//        query_1.setWhereClause("=");
+//        query_1.setValue(casoId);
+//
+////        QueryParameter joincaso = new QueryParameter(QueryParameter.$TYPE_JOIN);
+////        joincaso.setJoinAlias("materiJudi");
+////        joincaso.setJoinOrderNumber(1);
+////        joincaso.setColumnName("uzatmateri");
+//        
+//        List parameList = new ArrayList();
+//        parameList.add(query_1);
+////        parameList.add(joincaso);
+//        
+//        List<Uzatcaso> list = ds.customQuery(parameList, Uzatcaso.class);
+//        try {
+//            if (!list.isEmpty()) {
+//                findActor = list.get(0);
+//            }
+//        } catch (Exception ex) {
+//            log.level.info("ERROR  findActorbyCasoId : " + ex.toString());
+//        }
+//        return findActor;
+//    }
 }
