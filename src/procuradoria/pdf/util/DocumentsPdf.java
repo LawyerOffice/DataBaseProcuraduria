@@ -6,12 +6,10 @@
 package procuradoria.pdf.util;
 
 import com.logger.L;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -96,26 +94,12 @@ public class DocumentsPdf {
                 inputStream.close();
             }
 
-            ///////cvu377
-            FileInputStream in = null;
-            File file = new File(Url);
-            byte[] bFile = new byte[(int) file.length()];
-            FileInputStream fileInputStream;
-
-            fileInputStream = new FileInputStream(file);
-            fileInputStream.read(bFile);
-            fileInputStream.close();
-            java.sql.Blob blob = null;
-            blob = new SerialBlob(bFile);
-            docs.setUzatdocsArchivo(blob);
-            exito = ProcuradoriaMethods.InsertDocumemts(docs);
+            exito = ProcuradoriaMethods.InsertDocumemts(docs, Url);
 
         } catch (FileNotFoundException ex) {
             log.level.info(">> FileNotFoundException " + ex.getMessage());
         } catch (IOException ex) {
             log.level.info(">> IOExceptionn " + ex.getMessage());
-        } catch (SQLException ex) {
-            log.level.info(">> SQLException " + ex.getMessage());
         }
 
         return exito;

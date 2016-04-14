@@ -93,14 +93,39 @@ public class ProcuradoriaMethods {
         }
         return objFasesComent;
     }
-    
-    public static BigDecimal GetUltimaFaseIdByCaso(BigDecimal uzatcaso,BigDecimal uzatfaseFlag) {
+
+    public static BigDecimal GetUltimaFaseIdByCaso(BigDecimal uzatcaso, BigDecimal uzatfaseFlag) {
         BigDecimal uzatfaseid = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-            if(uzatcaso != null && uzatfaseFlag != null){
+            if (uzatcaso != null && uzatfaseFlag != null) {
                 uzatfaseid = ProcuradoriaCrud.getUltimaFaseIdByCaso(uzatcaso, uzatfaseFlag);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN FINDFASESANDCOMTBYIDCASOANDIDFASE : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return uzatfaseid;
+    }
+
+    public static BigDecimal GetNumberFacesOpenCloseByNumCausa(BigDecimal uzatcasoid, BigDecimal uzatfaseFlag) {
+        BigDecimal uzatfaseid = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (uzatcasoid != null && uzatfaseFlag != null) {
+                uzatfaseid = ProcuradoriaCrud.getNumberFacesOpenCloseByNumCausa(uzatcasoid, uzatfaseFlag);
             }
 
         } catch (Exception ex) {
@@ -391,12 +416,12 @@ public class ProcuradoriaMethods {
         return listJudicaturas;
     }
 
-    public static Uzatcaso CasoByNumCausaFlagVisible(String uztnumCausa ,BigDecimal uztflagVisible) {
+    public static Uzatcaso CasoByNumCausaFlagVisible(String uztnumCausa, BigDecimal uztflagVisible) {
         Uzatcaso listCasos = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-            listCasos = ProcuradoriaCrud.casoByNumCausaFlagVisible(uztnumCausa,uztflagVisible);
+            listCasos = ProcuradoriaCrud.casoByNumCausaFlagVisible(uztnumCausa, uztflagVisible);
         } catch (Exception ex) {
             log.level.error("ERROR EN LISTCASOBYNUMCAUSAFLAGVISIBLE : ");
             delegateException = ex;
@@ -412,7 +437,7 @@ public class ProcuradoriaMethods {
         }
         return listCasos;
     }
-    
+
     public static Uzatcaso CasoByIdCaso(BigDecimal uztcasoId) {
         Uzatcaso listCasos = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -466,31 +491,7 @@ public class ProcuradoriaMethods {
                 exito = ProcuradoriaCrud.insertDocs(docs, pdfBytes, pdfSize);
             }
         } catch (Exception ex) {
-            log.level.error("ERROR EN LISTTIPOROL : "+ex.getMessage());
-            delegateException = ex;
-        } finally {
-            hss.close();
-            if (delegateException != null) {
-                try {
-                    throw delegateException;
-                } catch (Exception ex) {
-                    log.level.info("delageException " + ex.toString());
-                }
-            }
-        }
-        return exito;
-    }
-    
-    public static Boolean InsertDocs(Uzatdocs docs) {
-        Boolean exito = false;
-        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
-        Exception delegateException = null;
-        try {
-            if (docs != null) {
-                exito = ProcuradoriaCrud.insertDocs(docs);
-            }
-        } catch (Exception ex) {
-            log.level.error("ERROR EN LISTTIPOROL : "+ex.getMessage());
+            log.level.error("ERROR EN LISTTIPOROL : " + ex.getMessage());
             delegateException = ex;
         } finally {
             hss.close();
@@ -505,16 +506,40 @@ public class ProcuradoriaMethods {
         return exito;
     }
 
-     public static Boolean InsertDocumemts(Uzatdocs docs) {
+    public static Boolean InsertDocs(Uzatdocs docs) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
             if (docs != null) {
-                exito = ProcuradoriaCrud.insertDocument(docs);
+                exito = ProcuradoriaCrud.insertDocs(docs);
             }
         } catch (Exception ex) {
-            log.level.error("ERROR EN LISTTIPOROL : "+ex.getMessage());
+            log.level.error("ERROR EN LISTTIPOROL : " + ex.getMessage());
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+
+    public static Boolean InsertDocumemts(Uzatdocs docs, String urlpdf) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (docs != null && urlpdf != null) {
+                exito = ProcuradoriaCrud.insertDocument(docs, urlpdf);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN LISTTIPOROL : " + ex.getMessage());
             delegateException = ex;
         } finally {
             hss.close();
@@ -896,7 +921,7 @@ public class ProcuradoriaMethods {
         return listJudi;
     }
 
-        public static Uzatfunci FindFuncionarioByIdFunci(BigDecimal IdFunci) {
+    public static Uzatfunci FindFuncionarioByIdFunci(BigDecimal IdFunci) {
         Uzatfunci findFun = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
@@ -920,7 +945,7 @@ public class ProcuradoriaMethods {
         }
         return findFun;
     }
-    
+
     public static Uzatfunci FindFuncionarioByCedula(String cedula) {
         Uzatfunci findFun = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1011,8 +1036,8 @@ public class ProcuradoriaMethods {
         }
         return findCaso;
     }
-    
-        public static ArrayList<Uzatasign> FindCasosReasignar(String uzatfuncionarioId) {
+
+    public static ArrayList<Uzatasign> FindCasosReasignar(String uzatfuncionarioId) {
         ArrayList<Uzatasign> findCaso = new ArrayList<>();
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
@@ -1033,7 +1058,7 @@ public class ProcuradoriaMethods {
         }
         return findCaso;
     }
-    
+
     public static ArrayList<Uzatasign> FindCasosAdminLazy(BigDecimal uzatfuncionarioId, BigDecimal uzatcasoFlag, BigDecimal uzatasignarFlag) {
         ArrayList<Uzatasign> findCaso = new ArrayList<>();
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1274,7 +1299,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Boolean insertActor(Uzatactor actor) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1298,13 +1323,13 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Boolean insertInvFf(UzatinvFf involff) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-            if(involff != null){
+            if (involff != null) {
                 exito = ProcuradoriaCrud.insertinvff(involff);
             }
         } catch (Exception ex) {
@@ -1322,7 +1347,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Uzatactor findActorbyIDBanner(String id) {
         Uzatactor findActor = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1347,13 +1372,13 @@ public class ProcuradoriaMethods {
         }
         return findActor;
     }
-    
+
     public static int findNumerosdeCasosbyMateri(String materi) {
         int temp = 0;
-        
+
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
-        
+
         try {
             if (materi != null) {
                 temp = ProcuradoriaCrud.findNumerosdeCasosbyMateri(materi);
@@ -1374,7 +1399,7 @@ public class ProcuradoriaMethods {
         }
         return temp;
     }
-    
+
     public static Boolean insertMateria(Uzatmateri materia) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1398,7 +1423,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Boolean insertJudicatura(Uzatjudi judicatura) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1422,7 +1447,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Boolean UpdateMateria(Uzatmateri materia) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1446,7 +1471,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Boolean UpdateJudicatura(Uzatjudi judicatura) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1470,7 +1495,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-    
+
     public static Uzatmateri FindMateriabyId(BigDecimal id) {
         Uzatmateri materi = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1495,7 +1520,7 @@ public class ProcuradoriaMethods {
         }
         return materi;
     }
-    
+
     public static Uzatfunci FindFuncionarioByIDBanner(String idbanner) {
         Uzatfunci findFun = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();

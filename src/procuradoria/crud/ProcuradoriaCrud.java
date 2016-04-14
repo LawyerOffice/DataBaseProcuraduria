@@ -8,7 +8,11 @@ package procuradoria.crud;
 import com.dao.DAOServices;
 import com.dao.QueryParameter;
 import com.logger.L;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Blob;
@@ -19,11 +23,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleTypes;
+import oracle.sql.BLOB;
 import oracle.sql.NUMBER;
 import org.hibernate.HibernateException;
 import org.hibernate.jdbc.ReturningWork;
+import org.hibernate.jdbc.Work;
 import procuradoria.map.*;
 import procuradoria.util.ProcuraduriaHibernateUtil;
 
@@ -975,6 +984,30 @@ public class ProcuradoriaCrud {
         return countNum;
     }
 
+    public static BigDecimal getNumberFacesOpenCloseByNumCausa(final BigDecimal uzatcasoid, final BigDecimal uzatfaseFlag) {
+        BigDecimal countNum = null;
+        try {
+            countNum = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<BigDecimal>() {
+
+                @Override
+                public BigDecimal execute(Connection cnctn) throws SQLException {
+                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFGNFPFL(?,?) } ");
+                    f1.registerOutParameter(1, OracleTypes.NUMBER);
+                    f1.setBigDecimal(2, uzatcasoid);
+                    f1.setBigDecimal(3, uzatfaseFlag);
+                    f1.execute();
+                    NUMBER count = ((OracleCallableStatement) f1).getNUMBER(1);
+                    return count.bigDecimalValue();
+                }
+            });
+
+        } catch (HibernateException ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+
+        return countNum;
+    }
+
     public static BigDecimal getCountCasosByFlagByIdFunci(final BigDecimal uzatflag, final BigDecimal uzatfuncionarioId) {
         BigDecimal countNum = null;
         try {
@@ -1549,30 +1582,43 @@ public class ProcuradoriaCrud {
         return temp;
     }
 
-    public static Boolean insertDocument(final Uzatdocs document) {
-        Boolean exito = true;
+    public static Boolean insertDocument(final Uzatdocs document, final String urlpdf) {
+        final Boolean exito = true;
         try {
-            exito = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<Boolean>() {
+            ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doWork(new Work() {
 
                 @Override
-                public Boolean execute(Connection cnctn) throws SQLException {
-                    PreparedStatement pstmt = cnctn.prepareStatement("INSERT INTO UZATDOCS (UZATCASO_ID, UZATFASE_ID, UZATDOCS_CASILLA, UZATDOCS_FECHA, UZATDOCS_COMPROMISO, UZATDOCS_ARCHIVO, UZATFUNCIONARIO_ID) "
-                            + "VALUES (?, ?, ?, ?, ?, empty_blob(), ?);");
-                    pstmt.setBigDecimal(1, document.getId().getUzatcasoId());
-                    pstmt.setBigDecimal(2, document.getId().getUzatfaseId());
-                    pstmt.setString(3, document.getUzatdocsCasilla());
-                    pstmt.setString(4, document.getUzatdocsFecha());
-                    pstmt.setString(5, document.getUzatdocsCompromiso());
-                    pstmt.setBlob(6, document.getUzatdocsArchivo());
-                    pstmt.setBigDecimal(7, document.getUzatfuncionarioId());
-                    Boolean exito = pstmt.execute();
-                    if (exito) {
+                public void execute(Connection cnctn) throws SQLException {
+
+                    OraclePreparedStatement pstmt = (OraclePreparedStatement) cnctn.prepareStatement("INSERT INTO UZATDOCS (UZATCASO_ID, UZATFASE_ID, UZATDOCS_CASILLA, UZATDOCS_FECHA, UZATDOCS_COMPROMISO, UZATDOCS_ARCHIVO, UZATFUNCIONARIO_ID) "
+                            + "VALUES (?, ?, ?, ?, ?, ?, ?);");
+                    try {
+                        pstmt.setBigDecimal(1, document.getId().getUzatcasoId());
+                        pstmt.setBigDecimal(2, document.getId().getUzatfaseId());
+                        pstmt.setString(3, document.getUzatdocsCasilla());
+                        pstmt.setString(4, document.getUzatdocsFecha());
+                        pstmt.setString(5, document.getUzatdocsCompromiso());
+                        File fi = new File(urlpdf);
+                        FileInputStream fis = new FileInputStream(fi);
+                        byte[] zipped = new byte[(int) fi.length()];
+                        fis.read(zipped);
+                        BLOB blob = BLOB.createTemporary(cnctn, true, BLOB.DURATION_SESSION);
+                        OutputStream blob_os = blob.getBinaryOutputStream();
+                        blob_os.write(zipped);
+                        blob_os.flush();
+                        pstmt.setBlob(6, blob);
+                        pstmt.setBigDecimal(7, document.getUzatfuncionarioId());
+                        pstmt.addBatch();
+                        pstmt.executeBatch();
                         cnctn.commit();
+                        fis.close();
+                    } catch (IOException ex) {
+                        log.level.info(">>> " + ex.toString());
+                    } finally {
+                        pstmt.close();
                     }
-                    return exito;
 
                 }
-
             });
         } catch (HibernateException ex) {
             log.level.info(">>> " + ex.toString());
