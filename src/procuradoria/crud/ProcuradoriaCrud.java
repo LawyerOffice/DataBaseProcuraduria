@@ -1334,7 +1334,7 @@ public class ProcuradoriaCrud {
     }
 
     public static Uzatcaso findCasobyNumCausa(String NumCausa) {
-        
+
         Uzatcaso findCaso = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -1348,11 +1348,11 @@ public class ProcuradoriaCrud {
         joincaso.setJoinAlias("casoJudi");
         joincaso.setJoinOrderNumber(1);
         joincaso.setColumnName("uzatjudi");
-        
+
         List parameList = new ArrayList();
         parameList.add(query_1);
         parameList.add(joincaso);
-        
+
         List<Uzatcaso> list = ds.customQuery(parameList, Uzatcaso.class);
         try {
             if (!list.isEmpty()) {
@@ -1583,43 +1583,36 @@ public class ProcuradoriaCrud {
     }
 
     public static Boolean insertDocument(final Uzatdocs document, final String urlpdf) {
-        final Boolean exito = true;
+        Boolean exito = true;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
         try {
-            ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doWork(new Work() {
-
+            Connection connection = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<Connection>() {
                 @Override
-                public void execute(Connection cnctn) throws SQLException {
-
-                    OraclePreparedStatement pstmt = (OraclePreparedStatement) cnctn.prepareStatement("INSERT INTO UZATDOCS (UZATCASO_ID, UZATFASE_ID, UZATDOCS_CASILLA, UZATDOCS_FECHA, UZATDOCS_COMPROMISO, UZATDOCS_ARCHIVO, UZATFUNCIONARIO_ID) "
-                            + "VALUES (?, ?, ?, ?, ?, ?, ?);");
-                    try {
-                        pstmt.setBigDecimal(1, document.getId().getUzatcasoId());
-                        pstmt.setBigDecimal(2, document.getId().getUzatfaseId());
-                        pstmt.setString(3, document.getUzatdocsCasilla());
-                        pstmt.setString(4, document.getUzatdocsFecha());
-                        pstmt.setString(5, document.getUzatdocsCompromiso());
-                        File fi = new File(urlpdf);
-                        FileInputStream fis = new FileInputStream(fi);
-                        byte[] zipped = new byte[(int) fi.length()];
-                        fis.read(zipped);
-                        BLOB blob = BLOB.createTemporary(cnctn, true, BLOB.DURATION_SESSION);
-                        OutputStream blob_os = blob.getBinaryOutputStream();
-                        blob_os.write(zipped);
-                        blob_os.flush();
-                        pstmt.setBlob(6, blob);
-                        pstmt.setBigDecimal(7, document.getUzatfuncionarioId());
-                        pstmt.addBatch();
-                        pstmt.executeBatch();
-                        cnctn.commit();
-                        fis.close();
-                    } catch (IOException ex) {
-                        log.level.info(">>> " + ex.toString());
-                    } finally {
-                        pstmt.close();
-                    }
-
+                public Connection execute(Connection cnctn) throws SQLException {
+                    return cnctn;
                 }
             });
+            try {
+                File fi = new File(urlpdf);
+                FileInputStream fis = new FileInputStream(fi);
+                byte[] zipped = new byte[(int) fi.length()];
+                fis.read(zipped);
+                BLOB blob = BLOB.createTemporary(connection, true, BLOB.DURATION_SESSION);
+                OutputStream blob_os = blob.getBinaryOutputStream();
+                blob_os.write(zipped);
+                blob_os.flush();
+                document.setUzatdocsArchivo(blob);
+                if (document != null) {
+                    ds.save(document);
+                    exito = true;
+                }
+            } catch (IOException ex) {
+                log.level.info(">>> " + ex.toString());
+            } catch (SQLException ex) {
+                log.level.info(">>> " + ex.toString());
+            }
+
         } catch (HibernateException ex) {
             log.level.info(">>> " + ex.toString());
         }
@@ -1721,10 +1714,10 @@ public class ProcuradoriaCrud {
         }
 
         return findFun;
-    }   
-    
+    }
+
     public static Uzatmateri findMateribyJudiId(BigDecimal judiID) {
-        
+
         Uzatmateri findmateri = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -1738,11 +1731,11 @@ public class ProcuradoriaCrud {
         joincaso.setJoinAlias("materiJudi");
         joincaso.setJoinOrderNumber(1);
         joincaso.setColumnName("uzatmateri");
-        
+
         List parameList = new ArrayList();
         parameList.add(query_1);
         parameList.add(joincaso);
-        
+
         List<Uzatjudi> list = ds.customQuery(parameList, Uzatjudi.class);
         try {
             if (!list.isEmpty()) {
@@ -1753,7 +1746,7 @@ public class ProcuradoriaCrud {
         }
         return findmateri;
     }
-    
+
 //    public static Uzatcaso findActorbyCasoId(BigDecimal casoId) {
 //        
 //        Uzatcaso findActor = null;
