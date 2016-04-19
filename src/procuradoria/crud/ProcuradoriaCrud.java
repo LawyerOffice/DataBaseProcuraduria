@@ -1629,21 +1629,22 @@ public class ProcuradoriaCrud {
                     return cnctn;
                 }
             });
-            String Sql = "INSERT INTO UZATDOCS (UZATCASO_ID, UZATFASE_ID, UZATDOCS_ID, UZATDOCS_CASILLA, UZATDOCS_FECHA, UZATDOCS_COMPROMISO, UZATDOCS_ARCHIVO, UZATFUNCIONARIO_ID) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-            PreparedStatement pstmt = connection.prepareStatement(Sql);
+            String Sql = "INSERT INTO ESPE.UZATDOCS (UZATCASO_ID, UZATFASE_ID, UZATDOCS_CASILLA, UZATDOCS_FECHA, UZATDOCS_COMPROMISO, UZATDOCS_ARCHIVO, UZATFUNCIONARIO_ID) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+            OraclePreparedStatement pstmt = (OraclePreparedStatement) connection.prepareStatement(Sql);
             pstmt.setBigDecimal(1, document.getId().getUzatcasoId());
             pstmt.setBigDecimal(2, document.getId().getUzatfaseId());
-            pstmt.setBigDecimal(3, null);
-            pstmt.setString(4, document.getUzatdocsCasilla());
-            pstmt.setString(5, document.getUzatdocsFecha());
-            pstmt.setString(6, document.getUzatdocsCompromiso());
+            pstmt.setString(3, document.getUzatdocsCasilla());
+            pstmt.setString(4, document.getUzatdocsFecha());
+            pstmt.setString(5, document.getUzatdocsCompromiso());
             File file = new File(urlpdf);
             InputStream in = new FileInputStream(file);
-            pstmt.setBinaryStream(7, in, (int) file.length());
-            pstmt.setBigDecimal(8, document.getUzatfuncionarioId());
+            pstmt.setBinaryStream(6, in, (int) file.length());
+            pstmt.setBigDecimal(7, document.getUzatfuncionarioId());
             pstmt.executeUpdate();
             connection.commit();
+            pstmt.close();
+            connection.close();
 
         } catch (HibernateException ex) {
             log.level.info(">>> " + ex.toString());
