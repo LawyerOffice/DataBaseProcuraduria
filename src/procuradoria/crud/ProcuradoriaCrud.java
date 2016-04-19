@@ -10,6 +10,7 @@ import com.dao.QueryParameter;
 import com.logger.L;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -1614,6 +1615,41 @@ public class ProcuradoriaCrud {
             }
 
         } catch (HibernateException ex) {
+            log.level.info(">>> " + ex.toString());
+        }
+        return exito;
+    }
+
+    public static Boolean insertDocument(final Uzatdocs document, final String urlpdf, final int type) {
+        Boolean exito = true;
+        try {
+            Connection connection = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<Connection>() {
+                @Override
+                public Connection execute(Connection cnctn) throws SQLException {
+                    return cnctn;
+                }
+            });
+            String Sql = "INSERT INTO UZATDOCS (UZATCASO_ID, UZATFASE_ID, UZATDOCS_ID, UZATDOCS_CASILLA, UZATDOCS_FECHA, UZATDOCS_COMPROMISO, UZATDOCS_ARCHIVO, UZATFUNCIONARIO_ID) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement pstmt = connection.prepareStatement(Sql);
+            pstmt.setBigDecimal(1, document.getId().getUzatcasoId());
+            pstmt.setBigDecimal(2, document.getId().getUzatfaseId());
+            pstmt.setBigDecimal(3, null);
+            pstmt.setString(4, document.getUzatdocsCasilla());
+            pstmt.setString(5, document.getUzatdocsFecha());
+            pstmt.setString(6, document.getUzatdocsCompromiso());
+            File file = new File(urlpdf);
+            InputStream in = new FileInputStream(file);
+            pstmt.setBinaryStream(7, in, (int) file.length());
+            pstmt.setBigDecimal(8, document.getUzatfuncionarioId());
+            pstmt.executeUpdate();
+            connection.commit();
+
+        } catch (HibernateException ex) {
+            log.level.info(">>> " + ex.toString());
+        } catch (SQLException ex) {
+            log.level.info(">>> " + ex.toString());
+        } catch (FileNotFoundException ex) {
             log.level.info(">>> " + ex.toString());
         }
         return exito;

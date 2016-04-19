@@ -95,7 +95,7 @@ public class DocumentsPdf {
             }
             
 
-            exito = ProcuradoriaMethods.InsertDocumemts(docs, Url);
+            exito = ProcuradoriaMethods.InsertDocumemts(docs, Url, 0);
 
         } catch (FileNotFoundException ex) {
             log.level.info(">> FileNotFoundException " + ex.getMessage());
