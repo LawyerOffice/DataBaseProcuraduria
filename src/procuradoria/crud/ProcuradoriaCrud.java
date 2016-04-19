@@ -1630,27 +1630,33 @@ public class ProcuradoriaCrud {
                 }
             });
             String Sql = "INSERT INTO ESPE.UZATDOCS (UZATCASO_ID, UZATFASE_ID, UZATDOCS_CASILLA, UZATDOCS_FECHA, UZATDOCS_COMPROMISO, UZATDOCS_ARCHIVO, UZATFUNCIONARIO_ID) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
             OraclePreparedStatement pstmt = (OraclePreparedStatement) connection.prepareStatement(Sql);
             pstmt.setBigDecimal(1, document.getId().getUzatcasoId());
             pstmt.setBigDecimal(2, document.getId().getUzatfaseId());
             pstmt.setString(3, document.getUzatdocsCasilla());
             pstmt.setString(4, document.getUzatdocsFecha());
             pstmt.setString(5, document.getUzatdocsCompromiso());
-            File file = new File(urlpdf);
-            InputStream in = new FileInputStream(file);
-            pstmt.setBinaryStream(6, in, (int) file.length());
+            File fi = new File(urlpdf);
+            FileInputStream fis = new FileInputStream(fi);
+            byte[] zipped = new byte[(int) fi.length()];
+            fis.read(zipped);
+            BLOB blob = BLOB.createTemporary(connection, true, BLOB.DURATION_SESSION);
+            OutputStream blob_os = blob.getBinaryOutputStream();
+            blob_os.write(zipped);
+            blob_os.flush();;
+            pstmt.setBlob(6, blob);
             pstmt.setBigDecimal(7, document.getUzatfuncionarioId());
             pstmt.executeUpdate();
-            connection.commit();
             pstmt.close();
-            connection.close();
 
         } catch (HibernateException ex) {
             log.level.info(">>> " + ex.toString());
         } catch (SQLException ex) {
             log.level.info(">>> " + ex.toString());
         } catch (FileNotFoundException ex) {
+            log.level.info(">>> " + ex.toString());
+        } catch (IOException ex) {
             log.level.info(">>> " + ex.toString());
         }
         return exito;
