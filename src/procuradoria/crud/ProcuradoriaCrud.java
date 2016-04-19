@@ -1621,7 +1621,7 @@ public class ProcuradoriaCrud {
     }
 
     public static Boolean insertDocument(final Uzatdocs document, final String urlpdf, final int type) {
-        Boolean exito = true;
+        Boolean exito = false;
         try {
             Connection connection = ProcuraduriaHibernateUtil.getSessionFactory().getCurrentSession().doReturningWork(new ReturningWork<Connection>() {
                 @Override
@@ -1649,7 +1649,7 @@ public class ProcuradoriaCrud {
             pstmt.setBigDecimal(7, document.getUzatfuncionarioId());
             pstmt.executeUpdate();
             pstmt.close();
-
+            exito = true;
         } catch (HibernateException ex) {
             log.level.info(">>> " + ex.toString());
         } catch (SQLException ex) {
