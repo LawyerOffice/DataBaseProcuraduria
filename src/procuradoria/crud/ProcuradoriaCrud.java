@@ -789,6 +789,17 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
+    
+    public static Boolean updateCita(Uzatcita cita) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (cita != null) {
+            ds.update(cita);
+            exito = true;
+        }
+        return exito;
+    }
 
     public static Boolean insertCaso(Uzatcaso caso) {
         Boolean exito = false;

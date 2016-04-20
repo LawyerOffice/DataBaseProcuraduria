@@ -673,6 +673,30 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
+    
+    public static Boolean UpdateCita(Uzatcita cita) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (cita != null) {
+                exito = ProcuradoriaCrud.updateCita(cita);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN Insert FASE : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
 
     public static Boolean InsertCaso(Uzatcaso caso) {
         Boolean exito = false;
