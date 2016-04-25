@@ -1129,12 +1129,12 @@ public class ProcuradoriaMethods {
         return findCaso;
     }
 
-    public static ArrayList<Uzatasign> FindCasosAdminLazyByVinculacion(BigDecimal uzatasignarFlag,String cedula, String numCausa) {
+    public static ArrayList<Uzatasign> FindCasosAdminLazyByVinculacion(String cedula, String numCausa) {
         ArrayList<Uzatasign> findCaso = new ArrayList<>();
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-            findCaso = ProcuradoriaCrud.findCasosAdminLazyByVinculacion(uzatasignarFlag, cedula, numCausa);
+            findCaso = ProcuradoriaCrud.findCasosAdminLazyByVinculacion( cedula, numCausa);
         } catch (Exception ex) {
             log.level.error("ERROR EN FindCasosAdminLazyByVinculacion : ");
             delegateException = ex;

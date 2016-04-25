@@ -1373,7 +1373,6 @@ public class ProcuradoriaCrud {
     }
     
     public static ArrayList<Uzatasign> findCasosAdminLazyByVinculacion(
-            final BigDecimal uzatasignarFlag,
             final String cedula,
             final String numCausa) {
         ArrayList<Uzatasign> findCaso = new ArrayList<>();
@@ -1383,13 +1382,14 @@ public class ProcuradoriaCrud {
 
                 @Override
                 public ArrayList<Uzatasign> execute(Connection cnctn) throws SQLException {
-                    CallableStatement f1 = cnctn.prepareCall(" { ? = call UZAFGCAVIN(?,?,?) } ");
-                    f1.registerOutParameter(1, OracleTypes.CURSOR);
-                    f1.setBigDecimal(2, uzatasignarFlag);
-                    f1.setString(3, cedula);
-                    f1.setString(4, numCausa);
+                    
+                    CallableStatement f1 = cnctn.prepareCall("BEGIN UZAFGCAVIN(?,?,?); END;");
+                    f1.setString(1, cedula);
+                    f1.setString(2, numCausa);
+                    f1.registerOutParameter(3, OracleTypes.CURSOR);
                     f1.execute();
-                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(1);
+                    ResultSet rs = ((OracleCallableStatement) f1).getCursor(3);
+                    
                     ArrayList<Uzatasign> list = new ArrayList<>();
                     while (rs.next()) {
                         Uzatasign asg = new Uzatasign();
