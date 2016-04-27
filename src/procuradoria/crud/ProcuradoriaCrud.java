@@ -1991,4 +1991,28 @@ public class ProcuradoriaCrud {
         return findmateri;
     }
 
+    public static Uzatmateri findmateribynombre(String nombre) {
+        Uzatmateri findMat = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        QueryParameter query_5 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_5.setColumnName("uzatmateriaDescripcion");
+        query_5.setWhereClause("=");
+        query_5.setValue(nombre);
+
+        List paramList = new ArrayList();
+        paramList.add(query_5);
+
+        List<Uzatmateri> listmat = ds.customQuery(paramList, Uzatmateri.class);
+        try {
+            if (!listmat.isEmpty()) {
+                findMat = listmat.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo buscar materia por descripción");
+        }
+
+        return findMat;
+    }
 }

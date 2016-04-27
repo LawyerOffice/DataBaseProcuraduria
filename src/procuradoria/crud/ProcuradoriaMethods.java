@@ -1685,4 +1685,28 @@ public class ProcuradoriaMethods {
         return findMateri;
     }
 
+    public static Uzatmateri findmateribynombre(String nombre) {
+        Uzatmateri materi = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (nombre != null) {
+                materi = ProcuradoriaCrud.findmateribynombre(nombre);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN findmateribynombre : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return materi;
+    }
 }
