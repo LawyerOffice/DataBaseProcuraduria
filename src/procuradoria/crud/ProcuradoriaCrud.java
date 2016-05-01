@@ -1371,7 +1371,7 @@ public class ProcuradoriaCrud {
 
         return findCaso;
     }
-    
+
     public static ArrayList<Uzatasign> findCasosAdminLazyByVinculacion(
             final String cedula,
             final String numCausa) {
@@ -1382,14 +1382,14 @@ public class ProcuradoriaCrud {
 
                 @Override
                 public ArrayList<Uzatasign> execute(Connection cnctn) throws SQLException {
-                    
+
                     CallableStatement f1 = cnctn.prepareCall("BEGIN UZAFGCAVIN(?,?,?); END;");
                     f1.setString(1, cedula);
                     f1.setString(2, numCausa);
                     f1.registerOutParameter(3, OracleTypes.CURSOR);
                     f1.execute();
                     ResultSet rs = ((OracleCallableStatement) f1).getCursor(3);
-                    
+
                     ArrayList<Uzatasign> list = new ArrayList<>();
                     while (rs.next()) {
                         Uzatasign asg = new Uzatasign();
@@ -1541,19 +1541,18 @@ public class ProcuradoriaCrud {
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
 
+//        QueryParameter joincaso = new QueryParameter(QueryParameter.$TYPE_JOIN);
+//        joincaso.setJoinAlias("uzatjudi");
+//        joincaso.setJoinOrderNumber(1);
+//        joincaso.setColumnName("uzatjudi");
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
         query_1.setColumnName("uzatcasoNumcausa");
         query_1.setWhereClause("=");
         query_1.setValue(NumCausa);
 
-        QueryParameter joincaso = new QueryParameter(QueryParameter.$TYPE_JOIN);
-        joincaso.setJoinAlias("casoJudi");
-        joincaso.setJoinOrderNumber(1);
-        joincaso.setColumnName("uzatjudi");
-
         List parameList = new ArrayList();
+//        parameList.add(joincaso);
         parameList.add(query_1);
-        parameList.add(joincaso);
 
         List<Uzatcaso> list = ds.customQuery(parameList, Uzatcaso.class);
         try {
