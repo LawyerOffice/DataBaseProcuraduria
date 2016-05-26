@@ -1564,6 +1564,36 @@ public class ProcuradoriaCrud {
         }
         return findCaso;
     }
+    
+    public static Uzatcaso findCasobyNumCausa2(String NumCausa) {
+        //Se hace un join de caso a judi
+        Uzatcaso findCaso = null;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+
+        QueryParameter joincaso = new QueryParameter(QueryParameter.$TYPE_JOIN);
+        joincaso.setJoinAlias("uzatjudi");
+        joincaso.setJoinOrderNumber(1);
+        joincaso.setColumnName("uzatjudi");
+        QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_1.setColumnName("uzatcasoNumcausa");
+        query_1.setWhereClause("=");
+        query_1.setValue(NumCausa);
+
+        List parameList = new ArrayList();
+        parameList.add(joincaso);
+        parameList.add(query_1);
+
+        List<Uzatcaso> list = ds.customQuery(parameList, Uzatcaso.class);
+        try {
+            if (!list.isEmpty()) {
+                findCaso = list.get(0);
+            }
+        } catch (Exception ex) {
+            log.level.info("ERROR  findCasobyId : " + ex.toString());
+        }
+        return findCaso;
+    }
 
     public static Boolean insertNuevaAsignacion(Uzatasign asign) {
         Boolean exito = false;

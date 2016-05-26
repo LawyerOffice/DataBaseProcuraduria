@@ -1220,6 +1220,32 @@ public class ProcuradoriaMethods {
         return findCaso;
     }
 
+    public static Uzatcaso FindCasobyNumCausa2(String numcausa) {
+        //Coje el caso con un join a judi para tener la descripcion de la judicatura
+        Uzatcaso findCaso = null;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (numcausa != null) {
+                findCaso = ProcuradoriaCrud.findCasobyNumCausa2(numcausa);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN getCasobyNumCausa : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return findCaso;
+    }
+    
     public static Boolean InsertNuevaAsignacion(Uzatasign asign) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
