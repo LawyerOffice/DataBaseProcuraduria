@@ -1812,7 +1812,32 @@ public class ProcuradoriaCrud {
 
         return temp;
     }
+   
+    public static int findNumerosdeCasosbyJudi(String judi) {
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
 
+        List paramList = new ArrayList();
+
+        List<Uzatcaso> listfun = ds.customQuery(paramList, Uzatcaso.class);
+
+        int temp = 0;
+
+        try {
+            if (!listfun.isEmpty()) {
+                for (int i = 0; i < listfun.size(); i++) {
+                    if (listfun.get(i).getUzatjudi().getId().getUzatjudiId().equals(new BigDecimal(judi))) {
+                        temp++;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            log.level.info("No se pudo buscar caso por numero de causa");
+        }
+
+        return temp;
+    }
+    
     public static Boolean insertDocument(final Uzatdocs document, final String urlpdf) {
         Boolean exito = true;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -1939,7 +1964,21 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-
+        
+        public static Boolean deleteMateriabyId(BigDecimal id) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+ 
+        Uzatmateri materi = (Uzatmateri)ds.retriveEntity(Uzatmateri.class, id);
+        if (materi != null) {
+            if (ds.delete(materi)) {
+                exito = true;
+            }
+        }
+        return exito;
+    }
+        
     public static Uzatmateri findMateriabyId(BigDecimal id) {
         Uzatmateri findMateria = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -2044,4 +2083,18 @@ public class ProcuradoriaCrud {
 
         return findMat;
     }
+
+    static boolean deleteJudi(BigDecimal materiID, BigDecimal judiID) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        
+        Uzatjudi judi = (Uzatjudi)ds.retriveEntity(Uzatjudi.class,new UzatjudiId(materiID, judiID));
+        System.out.println("");
+        if (judi != null) {
+            if (ds.delete(judi)) {
+                exito = true;
+            }
+        }
+        return exito;}
 }

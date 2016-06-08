@@ -1540,6 +1540,33 @@ public class ProcuradoriaMethods {
         return temp;
     }
 
+    public static int findNumerosdeCasosbyJudi(String judi) {
+        int temp = 0;
+
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+
+        try {
+            if (judi != null) {
+                temp = ProcuradoriaCrud.findNumerosdeCasosbyJudi(judi);
+            }
+
+        } catch (Exception ex) {
+            log.level.error("ERROR EN findNumerosdeCasosbyJudi : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return temp;
+    }
+    
     public static Boolean insertMateria(Uzatmateri materia) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1636,6 +1663,33 @@ public class ProcuradoriaMethods {
         return exito;
     }
 
+        
+        public static boolean DeleteMateriabyId(BigDecimal id) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (id != null) {
+                if(ProcuradoriaCrud.deleteMateriabyId(id)){
+                    exito =true;
+                }
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN deleteMateriabyId : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+        
     public static Uzatmateri FindMateriabyId(BigDecimal id) {
         Uzatmateri materi = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1734,5 +1788,33 @@ public class ProcuradoriaMethods {
             }
         }
         return materi;
+    }
+
+    public static Boolean DeleteJudi(BigDecimal materiID, BigDecimal judiID) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        
+        
+        try {
+            if (materiID != null && judiID !=null) {
+                if(ProcuradoriaCrud.deleteJudi(materiID, judiID)){
+                    exito =true;
+                }
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN DeleteJudi : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
     }
 }
