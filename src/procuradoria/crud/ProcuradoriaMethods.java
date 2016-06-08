@@ -675,13 +675,13 @@ public class ProcuradoriaMethods {
         return exito;
     }
 
-    public static Boolean UpdateUzatInvolfff(UpdateInvolFF Ids, UzatinvFf involff) {
+    public static Boolean UpdateUzatInvolfff(UpdateInvolFF Ids, String fechaHoraActual) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-            if (involff != null) {
-                exito = ProcuradoriaCrud.updateUzatInvolff(Ids, involff);
+            if (Ids != null) {
+                exito = ProcuradoriaCrud.updateUzatInvolff(Ids, fechaHoraActual);
             }
         } catch (Exception ex) {
             log.level.error("ERROR EN Insert FASE : ");

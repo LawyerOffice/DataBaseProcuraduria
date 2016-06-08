@@ -814,11 +814,11 @@ public class ProcuradoriaCrud {
         return exito;
     }
 
-    public static Boolean updateUzatInvolff(UpdateInvolFF Ids, UzatinvFf involff) {
+    public static Boolean updateUzatInvolff(UpdateInvolFF Ids, String fechaHoraActual) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        if (involff != null) {
+        if (Ids != null) {
             // ds.update(fase);
             exito = true;
         }
