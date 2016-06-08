@@ -9,6 +9,7 @@ import com.logger.L;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import procuradoria.crud.tools.UpdateInvolFF;
 import procuradoria.mail.util.MailTool;
 import procuradoria.map.*;
 import procuradoria.util.*;
@@ -674,6 +675,30 @@ public class ProcuradoriaMethods {
         return exito;
     }
 
+    public static Boolean UpdateUzatInvolfff(UpdateInvolFF Ids, UzatinvFf involff) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (involff != null) {
+                exito = ProcuradoriaCrud.updateUzatInvolff(Ids, involff);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN Insert FASE : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
+
     public static Boolean UpdateCita(Uzatcita cita) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1134,7 +1159,7 @@ public class ProcuradoriaMethods {
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
-            findCaso = ProcuradoriaCrud.findCasosAdminLazyByVinculacion( cedula, numCausa);
+            findCaso = ProcuradoriaCrud.findCasosAdminLazyByVinculacion(cedula, numCausa);
         } catch (Exception ex) {
             log.level.error("ERROR EN FindCasosAdminLazyByVinculacion : ");
             delegateException = ex;
@@ -1245,7 +1270,7 @@ public class ProcuradoriaMethods {
         }
         return findCaso;
     }
-    
+
     public static Boolean InsertNuevaAsignacion(Uzatasign asign) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1566,7 +1591,7 @@ public class ProcuradoriaMethods {
         }
         return temp;
     }
-    
+
     public static Boolean insertMateria(Uzatmateri materia) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1663,15 +1688,14 @@ public class ProcuradoriaMethods {
         return exito;
     }
 
-        
-        public static boolean DeleteMateriabyId(BigDecimal id) {
+    public static boolean DeleteMateriabyId(BigDecimal id) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
             if (id != null) {
-                if(ProcuradoriaCrud.deleteMateriabyId(id)){
-                    exito =true;
+                if (ProcuradoriaCrud.deleteMateriabyId(id)) {
+                    exito = true;
                 }
             }
         } catch (Exception ex) {
@@ -1689,7 +1713,7 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
-        
+
     public static Uzatmateri FindMateriabyId(BigDecimal id) {
         Uzatmateri materi = null;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
@@ -1794,12 +1818,11 @@ public class ProcuradoriaMethods {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
-        
-        
+
         try {
-            if (materiID != null && judiID !=null) {
-                if(ProcuradoriaCrud.deleteJudi(materiID, judiID)){
-                    exito =true;
+            if (materiID != null && judiID != null) {
+                if (ProcuradoriaCrud.deleteJudi(materiID, judiID)) {
+                    exito = true;
                 }
             }
         } catch (Exception ex) {

@@ -30,6 +30,7 @@ import oracle.sql.BLOB;
 import oracle.sql.NUMBER;
 import org.hibernate.HibernateException;
 import org.hibernate.jdbc.ReturningWork;
+import procuradoria.crud.tools.UpdateInvolFF;
 import procuradoria.map.*;
 import procuradoria.util.ProcuraduriaHibernateUtil;
 
@@ -813,6 +814,17 @@ public class ProcuradoriaCrud {
         return exito;
     }
 
+    public static Boolean updateUzatInvolff(UpdateInvolFF Ids, UzatinvFf involff) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (involff != null) {
+            // ds.update(fase);
+            exito = true;
+        }
+        return exito;
+    }
+
     public static Boolean updateCita(Uzatcita cita) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -1564,7 +1576,7 @@ public class ProcuradoriaCrud {
         }
         return findCaso;
     }
-    
+
     public static Uzatcaso findCasobyNumCausa2(String NumCausa) {
         //Se hace un join de caso a judi
         Uzatcaso findCaso = null;
@@ -1812,7 +1824,7 @@ public class ProcuradoriaCrud {
 
         return temp;
     }
-   
+
     public static int findNumerosdeCasosbyJudi(String judi) {
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -1837,7 +1849,7 @@ public class ProcuradoriaCrud {
 
         return temp;
     }
-    
+
     public static Boolean insertDocument(final Uzatdocs document, final String urlpdf) {
         Boolean exito = true;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -1964,13 +1976,13 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-        
-        public static Boolean deleteMateriabyId(BigDecimal id) {
+
+    public static Boolean deleteMateriabyId(BigDecimal id) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
- 
-        Uzatmateri materi = (Uzatmateri)ds.retriveEntity(Uzatmateri.class, id);
+
+        Uzatmateri materi = (Uzatmateri) ds.retriveEntity(Uzatmateri.class, id);
         if (materi != null) {
             if (ds.delete(materi)) {
                 exito = true;
@@ -1978,7 +1990,7 @@ public class ProcuradoriaCrud {
         }
         return exito;
     }
-        
+
     public static Uzatmateri findMateriabyId(BigDecimal id) {
         Uzatmateri findMateria = null;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
@@ -2088,13 +2100,14 @@ public class ProcuradoriaCrud {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        
-        Uzatjudi judi = (Uzatjudi)ds.retriveEntity(Uzatjudi.class,new UzatjudiId(materiID, judiID));
+
+        Uzatjudi judi = (Uzatjudi) ds.retriveEntity(Uzatjudi.class, new UzatjudiId(materiID, judiID));
         System.out.println("");
         if (judi != null) {
             if (ds.delete(judi)) {
                 exito = true;
             }
         }
-        return exito;}
+        return exito;
+    }
 }
