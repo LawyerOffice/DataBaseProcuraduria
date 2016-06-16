@@ -818,8 +818,30 @@ public class ProcuradoriaCrud {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
-        if (Ids != null) {
-            // ds.update(fase);
+        if (Ids != null && fechaHoraActual != null) {
+            QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+            query_1.setColumnName("id.uzatcasoId");
+            query_1.setWhereClause("=");
+            query_1.setValue(Ids.getUzatIdCaso());
+
+            QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+            query_2.setColumnName("id.uzatfaseId");
+            query_2.setWhereClause("=");
+            query_2.setValue(Ids.getUzatIdFase());
+            
+            QueryParameter query_3 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+            query_3.setColumnName("id.uzatfuncionarioId");
+            query_3.setWhereClause("=");
+            query_3.setValue(Ids.getUzatIdFase());
+
+            List parameList = new ArrayList();
+            parameList.add(query_1);
+            parameList.add(query_2);
+            parameList.add(query_3);
+            
+            List<UzatinvFf> list = ds.customQuery(parameList, UzatinvFf.class);
+            
+            
             exito = true;
         }
         return exito;
