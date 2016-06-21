@@ -832,7 +832,7 @@ public class ProcuradoriaCrud {
             QueryParameter query_3 = new QueryParameter(QueryParameter.$TYPE_WHERE);
             query_3.setColumnName("id.uzatfuncionarioId");
             query_3.setWhereClause("=");
-            query_3.setValue(Ids.getUzatIdFase());
+            query_3.setValue(Ids.getUzatIdFun());
 
             List parameList = new ArrayList();
             parameList.add(query_1);
@@ -840,6 +840,10 @@ public class ProcuradoriaCrud {
             parameList.add(query_3);
             
             List<UzatinvFf> list = ds.customQuery(parameList, UzatinvFf.class);
+            
+            if(!list.isEmpty()){
+                
+            }
             
             
             exito = true;
