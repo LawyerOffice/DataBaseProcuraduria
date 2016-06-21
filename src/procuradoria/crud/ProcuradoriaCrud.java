@@ -842,11 +842,13 @@ public class ProcuradoriaCrud {
             List<UzatinvFf> list = ds.customQuery(parameList, UzatinvFf.class);
             
             if(!list.isEmpty()){
-                
+                for(UzatinvFf ff : list){
+                    ff.setUzatinvolFfFOut(fechaHoraActual);
+                    ds.update(ff);
+                }
+                exito = true;
             }
             
-            
-            exito = true;
         }
         return exito;
     }
