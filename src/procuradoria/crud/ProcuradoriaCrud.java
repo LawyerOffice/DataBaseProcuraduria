@@ -64,17 +64,19 @@ public class ProcuradoriaCrud {
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
         QueryParameter query_1 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_1.setColumnName("id.uztfuncionarioId");
+        query_1.setColumnName("id.uzatfuncionarioId");
         query_1.setWhereClause("=");
         query_1.setValue(uztfuncionarioId);
         //uztrolFlag
         QueryParameter query_2 = new QueryParameter(QueryParameter.$TYPE_WHERE);
-        query_2.setColumnName("uztrolFlag");
+        query_2.setColumnName("uzatrolFlag");
         query_2.setWhereClause("=");
         query_2.setValue(uztrolFlag);
+        
         List parameList = new ArrayList();
         parameList.add(query_1);
         parameList.add(query_2);
+        
         List<Uzatrol> list = ds.customQuery(parameList, Uzatrol.class);
         try {
             if (!list.isEmpty()) {
@@ -743,6 +745,21 @@ public class ProcuradoriaCrud {
                 getSessionFactory().getCurrentSession());
         if (rol != null) {
             ds.save(rol);
+            exito = true;
+        }
+        return exito;
+    }
+
+    public static Boolean updateRols(ArrayList<Uzatrol> rols) {
+        Boolean exito = false;
+        DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
+                getSessionFactory().getCurrentSession());
+        if (rols != null) {
+            for (Uzatrol rol : rols) {
+                Uzatrol rolZero = rol;
+                rolZero.setUzatrolFlag(BigDecimal.ZERO);
+                ds.update(rolZero);
+            }
             exito = true;
         }
         return exito;

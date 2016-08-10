@@ -894,6 +894,30 @@ public class ProcuradoriaMethods {
         }
         return exito;
     }
+    
+    public static Boolean UpdateRols(ArrayList<Uzatrol> rols) {
+        Boolean exito = false;
+        ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
+        Exception delegateException = null;
+        try {
+            if (rols != null) {
+                exito = ProcuradoriaCrud.updateRols(rols);
+            }
+        } catch (Exception ex) {
+            log.level.error("ERROR EN LISTTIPOROL : ");
+            delegateException = ex;
+        } finally {
+            hss.close();
+            if (delegateException != null) {
+                try {
+                    throw delegateException;
+                } catch (Exception ex) {
+                    log.level.info("delageException " + ex.toString());
+                }
+            }
+        }
+        return exito;
+    }
 
     public static Boolean InserFuncionario(Uzatfunci fun) {
         Boolean exito = false;
