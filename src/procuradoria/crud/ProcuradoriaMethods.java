@@ -895,13 +895,13 @@ public class ProcuradoriaMethods {
         return exito;
     }
     
-    public static Boolean UpdateRols(ArrayList<Uzatrol> rols) {
+    public static Boolean UpdateRols(ArrayList<Uzatrol> rols, String UzatrolFechaOut) {
         Boolean exito = false;
         ProcuradoriaHibernateSessionHandler hss = new ProcuradoriaHibernateSessionHandler();
         Exception delegateException = null;
         try {
             if (rols != null) {
-                exito = ProcuradoriaCrud.updateRols(rols);
+                exito = ProcuradoriaCrud.updateRols(rols,UzatrolFechaOut);
             }
         } catch (Exception ex) {
             log.level.error("ERROR EN LISTTIPOROL : ");

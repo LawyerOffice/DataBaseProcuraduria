@@ -73,9 +73,15 @@ public class ProcuradoriaCrud {
         query_2.setWhereClause("=");
         query_2.setValue(uztrolFlag);
         
+        QueryParameter query_3 = new QueryParameter(QueryParameter.$TYPE_WHERE);
+        query_3.setColumnName("uzatrolFechaOut");
+        query_3.setWhereClause("=");
+        query_3.setValue(null);
+        
         List parameList = new ArrayList();
         parameList.add(query_1);
         parameList.add(query_2);
+        parameList.add(query_3);
         
         List<Uzatrol> list = ds.customQuery(parameList, Uzatrol.class);
         try {
@@ -750,7 +756,7 @@ public class ProcuradoriaCrud {
         return exito;
     }
 
-    public static Boolean updateRols(ArrayList<Uzatrol> rols) {
+    public static Boolean updateRols(ArrayList<Uzatrol> rols, String UzatrolFechaOut) {
         Boolean exito = false;
         DAOServices ds = new DAOServices(ProcuraduriaHibernateUtil.
                 getSessionFactory().getCurrentSession());
@@ -758,6 +764,7 @@ public class ProcuradoriaCrud {
             for (Uzatrol rol : rols) {
                 Uzatrol rolZero = rol;
                 rolZero.setUzatrolFlag(BigDecimal.ZERO);
+                rolZero.setUzatrolFechaOut(UzatrolFechaOut);
                 ds.update(rolZero);
             }
             exito = true;
